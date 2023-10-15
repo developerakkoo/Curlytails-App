@@ -1,0 +1,7 @@
+{
+  "name": "Curlytails-User",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
