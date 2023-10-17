@@ -1,0 +1,67 @@
+<ion-header [translucent]="true" class="ion-no-border">
+  <ion-toolbar>
+    <ion-title>Order Detail</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="tabs/profile/orders"></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+ <ion-grid fixed>
+  <ion-row>
+    <ion-col size="12">
+     <ion-item>
+      <ion-avatar slot="start">
+        <img src="assets/dogfood.jpg" alt="" srcset="">
+      </ion-avatar>
+      <ion-label>
+        <h6>Drools Optimum Performance</h6>
+        <p>Chicken Flavor, 20kg</p>
+        <p>Order Delivered On 03-oct-2023</p>
+      </ion-label>
+     </ion-item>
+     <ion-list>
+      <ion-list-header>
+        <ion-label>
+          <h4 style="font-size: 20px;
+          font-weight: 500;">Order Info</h4>
+        </ion-label>
+      </ion-list-header>
+      <ion-item detail>
+        <ion-label>View Order details</ion-label>
+      </ion-item>
+      <ion-item detail>
+        <ion-label>Download Invoice</ion-label>
+      </ion-item>
+      <ion-item detail>
+        <ion-label>Buy it again</ion-label>
+      </ion-item>
+     </ion-list>
+
+     <ion-list>
+      <ion-list-header>
+        <ion-label>
+          <h4 style="font-size: 20px;
+          font-weight: 500;">Shipping Details</h4>
+        </ion-label>
+      </ion-list-header>
+      <ion-item >
+        <ion-label class="ion-text-wrap">
+          <p>Akshay Jadhav</p>
+          <p>flat no 11, Santosh Nivas, Near Akshar Residency, Shivkrupa</p>
+          <p>Nagar, Hirawadi, Nashik.</p>
+          <p>Contact No:- 8007477111</p>
+        </ion-label>
+      </ion-item>
+      
+     </ion-list>
+    </ion-col>
+    <!-- <ion-col size="6">
+      <ion-text color="dark">
+        <h6>Drools Optimum Performance</h6>
+      </ion-text>
+    </ion-col> -->
+  </ion-row>
+ </ion-grid>
+</ion-content>

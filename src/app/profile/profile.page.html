@@ -9,21 +9,21 @@
 <ion-content>
   <img src="assets/profile-bg.png" alt="" srcset="">
 <ion-list>
-  <ion-item detail>
+  <ion-item detail (click)="openPage('orders')">
     <ion-icon name="bag-handle-outline" slot="start"></ion-icon>
     <ion-label>
       <strong>Orders</strong>
       <p>All your order details</p>
     </ion-label>
   </ion-item>
-  <ion-item detail>
+  <ion-item detail (click)="openPage('address')">
     <ion-icon name="business-outline" slot="start"></ion-icon>
     <ion-label>
       <strong>Address</strong>
       <p>Add/remove your address details</p>
     </ion-label>
   </ion-item>
-  <ion-item detail>
+  <ion-item detail (click)="openPage('cart')">
     <ion-icon name="cart-outline" slot="start"></ion-icon>
     <ion-label>
       <strong>Cart</strong>
