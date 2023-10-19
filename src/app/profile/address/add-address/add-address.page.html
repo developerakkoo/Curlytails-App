@@ -1,0 +1,23 @@
+<ion-header [translucent]="true" class="ion-no-border" >
+  <ion-toolbar>
+    <ion-title>Add a new address</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="tabs/profile/address"></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="ion-padding">
+<form [formGroup]="addressForm" (ngSubmit)="onSubmit()">
+    <ion-input fill="outline"  label="Full Name" label-placement="floating" required formControlName="name" type="text"></ion-input><br>
+    <ion-input fill="outline"  label="Contact Number" label-placement="floating" required formControlName="number" type="tel"></ion-input><br>
+    <ion-input fill="outline"  label="Flat,House No, Building, Company, Apartment" label-placement="floating" required formControlName="flat" type="text"></ion-input><br>
+    <ion-input fill="outline"  label="Area, Street" label-placement="floating" required formControlName="area" type="text"></ion-input><br>
+    <ion-input fill="outline"  label="Pincode" label-placement="floating" required formControlName="pincode" type="text"></ion-input><br>
+ 
+    <ion-input fill="outline"  label="City" label-placement="floating" required formControlName="city" type="text"></ion-input><br>
+  <ion-button expand="block" mode="ios" color="primary" type="submit" [disabled]="addressForm.invalid"><br>
+    Add Address
+  </ion-button>
+</form>
+</ion-content>

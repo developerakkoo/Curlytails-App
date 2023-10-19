@@ -1,0 +1,25 @@
+<ion-header [translucent]="true" class="ion-no-border">
+  <ion-toolbar>
+    <ion-title>Your Address</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="tabs/profile"></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+ <ion-list>
+  <ion-item button lines="full" detail (click)="openAddAddressPage()">
+    <ion-label>Add New Address</ion-label>
+  </ion-item>
+  <ion-item>
+    <ion-label class="ion-text-wrap">
+      <p> <strong>Akshay Jadhav</strong> </p>
+      <p>Flat no 11, Santosh Nivas, Hirawadi, Nashik.</p>
+      <p>Maharashtra. 4222101</p>
+    </ion-label>
+    <ion-icon slot="end" name="create"></ion-icon>
+    <ion-icon color="danger" slot="end" name="trash"></ion-icon>
+  </ion-item>
+ </ion-list>
+</ion-content>

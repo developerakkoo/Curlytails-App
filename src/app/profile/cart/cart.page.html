@@ -1,0 +1,49 @@
+<ion-header [translucent]="true" class="ion-no-border">
+  <ion-toolbar>
+    <ion-title>My Cart</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="tabs/profile"></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-list>
+    <ion-list-header>
+      <ion-label>Your cart items</ion-label>
+      <ion-button>Clear cart</ion-button>
+    </ion-list-header>
+    <ion-item lines="none">
+   
+      <ion-thumbnail slot="start">
+        <img src="assets/dogfood.jpg" />
+
+      </ion-thumbnail>
+      <ion-label class="ion-text-wrap">
+        <p>Drools Optimum Performance</p>
+        <p> {{amount | currency:"INR"}} </p>
+      </ion-label>
+   
+      <ion-row style="background-color: #ece9e9;
+      border-radius: 4px;" slot="end" class="ion-no-padding ion-align-items-center"> 
+        <ion-col size="5">
+          <ion-button (click)="incrementQuantity()" fill="clear">
+            <ion-icon color="dark" slot="icon-only" name="add"></ion-icon>
+          </ion-button>
+        </ion-col>
+        <ion-col size="2">
+          1
+        </ion-col>
+        <ion-col size="5">
+          <ion-button (click)="decrementQuantity()" fill="clear">
+            <ion-icon color="dark" slot="icon-only" name="remove"></ion-icon>
+          </ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-item>
+  </ion-list>
+  <ion-button class="ion-padding"  expand="block" mode="ios">
+    Proceed to Pay 1200
+  </ion-button>
+</ion-content>
+

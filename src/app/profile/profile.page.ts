@@ -14,6 +14,17 @@ export class ProfilePage implements OnInit {
   }
 
   openPage(page:string){
-    this.router.navigate(['tabs','profile',page]);
+    if(page == "orders"){
+
+      this.router.navigate(['tabs','profile',page]);
+    }
+    if(page == "address"){
+      this.router.navigate(['tabs','profile',page]);
+
+    }
+    if(page == "cart"){
+      this.router.navigate(['tabs','profile',page]);
+
+    }
   }
 }
