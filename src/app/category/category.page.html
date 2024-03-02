@@ -1,0 +1,26 @@
+<ion-header [translucent]="true" class="ion-no-border">
+  <ion-toolbar>
+    <ion-title >Dog Categories</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="tabs/tab2"></ion-back-button>
+    </ion-buttons>
+    
+
+  </ion-toolbar>
+  <ion-searchbar style="
+     --box-shadow: none;
+     width: 100vw;
+     height: 90px;
+     --background: #F2F3F2;
+     padding: 25px;
+     " class="custom" placeholder="Search Product" animated="true">
+    </ion-searchbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <div class="wrapper">
+    <div *ngFor="let item of categoryBadges;let i = index" class="badge" (click)="categorySelectEvent($event, i)">
+      <p> {{item.name | titlecase}} </p>
+    </div>
+  </div>
+</ion-content>

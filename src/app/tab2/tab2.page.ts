@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-tab2',
@@ -46,7 +47,7 @@ export class Tab2Page {
 
     
   ]
-  constructor() {}
+  constructor(private router: Router) {}
 
 
   categorySelectEvent(ev:any, i:any){
@@ -68,5 +69,6 @@ export class Tab2Page {
     
     var el = document.getElementsByClassName('categoryWrapper')[0];
     el?.classList.toggle("slide-bck-center");
+    this.router.navigate(['category'])
   }
 }
