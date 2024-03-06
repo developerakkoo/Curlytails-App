@@ -1,0 +1,67 @@
+<ion-content>
+
+  <ion-grid>
+    <ion-row>
+      <!-- Filter Options Column -->
+      <ion-col size="3">
+
+        <ion-item>
+          <ion-label>
+            <ion-range labelPlacement="start" label="Price" [pin]="true" (ionChange)="onIonChange($event)" [pinFormatter]="pinFormatter"></ion-range>
+          </ion-label>
+        </ion-item>
+
+
+        <ion-item *ngFor="let item of ReceivedFilterData | keyvalue: originalOrder">
+          <ion-lable>
+            <h5>{{item.key}}</h5>
+            <ion-list>
+              <ion-radio-group (ionChange)="showselected(item.key,$event)">
+                <ion-item *ngFor="let value of item.value">
+                  <ion-radio justify="space-between" [value]="value">{{value}}</ion-radio>
+                </ion-item>
+              </ion-radio-group>
+            </ion-list>
+          </ion-lable>
+
+        </ion-item>
+        <!-- // static option for veg and nonveg  -->
+        <ion-item>
+          <ion-label>
+            <h5>Veg/Nonveg</h5>
+            <ion-list>
+              <ion-radio-group (ionChange)="showselected('vegNonveg',$event)">
+                <ion-radio value="veg">Veg</ion-radio> <br />
+                <ion-radio value="nonveg">Nonveg</ion-radio>
+              </ion-radio-group>
+            </ion-list>
+          </ion-label>
+        </ion-item>
+
+
+      </ion-col>
+
+      <!-- Content Column -->
+      <ion-col size="9">
+        <div style="display: flex; flex-wrap: wrap; ">
+
+          <ion-card *ngFor="let description of ReceivedCategoryData?.savedProduct"
+            style="width: 300px; margin-bottom: 10px; margin-right: 2px;">
+            <img alt="image here" [src]="description.images[0]?.link" style="width: 100px;" />
+            <ion-card-header>
+              <ion-card-title>{{ description.name }}</ion-card-title>
+              <ion-card-title>{{ description.brand }}</ion-card-title>
+              <ion-card-subtitle>{{ description.price }}</ion-card-subtitle>
+            </ion-card-header>
+
+            <ion-card-content style="overflow: hidden;">
+              {{ description.description }}
+            </ion-card-content>
+          </ion-card>
+
+        </div>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+</ion-content>
