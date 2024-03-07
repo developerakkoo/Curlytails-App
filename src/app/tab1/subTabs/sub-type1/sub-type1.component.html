@@ -5,6 +5,24 @@
       <!-- Filter Options Column -->
       <ion-col size="3">
 
+        <!-- select product category  -->
+
+
+       <ion-item class="custom-list">
+        <ion-label>
+          <h5 slot="fixed">Select Product Category</h5>
+          <ion-list>
+            <ion-radio-group (ionChange)="selectproductCategory($event)">
+              <ion-item *ngFor="let product of SelectProductCategory">
+                <ion-radio justify="space-between"  [value]="product._id">{{product.name}}</ion-radio>
+              </ion-item>
+            </ion-radio-group>
+          </ion-list>
+        </ion-label>
+       </ion-item>
+          
+
+        <!-- radio buttons  -->
         <ion-item>
           <ion-label>
             <ion-range labelPlacement="start" label="Price" [pin]="true" (ionChange)="onIonChange($event)" [pinFormatter]="pinFormatter"></ion-range>
@@ -12,11 +30,11 @@
         </ion-item>
 
 
-        <ion-item *ngFor="let item of ReceivedFilterData | keyvalue: originalOrder">
+        <ion-item  *ngFor="let item of ReceivedFilterData | keyvalue: originalOrder">
           <ion-lable>
             <h5>{{item.key}}</h5>
             <ion-list>
-              <ion-radio-group (ionChange)="showselected(item.key,$event)">
+              <ion-radio-group [allowEmptySelection]="true" (ionChange)="showselected(item.key,$event)">
                 <ion-item *ngFor="let value of item.value">
                   <ion-radio justify="space-between" [value]="value">{{value}}</ion-radio>
                 </ion-item>
@@ -25,6 +43,7 @@
           </ion-lable>
 
         </ion-item>
+
         <!-- // static option for veg and nonveg  -->
         <ion-item>
           <ion-label>
@@ -63,5 +82,7 @@
       </ion-col>
     </ion-row>
   </ion-grid>
+
+  {{PageData}}
 
 </ion-content>

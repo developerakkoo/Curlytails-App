@@ -16,7 +16,8 @@ export class Tab1Page implements OnInit {
   BannerImg :any[] = []
   TrendingNow :any[] = []
   PetTypes: any[] = []
-  searchQuery:any
+  searchQuery:any;
+
 
   ngOnInit(): void {
    this.getTopBanner();   
@@ -28,6 +29,8 @@ export class Tab1Page implements OnInit {
   getTopBanner() {
     this.CommenService.getAllBanner().subscribe({
       next:(value:any) => {
+        console.log(value);
+        
        this.BannerImg = value.data
     
       }

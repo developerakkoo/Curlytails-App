@@ -2,9 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router'
 import { RangeCustomEvent } from '@ionic/angular';
 import { CommenServiceService } from '../../../services/Commen-service.service'
-import { map, of, switchMap } from 'rxjs';
+import { exhaustMap, filter, map, of, switchMap } from 'rxjs';
 import { KeyValue } from '@angular/common';
-
+import { InfiniteScrollCustomEvent } from '@ionic/angular';
 
 
 
@@ -24,6 +24,11 @@ export class SubType1Component implements OnInit {
   params = ''
   ReceivedFilterData: any;
   ReceivedCategoryData: any;
+  ProductCategoryData: any;
+  SelectProductCategory: any;
+
+  AllFilterData:any
+
 
   selectedValues: { [key: string]: string } = {
     BreedSize: '',
@@ -31,7 +36,7 @@ export class SubType1Component implements OnInit {
     brands: '',
     flavor: '',
     vegNonveg: '',
-    categoryId : '',
+    categoryId: '',
     productCategoryId: '',
     lowestPrice: '0',
     upperPrice: '',
@@ -48,46 +53,99 @@ export class SubType1Component implements OnInit {
 
     })
     // call method
-    this.DisplaySelectedCategoryData()
-    this.getfilterselectedvalue()
+    this.DisplaySelectedCategoryData();
+    this.displaySelectedproductdata();
+    // console.log(this.AllFilterData);
+    
+    // this.getfilterselectedvalue()
 
   }
 
+  // below are onpage load methods 
   DisplaySelectedCategoryData() {
+
     if (this.params) {
-      this.service.getCategoryById(this.params).subscribe(res => {
+      this.service.getCategoryById(this.params).pipe(
+
+      ).subscribe(res => {
         // this.ReceivedFilterData.push(res.data)
         // this.ReceivedCategoryData.push(res) 
         this.ReceivedCategoryData = res
+        // console.log(res);
         this.ReceivedFilterData = this.ReceivedCategoryData.filterData
-        console.log(this.ReceivedFilterData);
+
       })
     }
   }
 
+  displaySelectedproductdata() {
+
+    this.service.getProductCategory(this.params).subscribe(res => {
+      this.ProductCategoryData = res
+      this.SelectProductCategory = this.ProductCategoryData.data
+      console.log(this.SelectProductCategory);
+
+    })
+  }
+
+  // onpage load methods ends here 
+
+  // below is method is used to iterate object with key, vlaue pair 
   originalOrder = (a: KeyValue<number, string>, b: KeyValue<number, string>): number => {
     return 0;
   }
+
+  // below are price range methods 
+  onIonChange(ev: Event) {
+    const value:any = (ev as RangeCustomEvent).detail.value;
+    const multipliedValue = value * 100; // Multiply by 100
+
+    // console.log('ionChange emitted value:', value);
+    // console.log('Multiplied value:', multipliedValue);
+    this.showselected('upperPrice', multipliedValue.toString())
+  }
+
+
+  pinFormatter(value: number) {
+    return `${value * 100}`;
+  }
+  // above are price range methods 
+
+
+
+  // below are filter methods 
 
   getfilterselectedvalue() {
     console.log(this.selectedValues);
   }
 
-  onIonChange(ev: Event) {
-    console.log('ionChange emitted value:', (ev as RangeCustomEvent).detail.value);
-    this.selectedValues['upperPrice'] = (ev as RangeCustomEvent).detail.value.toString()
-  }
-  pinFormatter(value: number) {
-    return `${value*100}`;
+  selectproductCategory(event: any) {
+    const categoryId = event.detail.value;
+    console.log(categoryId);
+    this.showselected('productCategoryId', categoryId)
   }
 
   showselected(key: any, event: any) {
-    const selectedValue = event.detail.value;
-    this.selectedValues[key] = selectedValue;
+    if (typeof event === 'object') {
+      const selectedValue = event.detail.value;
+      this.selectedValues[key] = selectedValue;
+      // console.log(this.selectedValues);
+    } else {
+      this.selectedValues[key] = event;
+      // console.log(this.selectedValues);
+    }
 
-    console.log(this.selectedValues);
+     this.service.FilterProduct(this.selectedValues).subscribe( res => {
+      this.AllFilterData = res 
+    })
+
   }
 
+  
+    // show SelectProductCategory if filer data is null 
+    PageData(){
+      return this.AllFilterData ? this.AllFilterData : this.SelectProductCategory;
+    }
 
 
 

@@ -28,3 +28,9 @@ ion-radio.radio-checked::part(mark) {
 
   transform: rotate(45deg);
 }
+
+.custom-list {
+  height: 300px; /* Set the desired height */
+  overflow-y: auto; /* Add a vertical scrollbar when content exceeds height */
+}
+
