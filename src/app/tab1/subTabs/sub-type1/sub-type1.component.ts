@@ -20,8 +20,8 @@ import { InfiniteScrollCustomEvent } from '@ionic/angular';
 export class SubType1Component implements OnInit {
 
 
-
-  params = ''
+  categoryName = '';
+  params = '';
   ReceivedFilterData: any;
   ReceivedCategoryData: any;
   ProductCategoryData: any;
@@ -39,7 +39,7 @@ export class SubType1Component implements OnInit {
     categoryId: '',
     productCategoryId: '',
     lowestPrice: '0',
-    upperPrice: '',
+    upperPrice: '1000',
   }
   // Object to store selected values
 
@@ -48,6 +48,7 @@ export class SubType1Component implements OnInit {
   ngOnInit() {
     this.route.params.subscribe(params => {
       this.params = params['data'];
+      this.categoryName = params['name'];
       this.selectedValues['categoryId'] = this.params
       console.log(this.params);
 
@@ -55,7 +56,9 @@ export class SubType1Component implements OnInit {
     // call method
     this.DisplaySelectedCategoryData();
     this.displaySelectedproductdata();
-    // console.log(this.AllFilterData);
+    this.showselected;
+    this. HitFilterData();
+    console.log(this.selectedValues['upperPrice']);
     
     // this.getfilterselectedvalue()
 
@@ -101,7 +104,7 @@ export class SubType1Component implements OnInit {
     const multipliedValue = value * 100; // Multiply by 100
 
     // console.log('ionChange emitted value:', value);
-    // console.log('Multiplied value:', multipliedValue);
+    console.log('Multiplied value:', multipliedValue);
     this.showselected('upperPrice', multipliedValue.toString())
   }
 
@@ -134,19 +137,17 @@ export class SubType1Component implements OnInit {
       this.selectedValues[key] = event;
       // console.log(this.selectedValues);
     }
-
-     this.service.FilterProduct(this.selectedValues).subscribe( res => {
-      this.AllFilterData = res 
-    })
-
+       this. HitFilterData();
   }
 
   
-    // show SelectProductCategory if filer data is null 
-    PageData(){
-      return this.AllFilterData ? this.AllFilterData : this.SelectProductCategory;
-    }
+  HitFilterData (){
+    this.service.FilterProduct(this.selectedValues).subscribe((res: {data? : any[] }) => {
+      this.AllFilterData = res.data;
+      console.log(this.AllFilterData);
+    })
 
+  }
 
 
 }

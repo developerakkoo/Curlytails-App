@@ -53,7 +53,7 @@ export class CommenServiceService {
   }
 
   // After clicking of specific category in browse pet types
-  getCategoryById(Id: any){
+  getCategoryById(Id: any) {
     return this.http.get(`${environment.API_URL}/get/product/categoryId/${Id}`, { headers: this.header }).pipe(
       catchError((err) => {
         return this.errorService.handleError(err);
@@ -62,9 +62,9 @@ export class CommenServiceService {
   }
 
   // filter data on product category basis 
-  getProductCategory(productId:any){
-    console.log("product id here --------->"+productId);
-    
+  getProductCategory(productId: any) {
+    console.log("product id here --------->" + productId);
+
     return this.http.get(`${environment.API_URL}/get/productCategory/category/${productId}`, { headers: this.header }).pipe(
       catchError((err) => {
         return this.errorService.handleError(err);
@@ -82,8 +82,8 @@ export class CommenServiceService {
   }
 
   FilterProduct(data: any) {
- 
-    let { 
+
+    let {
       BreedSize,
       LifeStage,
       brands,
@@ -94,18 +94,12 @@ export class CommenServiceService {
       lowestPrice,
       upperPrice } = data
 
-      console.log( "filter service hit.."+
-       BreedSize,
-      LifeStage,
-      brands,
-      flavor,
-      vegNonveg,
-      categoryId,
-      productCategoryId,
-      lowestPrice, categoryId, productCategoryId);
-      
+    // console.log("filter service hit.." +
+    //   upperPrice
+    //   );
 
-    return this.http.get(`${environment.API_URL}/filter/product/${categoryId}?brand=${brands}&flavor=${flavor}&lifeStage=${LifeStage}&breedSize=${BreedSize}&vegNonVeg=${vegNonveg}&productCategoryId=${productCategoryId}&lowerPrice=${lowestPrice}&upperPrice=${upperPrice}`)
+
+    return this.http.get(`${environment.API_URL}/filter/product/${categoryId}?brand=${brands}&flavor=${flavor}&lifeStage=${LifeStage}&breedSize=${BreedSize}&vegNonVeg=${vegNonveg}&productCategoryId=${productCategoryId}&lowerPrice=${0}&upperPrice=${upperPrice}`)
   }
 
 }

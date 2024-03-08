@@ -55,9 +55,9 @@ export class Tab1Page implements OnInit {
   getAllcategory(){
     this.CommenService.getAllCategory().subscribe({
       next:(value:any) => {
-        // console.log(value);
+        // console.log("pet types--->"+ JSON.stringify(value));
         this.PetTypes = value.data
-        console.log(this.PetTypes);
+        // console.log("Pet types--->"+this.PetTypes);
         
       }
     })
@@ -65,12 +65,12 @@ export class Tab1Page implements OnInit {
 
    // After clicking of specific category in browse pet types
   getProductById(id:any){
-    console.log(id);
+    // console.log(id);
     
     this.CommenService.getCategoryById(id).subscribe({
       next:(value:any) => {
-        console.log("GET CATEGORY BY ID");
-        console.log(value);
+        // console.log("GET CATEGORY BY ID");
+        // console.log(value);
         
       }
     })
@@ -80,16 +80,20 @@ export class Tab1Page implements OnInit {
     // console.log(value);
      this.CommenService.SearchProduct(value).subscribe({
       next:(value:any) => {
-        console.log(value);
+        // console.log(value);
         
       }
      })
   }
 
-  navigateToPage2(id:any) {
+  navigateToPage2(id:any, name:any) {
     // Navigate to Page 2 with a parameter
-    console.log(id);
-    this.router.navigate(['/subType', {data: id}]); // 123 is an example parameter
+    console.log(id, name);
+    this.router.navigate(['/category', {data: id, name: name}]); // 123 is an example parameter
+  }
+
+  navigateToCategoryPage() {
+    this.router.navigate(['/tabs/tab2']); // Navigate to the category page
   }
 
 }

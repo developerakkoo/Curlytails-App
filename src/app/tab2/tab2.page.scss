@@ -80,8 +80,8 @@ align-items: flex-start;
   
 
   .categoryWrapper{
-    width: 170px;
-height: 180px;
+    width: 200px;
+height: max-content;
 border-radius: 17px;
 background: rgba(248,164,76,10%);
 border:1px solid rgba(248,164,76,30%);
@@ -92,7 +92,7 @@ align-items: center;
 justify-content: space-between;
 font-size: 16px;
 font-weight: 500;
-
+  cursor: pointer;
   }
 
 

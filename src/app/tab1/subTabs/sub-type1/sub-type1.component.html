@@ -1,3 +1,13 @@
+
+<ion-header [translucent]="true" class="ion-no-border">
+  <ion-toolbar>
+    <ion-title>Category {{categoryName}} </ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="tabs/tab1"></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
 <ion-content>
 
   <ion-grid>
@@ -7,30 +17,39 @@
 
         <!-- select product category  -->
 
+        <ion-item >
+          <ion-select label="Select Product Category" >
+            <ion-select-optgroup (ionChange)="selectproductCategory($event)">
+            <ion-select-option *ngFor="let product of SelectProductCategory" [value]="product._id">{{product.name}}</ion-select-option>
+          </ion-select-optgroup>
+          </ion-select>
+        </ion-item>
 
-       <ion-item class="custom-list">
-        <ion-label>
-          <h5 slot="fixed">Select Product Category</h5>
-          <ion-list>
-            <ion-radio-group (ionChange)="selectproductCategory($event)">
-              <ion-item *ngFor="let product of SelectProductCategory">
-                <ion-radio justify="space-between"  [value]="product._id">{{product.name}}</ion-radio>
-              </ion-item>
-            </ion-radio-group>
-          </ion-list>
-        </ion-label>
-       </ion-item>
-          
+        <!-- <ion-item class="custom-list">
+          <ion-label>
+            <h2 slot="fixed">Select Product Category</h2>
+            <ion-list>
+              <ion-radio-group (ionChange)="selectproductCategory($event)">
+                <ion-item *ngFor="let product of SelectProductCategory">
+                  <ion-radio justify="space-between" [value]="product._id">{{product.name}}</ion-radio>
+                </ion-item>
+              </ion-radio-group>
+            </ion-list>
+          </ion-label>
+        </ion-item> -->
+
 
         <!-- radio buttons  -->
         <ion-item>
           <ion-label>
-            <ion-range labelPlacement="start" label="Price" [pin]="true" (ionChange)="onIonChange($event)" [pinFormatter]="pinFormatter"></ion-range>
+            <ion-range labelPlacement="start" label="Price" [value]="100" [pin]="true" (ionChange)="onIonChange($event)" [pinFormatter]="pinFormatter">
+            </ion-range>
+           <h6> {{ ' Price Between - 0 - ' +  selectedValues['upperPrice'] + ' Rs ' }} </h6>
           </ion-label>
         </ion-item>
 
 
-        <ion-item  *ngFor="let item of ReceivedFilterData | keyvalue: originalOrder">
+        <!-- <ion-item *ngFor="let item of ReceivedFilterData | keyvalue: originalOrder">
           <ion-lable>
             <h5>{{item.key}}</h5>
             <ion-list>
@@ -42,6 +61,16 @@
             </ion-list>
           </ion-lable>
 
+        </ion-item> -->
+
+     
+
+        <ion-item *ngFor="let item of ReceivedFilterData | keyvalue: originalOrder">
+          <ion-select [label]="item.key" placeholder="Select">
+            <ion-select-optgroup (ionChange)="showselected(item.key,$event)">
+            <ion-select-option *ngFor="let value of item.value" [value]="value">{{value}}</ion-select-option>
+          </ion-select-optgroup>
+          </ion-select>
         </ion-item>
 
         <!-- // static option for veg and nonveg  -->
@@ -62,7 +91,8 @@
 
       <!-- Content Column -->
       <ion-col size="9">
-        <div style="display: flex; flex-wrap: wrap; ">
+
+        <!-- <div style="display: flex; flex-wrap: wrap; ">
 
           <ion-card *ngFor="let description of ReceivedCategoryData?.savedProduct"
             style="width: 300px; margin-bottom: 10px; margin-right: 2px;">
@@ -77,12 +107,50 @@
               {{ description.description }}
             </ion-card-content>
           </ion-card>
+        </div> -->
 
-        </div>
+        <!-- <div class="card-container">
+        <ion-card color="light" class="custom-card" *ngFor="let description of AllFilterData">
+          <ion-thambnail>
+            <img [src]="description.images[0]?.link" class="imgclass" alt="">
+          </ion-thambnail>
+          <ion-card-header>
+            <ion-card-title>{{ description.name }}</ion-card-title>
+            <ion-card-subtitle>{{ description.brand }}</ion-card-subtitle>
+            <ion-card-subtitle>Rs.{{ description.price }}</ion-card-subtitle>
+          </ion-card-header>
+          <ion-card-content>
+               {{ description.description }}
+          </ion-card-content>
+        </ion-card>
+      </div> -->
+
+
+        <ion-content>
+          <ion-grid>
+            <ion-row>
+              <ion-col  size-md="4" size-sm="6" size="12" *ngFor="let description of AllFilterData">
+                <ion-card color="light" class="custom-card">
+                  <ion-thambnail>
+                    <img [src]="description.images[0]?.link" class="imgclass" alt="">
+                  </ion-thambnail>
+                  <ion-card-header>
+                    <ion-card-title>{{ description.name }}</ion-card-title>
+                    <ion-card-subtitle>{{ description.brand }}</ion-card-subtitle>
+                    <ion-card-subtitle>Rs.{{ description.price }}</ion-card-subtitle>
+                  </ion-card-header>
+                  <ion-card-content>
+                    {{ description.description }}
+                  </ion-card-content>
+                </ion-card>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </ion-content>
+
       </ion-col>
     </ion-row>
   </ion-grid>
 
-  {{PageData}}
 
 </ion-content>
