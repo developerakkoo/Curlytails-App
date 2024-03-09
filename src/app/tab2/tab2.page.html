@@ -1,49 +1,65 @@
 <ion-header class="ion-no-border">
-  <ion-toolbar >
+  <ion-toolbar>
     <ion-title class="ion-text-center ion-margin-top">
       Explore Categories
     </ion-title>
-    <ion-searchbar style="
+ 
+    <!-- <ion-searchbar style="
      --box-shadow: none;
     width: 100vw;
     height: 90px;
     --background: #F2F3F2;
     padding: 25px;
-    " class="custom" #inputstring (input)="SearchMethod(inputstring.value)" placeholder="Search Product" animated="true">
-    </ion-searchbar>
+    " class="custom" #inputstring (input)="SearchMethod(inputstring.value)" placeholder="Search Product"
+      animated="true">
+    </ion-searchbar> -->
   </ion-toolbar>
 </ion-header>
 
 <ion-content class="ion-no-margin ion-no-padding">
   <div class="wrapper">
-    <div *ngFor="let item of categoryBadges;let i = index" class="badge" (click)="categorySelectEvent($event, i)">
-      <p (click)="SearchMethod(item.name)"> {{item.name | titlecase}} </p>
+    <div *ngFor="let item of PetTypes;let i = index" style="cursor: pointer;" class="badge" (click)="categorySelectEvent($event, i)">
+      <p (click)="SearchMethod(item._id)"> {{item.name | titlecase}} </p>
     </div>
   </div>
 
   <ion-grid fixed>
-    <ion-row >
+    <ion-row *ngIf="test">
+      <div style="width: 100%; display: flex; justify-content: center;">
+      <ion-item>
+        <ion-label>Searching</ion-label>
+        <ion-spinner name="circles"></ion-spinner>
+      </ion-item>
+    </div>
+    </ion-row>
+
+    <ion-row>
       <ion-item *ngIf="ShowMessage" style="margin-inline: auto;">
-        <ion-label><h1>Search Result is Empty</h1></ion-label>
-       </ion-item>
+        <ion-label>
+          <h1>No relavent search Found</h1>
+        </ion-label>
+      </ion-item>
     </ion-row>
 
     <ion-row *ngIf="!ShowOnPageData && !ShowMessage">
       <ion-col size="4" *ngFor="let searchdata of SearchResult">
-        <div class="categoryWrapper animate__animated animate__bounceIn" >
-          <img [src]="searchdata.images[0]?.link"  alt="" srcset="">
-          <ion-text class="ion-text-center">
-            <h6>{{searchdata.brand}}</h6>
-            <h6>{{searchdata.name}}</h6>
+        <div class="categoryWrapper animate__animated animate__bounceIn" (click)="navigateToPage2(searchdata.CategoryId._id)">
+          <img src="assets/dog-treet.svg" alt="" srcset="">
+          <ion-text class="ion-text-center" >
+            <h6>{{searchdata.CategoryId.name}}</h6>
+            <h6>{{searchdata.description }}</h6>
           </ion-text>
+          <!-- <br />    
+          <ion-button  size='small' color="light"> <ion-icon size="small" name="cart" aria-hidden="true"></ion-icon></ion-button>
+          <ion-button size='small' color="light" ><ion-icon size="samll" name="heart" color="" aria-hidden="true"></ion-icon> </ion-button> -->
         </div>
       </ion-col>
     </ion-row>
 
     <ion-row *ngIf="ShowOnPageData">
-      <ion-col  size="4" *ngFor="let category of AllSubCategoryData; let i = index">
-        <div class="categoryWrapper animate__animated animate__bounceIn"  (click)="openSubCategory(i, category._id)" >
-          <img src="assets/dog-treet.svg"  alt="" srcset="">
+      <ion-col size="4" *ngFor="let category of AllSubCategoryData; let i = index">
+        <div class="categoryWrapper animate__animated animate__bounceIn" (click)="openSubCategory(i, category._id)">
+          <img src="assets/dog-treet.svg" alt="" srcset="">
           <ion-text class="ion-text-center">
             <h6>{{category.name}}</h6>
             <h6>{{category.description}}</h6>
@@ -103,4 +119,3 @@
     </ion-row> -->
   </ion-grid>
 </ion-content>
-        

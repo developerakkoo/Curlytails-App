@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { IonicSlides } from '@ionic/angular';
 import { CommenServiceService } from '../services/Commen-service.service'
 import { Router } from '@angular/router'
+import { tap } from 'rxjs';
 
 
 @Component({
@@ -18,6 +19,7 @@ export class Tab1Page implements OnInit {
   PetTypes: any[] = []
   searchQuery:any;
 
+  laodingBar = false
 
   ngOnInit(): void {
    this.getTopBanner();   
@@ -30,10 +32,9 @@ export class Tab1Page implements OnInit {
     this.CommenService.getAllBanner().subscribe({
       next:(value:any) => {
         console.log(value);
-        
        this.BannerImg = value.data
-    
       }
+
     })
   }
 

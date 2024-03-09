@@ -44,7 +44,6 @@ export class CommenServiceService {
 
   // Brows pet types
   getAllCategory(): Observable<any> {
-
     return this.http.get(`${environment.API_URL}/getAll/category`, { headers: this.header }).pipe(
       catchError((err) => {
         return this.errorService.handleError(err);

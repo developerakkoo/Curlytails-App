@@ -9,10 +9,6 @@ const routes: Routes = [
   {
     path: 'category',
     loadChildren: () => import('./category/category.module').then( m => m.CategoryPageModule)
-  },
-  {
-    path:'subType',
-    loadChildren: () => import('./tab1/subTabs/sub-type1/sub-type1.module').then(m => m.SubType1Module)
   }
  
 ];

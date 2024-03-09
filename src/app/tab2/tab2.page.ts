@@ -2,14 +2,15 @@ import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { GetCategoryDataService } from '../services/get-category-data.service'
 import { SearchserviceService } from '../services/searchservice.service'
-import { delay, tap } from 'rxjs';
+import { delay, exhaustMap, map, switchMap, tap } from 'rxjs';
+import { CommenServiceService } from '../services/Commen-service.service'
 
 @Component({
   selector: 'app-tab2',
   templateUrl: 'tab2.page.html',
   styleUrls: ['tab2.page.scss']
 })
-export class Tab2Page implements OnInit, AfterViewInit  {
+export class Tab2Page implements OnInit, AfterViewInit {
 
 
   categoryBadges: any[] = [
@@ -50,26 +51,38 @@ export class Tab2Page implements OnInit, AfterViewInit  {
 
 
   ]
+  appenddata= {
+   name: "All"
+  };
+  PetTypes: any[] = [];
   AllSubCategoryData: any;
-  SearchResult:any;
-  ShowMessage = false
-  ShowOnPageData = true
+  SearchResult: any;
+  ShowMessage = false;
+  ShowOnPageData = true;
+  test = false
 
-  constructor(private router: Router, 
+  constructor(private router: Router,
+    // below service is to get all different categores dog, cat fish
+    private getCategoryService: CommenServiceService,
+    // below service is to get all subcategory of category 
     private getAllCategoryService: GetCategoryDataService,
-    private searchservice: SearchserviceService
-    ) { }
+    private searchservice: SearchserviceService,
+  ) { }
 
   ngOnInit(): void {
     this.getAllSubCategory();
- 
+    console.log(this.test);
+    this.getAllcategory();
+    
+
   }
 
   ngAfterViewInit(): void {
     this.selectTagonload(0);
   }
 
-  selectTagonload(i:any){
+  selectTagonload(i: any) {
+    console.log("selectTogoload hit ---"+ i);
     var element = document.getElementsByClassName('badge')[i];
     element.classList.toggle("active");
   }
@@ -89,89 +102,97 @@ export class Tab2Page implements OnInit, AfterViewInit  {
 
 
 
-  openSubCategory(ev: any, id:any) {
+  openSubCategory(ev: any, id: any) {
     console.log(ev, id);
     var el = document.getElementsByClassName('categoryWrapper')[ev];
     el?.classList.toggle("slide-bck-center");
     setTimeout(() => {
-      this.router.navigate(['category',{data:id}])
-    },1000)
+      this.router.navigate(['category', { data: id }])
+    }, 1000)
     // this.router.navigate(['category',{data:id}])
   }
 
-//   tap( res => {
-//     if(Object.keys(res).length === 0 ){
-//       this.ShowMessage = true
-//    }else{
-//     this.ShowMessage = false
-//    }
-//   // console.log("result here "+res);
-//   })
-// ).subscribe(
+  // brows pet types
+  getAllcategory() {
+    this.getCategoryService.getAllCategory().pipe(
+      map(res => {
+        const modifiedresponse = [this.appenddata, ...res.data];
+        return modifiedresponse
+      })
+    ).subscribe(modifiedresponse => {
+      // console.log("pet types--->"+ JSON.stringify(value));
+      this.PetTypes = modifiedresponse
+      // console.log("Pet types--->"+ this.PetTypes);
+    })
+  }
 
-  // SearchMethod(query:any){
-  
-  //  let searchdata =  this.searchservice.AllSearch(query).subscribe((res :{searchData?:any[]}) => {
-  //     this.SearchResult = res.searchData
-  //      if(this.SearchResult.length === 0){
-  //         this.ShowMessage = true
-  //      }else{
-  //       this.ShowMessage = false
-  //      }
-  //     console.log(this.SearchResult);
-  //   })
-
-  // }
 
   getAllSubCategory() {
     this.getAllCategoryService.getAllsubCategory().subscribe((res: { data?: any[] }) => {
       console.log(res);
       this.AllSubCategoryData = res.data
+      console.log(this.AllSubCategoryData);
+
       this.ShowOnPageData = true;
     })
   }
 
   // Call this method when performing a search
-SearchMethod(query: any) {
-  if (query ) {
-   
-      this.searchservice.AllSearch(query).pipe(delay(1000)).subscribe((res: { searchData?: any[] }) => {
-        this.SearchResult = res.searchData;
+  SearchMethod(query: any) {
+    if (query && query !== 'All') {
+      this.getAllCategoryService.getSubCategoryByCategoryId(query).pipe(
+        // using tap method show loading untill data is found 
+        tap(res => {
+          this.test = true
+          this.ShowMessage = false;
+          console.log("in tap method -->" + this.test);
+
+        }),
+        delay(1000)
+      ).subscribe((res: { data?: any[] }) => {
+        this.SearchResult = res.data;
         // If search results are found, display them and hide on-page data
+        // console.log(this.SearchResult);
+        
         if (this.SearchResult.length > 0) {
           this.ShowOnPageData = false;
           this.ShowMessage = false;
+          this.test = false;
+          console.log("data found ----> " + this.test);
         } else {
           // If no search results are found, display "Data not found" message
           this.ShowMessage = true;
+          this.ShowOnPageData = false;
+          this.test = false;
         }
         console.log(this.SearchResult);
       });
 
-  } else {
-    // If search query is cleared, display on-page data
-    this.ShowOnPageData = true;
-    this.ShowMessage = false;
+    } else {
+      // If search query is cleared, display on-page data
+      this.ShowOnPageData = true;
+      this.ShowMessage = false;
+      this.test = false;
+    }
   }
-}
 
 
 
 
-  navigateToPage2(id:any) {
+  navigateToPage2(id: any) {
     // Navigate to Page 2 with a parameter
     console.log(id);
-    // this.router.navigate(['/category', {data: id}]); // 123 is an example parameter
+    this.router.navigate(['/category', {data: id}]); // 123 is an example parameter
   }
 
   // getSubCategoryByCategoryId(id:any){
   //   this.getAllCategoryService.getSubCategoryByCategoryId(id).subscribe(res => {
   //     console.log(res);
-      
+
   //   })
   // }
 
- 
+
 
 
 }

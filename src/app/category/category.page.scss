@@ -25,7 +25,21 @@ ion-searchbar.custom {
   }
 
 
+  ion-icon{
+    // background-color: white;
+    margin: 5px;
+    text-decoration: underline;
+    margin-right: 10px;
+    color: lightcoral;
+    
+    //  color: red;
+  }
+
   /*Custom Div for Badges Styling Start */
+
+  .custom-card {
+      height: 500px;
+  }
 
   .wrapper {
     height: 9vh;

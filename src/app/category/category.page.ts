@@ -3,7 +3,7 @@ import { ActivatedRoute } from '@angular/router'
 import { RangeCustomEvent } from '@ionic/angular';
 import { CommenServiceService } from '../services/Commen-service.service'
 import { KeyValue } from '@angular/common';
-
+import { delay, tap } from 'rxjs';
 
 @Component({
   selector: 'app-category',
@@ -12,9 +12,9 @@ import { KeyValue } from '@angular/common';
 })
 export class CategoryPage implements OnInit {
 
-  categoryBadges:any[] = [
+  categoryBadges: any[] = [
     {
-      name:'All',
+      name: 'All',
       isSelected: true
     },
     {
@@ -23,28 +23,28 @@ export class CategoryPage implements OnInit {
 
     },
     {
-      name:'Treet',
+      name: 'Treet',
       isSelected: false
- 
+
     },
     {
       name: 'Toys',
       isSelected: false
 
     },
-   
+
     {
       name: 'Grooming',
       isSelected: false
 
     },
     {
-      name:'Bowls',
+      name: 'Bowls',
       isSelected: false
 
     }
 
-    
+
   ]
 
   categoryName = '';
@@ -53,9 +53,12 @@ export class CategoryPage implements OnInit {
   ReceivedCategoryData: any;
   ProductCategoryData: any;
   SelectProductCategory: any;
-
-  AllFilterData:any
-
+  ShowMessage = false;
+  loadbar = false
+  ShowOnPageData = true
+  AllFilterData: any
+  
+  initiallySelectedProductCategoryValue=''
 
   selectedValues: { [key: string]: string } = {
     BreedSize: '',
@@ -71,7 +74,10 @@ export class CategoryPage implements OnInit {
   // Object to store selected values
 
 
-  constructor(private route: ActivatedRoute, private service: CommenServiceService) { }
+  constructor(
+    private route: ActivatedRoute,
+    private service: CommenServiceService,
+  ) {  }
 
   ngOnInit() {
 
@@ -79,51 +85,49 @@ export class CategoryPage implements OnInit {
       this.params = params['data'];
       this.categoryName = params['name'];
       this.selectedValues['categoryId'] = this.params
-      console.log("this is param Id--->"+this.params);
+      console.log("this is param Id--->" + this.params);
 
     })
     // call method
     this.DisplaySelectedCategoryData();
     this.displaySelectedproductdata();
     this.showselected;
-    this. HitFilterData();
+    this.HitFilterData();
     console.log(this.selectedValues['upperPrice']);
-    
+
     // this.getfilterselectedvalue()
   }
 
 
-  categorySelectEvent(ev:any, i:any){
+  categorySelectEvent(ev: any, i: any) {
     console.log(ev);
     console.log(i);
     for (let index = 0; index < this.categoryBadges.length; index++) {
       var element = document.getElementsByClassName('badge')[index];
-    element.classList.remove("active");
-      
+      element.classList.remove("active");
+
     }
     var element = document.getElementsByClassName('badge')[i];
     element.classList.toggle("active");
-    
-    
+
+
   }
 
   // below are onpage load methods 
   DisplaySelectedCategoryData() {
 
     if (this.params) {
-      this.service.getCategoryById(this.params).pipe(
-
-      ).subscribe(res => {
+      this.service.getCategoryById(this.params).subscribe(res => {
         // this.ReceivedFilterData.push(res.data)
         // this.ReceivedCategoryData.push(res) 
         this.ReceivedCategoryData = res
-        // console.log(res);
+        console.log("onpage load data here -->" + res);
         this.ReceivedFilterData = this.ReceivedCategoryData.filterData
-
       })
     }
   }
 
+  // below method provids options to select product category 
   displaySelectedproductdata() {
 
     this.service.getProductCategory(this.params).subscribe(res => {
@@ -143,11 +147,12 @@ export class CategoryPage implements OnInit {
 
   // below are price range methods 
   onIonChange(ev: Event) {
-    const value:any = (ev as RangeCustomEvent).detail.value;
+    const value: any = (ev as RangeCustomEvent).detail.value;
     const multipliedValue = value * 100; // Multiply by 100
 
     // console.log('ionChange emitted value:', value);
     console.log('Multiplied value:', multipliedValue);
+    // below i have called  show selected as it assign the value to object that well be passed to servive http filter mehtod
     this.showselected('upperPrice', multipliedValue.toString())
   }
 
@@ -161,17 +166,22 @@ export class CategoryPage implements OnInit {
 
   // below are filter methods 
 
+  // just a console log method
   getfilterselectedvalue() {
     console.log(this.selectedValues);
   }
 
+
   selectproductCategory(event: any) {
     const categoryId = event.detail.value;
-    console.log(categoryId);
+    console.log("category Id here"+categoryId);
+    // below i have called  show selected as it assign the value to object that well be passed to servive http filter mehtod
     this.showselected('productCategoryId', categoryId)
   }
 
   showselected(key: any, event: any) {
+    console.log("selected mehod hit ....");
+
     if (typeof event === 'object') {
       const selectedValue = event.detail.value;
       this.selectedValues[key] = selectedValue;
@@ -180,16 +190,44 @@ export class CategoryPage implements OnInit {
       this.selectedValues[key] = event;
       // console.log(this.selectedValues);
     }
-       this. HitFilterData();
+    // below i have called  show filter method that initially takes all the
+    // values from this.selectedValues = [] and display data on dom
+    this.HitFilterData();
   }
 
-  
-  HitFilterData (){
-    this.service.FilterProduct(this.selectedValues).subscribe((res: {data? : any[] }) => {
-      this.AllFilterData = res.data;
-      console.log(this.AllFilterData);
-    })
 
+  HitFilterData() {
+    this.service.FilterProduct(this.selectedValues).pipe(
+      tap(res => {
+        this.loadbar = true,
+          this.ShowMessage = false;
+      })
+    ).subscribe(
+      (res: { data?: any[] }) => {
+        this.AllFilterData = res.data;
+
+        if (this.AllFilterData.length > 0) {
+          // this.ShowOnPageData = true;
+          this.ShowMessage = false;
+          this.loadbar = false;
+          console.log("data found ----> " + this.loadbar);
+        } else {
+          // If no search results are found, display "Data not found" message
+          // this.ShowOnPageData = false;
+          this.ShowMessage = true;
+          this.loadbar = false;
+        }
+
+        console.log(this.AllFilterData);
+      }
+    )
+
+  }
+
+  resetAll(){
+    console.log("reset done");
+    
+    this.initiallySelectedProductCategoryValue = '';
   }
 
 }
