@@ -1,0 +1,69 @@
+<ion-content>
+  <div class="flex-center">
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title>Register</ion-card-title>
+      </ion-card-header>
+
+      <ion-card-content>
+        <form [formGroup]="myForm" (ngSubmit)="onSubmit()">
+
+          <ion-input type="name" formControlName="name" fill="solid" label="Name" labelPlacement="floating"></ion-input>
+          <ion-item *ngIf="myForm.get('name')?.invalid && (myForm.get('name')?.dirty || myForm.get('name')?.touched)">
+          <ion-label>
+            <ion-note *ngIf="myForm.get('name')?.errors?.['required']">Please Enter your name</ion-note>
+          </ion-label>
+        </ion-item>
+
+          <br>
+          <ion-input type="email" formControlName="email" fill="solid" label="Email"
+            labelPlacement="floating"></ion-input>
+          <ion-item
+            *ngIf="myForm.get('email')?.invalid && (myForm.get('email')?.dirty || myForm.get('email')?.touched)">
+            <ion-label>
+              <ion-note *ngIf="myForm.get('email')?.errors?.['required']">Email required</ion-note>
+              <ion-note *ngIf="myForm.get('email')?.errors?.['email']">Invalid Email format</ion-note>
+            </ion-label>
+          </ion-item>
+
+          <br>
+          <ion-input type="text" formControlName="mobile" fill="solid" label="Number"
+            labelPlacement="floating"></ion-input>
+            <ion-item class=" w-max border text-sm font-small text-red-500"
+            *ngIf="myForm.get('mobile')?.invalid && (myForm.get('mobile')?.dirty || myForm.get('mobile')?.touched)">
+            <ion-label>
+              <ion-note *ngIf="myForm.get('mobile')?.errors?.['required']">Number is required</ion-note>
+              <ion-note *ngIf="myForm.get('mobile')?.errors?.['minlength']">Number is less then 10 digits.</ion-note>
+            </ion-label>
+          </ion-item>
+
+          <br>
+          <ion-input type="text" fill="solid" formControlName="address" label="Address"
+            labelPlacement="floating"></ion-input>
+            <ion-item *ngIf="myForm.get('address')?.invalid && (myForm.get('address')?.dirty || myForm.get('address')?.touched)">
+              <ion-label>
+                <ion-note *ngIf="myForm.get('address')?.errors?.['required']">Please Enter your Address</ion-note>
+              </ion-label>
+            </ion-item>
+
+          <br>
+          <ion-input type="password" fill="solid" formControlName="password" label="Password" labelPlacement="floating"
+           ></ion-input>
+          <ion-item class=" w-max border text-sm font-small text-red-500"
+            *ngIf="myForm.get('password')?.invalid && (myForm.get('password')?.dirty || myForm.get('password')?.touched)">
+            <ion-label>
+              <ion-note *ngIf="myForm.get('password')?.errors?.['required']">Password is required</ion-note>
+              <ion-note *ngIf="myForm.get('password')?.errors?.['minlength']">Password must be at least 8 characters
+                long</ion-note>
+            </ion-label>
+          </ion-item>
+
+          <br>
+          <ion-button type="submit" size="full" href="/register">Register</ion-button>
+          <ion-button size="full" fill="clear">Already Registered?</ion-button>
+        </form>
+      </ion-card-content>
+    </ion-card>
+  </div>
+
+</ion-content>

@@ -6,12 +6,6 @@ const routes: Routes = [
   {
     path: '',
     component: Tab1Page,
-    // children: [
-    //   {
-    //     path:'subType',
-    //     loadChildren: () => import('./subTabs/sub-type1/sub-type1.module').then(m => m.SubType1Module)
-    //   }
-    // ]
   }
 ];
 

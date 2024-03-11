@@ -23,7 +23,14 @@ const routes: Routes = [
         path: 'profile',
         loadChildren: () => import('../profile/profile.module').then( m => m.ProfilePageModule)
       },
-      
+      {
+        path:'login',
+        loadChildren: () => import('../profile/login/login.module').then(m => m.LoginPageModule)
+      },
+      {
+        path: 'register',
+        loadChildren: () => import('../profile/register/register.module').then( m => m.RegisterPageModule)
+      },
       {
         path: '',
         redirectTo: '/tabs/tab1',

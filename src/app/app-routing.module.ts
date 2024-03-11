@@ -9,7 +9,15 @@ const routes: Routes = [
   {
     path: 'category',
     loadChildren: () => import('./category/category.module').then( m => m.CategoryPageModule)
-  }
+  },
+  {
+    path:'login',
+    loadChildren: () => import('./profile/login/login.module').then(m => m.LoginPageModule)
+  },
+  {
+    path: 'register',
+    loadChildren: () => import('./profile/register/register.module').then( m => m.RegisterPageModule)
+  },
  
 ];
 @NgModule({
