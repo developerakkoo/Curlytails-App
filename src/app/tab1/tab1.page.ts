@@ -12,85 +12,100 @@ import { tap } from 'rxjs';
 })
 export class Tab1Page implements OnInit {
   swiperModules = [IonicSlides];
-  constructor(private CommenService: CommenServiceService, private router: Router) {}
+  constructor(private CommenService: CommenServiceService, private router: Router) { }
 
-  BannerImg :any[] = []
-  TrendingNow :any[] = []
+  BannerImg: any[] = []
+  TrendingNow: any[] = []
   PetTypes: any[] = []
-  searchQuery:any;
+  searchQuery: any;
 
   laodingBar = false
 
   ngOnInit(): void {
-   this.getTopBanner();   
-   this.getTrendingBanner();
-   this.getAllcategory();
+    this.getTopBanner();
+    this.getTrendingBanner();
+    this.getAllcategory();
   }
 
   // below method gets all the banner images on first page
   getTopBanner() {
-    this.CommenService.getAllBanner().subscribe({
-      next:(value:any) => {
-        console.log(value);
-       this.BannerImg = value.data
+    this.CommenService.getAllBanner().subscribe(
+      (res) => {
+        console.log(res);
+        this.BannerImg = res.data
+      },
+      (error) => {
+        console.log(error);
       }
-
-    })
+    )
   }
 
 
 
-  getTrendingBanner(){
+  getTrendingBanner() {
     this.CommenService.getTopCategory().subscribe({
-    next:(value:any) => {  
-          this.TrendingNow = value.data
-          // console.log("Trending Banner");
-          
-          // console.log(this.TrendingNow);
-          
+      next: (value: any) => {
+        this.TrendingNow = value.data
+      },
+      error: (err: any) => {
+        console.log(err);
+
       }
-    })
+    }
+    )
   }
- 
+
   // brows pet types
-  getAllcategory(){
+  getAllcategory() {
     this.CommenService.getAllCategory().subscribe({
-      next:(value:any) => {
+      next: (value: any) => {
         // console.log("pet types--->"+ JSON.stringify(value));
         this.PetTypes = value.data
         // console.log("Pet types--->"+this.PetTypes);
-        
+
+      },
+      error: (err: any) => {
+        console.log(err);
+
       }
     })
   }
 
-   // After clicking of specific category in browse pet types
-  getProductById(id:any){
+  // After clicking of specific category in browse pet types
+  getProductById(id: any) {
     // console.log(id);
-    
+
     this.CommenService.getCategoryById(id).subscribe({
-      next:(value:any) => {
+      next: (value: any) => {
         // console.log("GET CATEGORY BY ID");
         // console.log(value);
-        
+
+      },
+      error: (err: any) => {
+        console.log(err);
+
       }
     })
   }
 
-  SearchMethod(value:any){
+  SearchMethod(value: any) {
     // console.log(value);
-     this.CommenService.SearchProduct(value).subscribe({
-      next:(value:any) => {
+    this.CommenService.SearchProduct(value).subscribe({
+      next: (value: any) => {
         // console.log(value);
-        
+
+      },
+      error: (err: any) => {
+        console.log(err);
+
       }
-     })
+    })
   }
 
-  navigateToPage2(id:any, name:any) {
+  navigateToPage2(id: any, name: any) {
     // Navigate to Page 2 with a parameter
     console.log(id, name);
-    this.router.navigate(['/category', {data: id, name: name}]); // 123 is an example parameter
+    this.router.navigate(['/category', { data: id, name: name }]); // 123 is an example parameter
   }
 
   navigateToCategoryPage() {

@@ -18,14 +18,9 @@ export class CommenServiceService {
   //   'x-access-token':'Access-Control-Allow-Methods'
   // })
 
-  header = new HttpHeaders({
-    'content-Type': 'application/json',
-    'x-access-token': "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NWUyY2EyZWI1YTI2NzY1MTgwZWZiNWQiLCJlbWFpbCI6InRlc3QhYWRtaW5AZ21haWwuY29tIiwiaWF0IjoxNzA5NTQxNzYwLCJleHAiOjE3MDk2MjgxNjB9.RdIADR36oNl7uNVFdKKi2qBDvr21pDcANKmMONuCRHA"
-  })
-
-  //homw page banner
+  //home page banner
   getAllBanner(): Observable<any> {
-    return this.http.get(`${environment.API_URL}/get-top/banner`, { headers: this.header }).pipe(
+    return this.http.get(`${environment.API_URL}/get-top/banner`).pipe(
       catchError((err) => {
         return this.errorService.handleError(err);
       })
@@ -35,7 +30,7 @@ export class CommenServiceService {
   // below banner images TRENDING NOW data
   getTopCategory(): Observable<any> {
 
-    return this.http.get(`${environment.API_URL}/get-Trending/Banner`, { headers: this.header }).pipe(
+    return this.http.get(`${environment.API_URL}/get-Trending/Banner`).pipe(
       catchError((err) => {
         return this.errorService.handleError(err);
       })
@@ -44,7 +39,7 @@ export class CommenServiceService {
 
   // Brows pet types
   getAllCategory(): Observable<any> {
-    return this.http.get(`${environment.API_URL}/getAll/category`, { headers: this.header }).pipe(
+    return this.http.get(`${environment.API_URL}/getAll/category`).pipe(
       catchError((err) => {
         return this.errorService.handleError(err);
       })
@@ -53,7 +48,7 @@ export class CommenServiceService {
 
   // After clicking of specific category in browse pet types
   getCategoryById(Id: any) {
-    return this.http.get(`${environment.API_URL}/get/product/categoryId/${Id}`, { headers: this.header }).pipe(
+    return this.http.get(`${environment.API_URL}/get/product/categoryId/${Id}`).pipe(
       catchError((err) => {
         return this.errorService.handleError(err);
       })
@@ -64,7 +59,7 @@ export class CommenServiceService {
   getProductCategory(productId: any) {
     console.log("product id here --------->" + productId);
 
-    return this.http.get(`${environment.API_URL}/get/productCategory/category/${productId}`, { headers: this.header }).pipe(
+    return this.http.get(`${environment.API_URL}/get/productCategory/category/${productId}`).pipe(
       catchError((err) => {
         return this.errorService.handleError(err);
       })
@@ -73,7 +68,7 @@ export class CommenServiceService {
 
   SearchProduct(query: any) {
     console.log("hii");
-    return this.http.get(`${environment.API_URL}/search/product?q=${query}`, { headers: this.header }).pipe(
+    return this.http.get(`${environment.API_URL}/search/product?q=${query}`).pipe(
       catchError((err) => {
         return this.errorService.handleError(err);
       })
