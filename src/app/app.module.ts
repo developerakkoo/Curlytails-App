@@ -19,5 +19,6 @@ import { Storage } from '@ionic/storage'
   imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, HttpClientModule, CommonModule, ReactiveFormsModule],
   providers: [ Storage, { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },{provide: HTTP_INTERCEPTORS, useClass:AuthInterceptorsService, multi: true}],
   bootstrap: [AppComponent],
+  schemas:[ CUSTOM_ELEMENTS_SCHEMA]
 })
 export class AppModule {}

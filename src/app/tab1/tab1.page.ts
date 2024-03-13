@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,  CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { IonicSlides } from '@ionic/angular';
 import { CommenServiceService } from '../services/Commen-service.service'
 import { Router } from '@angular/router'
@@ -8,10 +8,13 @@ import { tap } from 'rxjs';
 @Component({
   selector: 'app-tab1',
   templateUrl: 'tab1.page.html',
-  styleUrls: ['tab1.page.scss']
+  styleUrls: ['tab1.page.scss'],
+  
 })
 export class Tab1Page implements OnInit {
   swiperModules = [IonicSlides];
+
+
   constructor(private CommenService: CommenServiceService, private router: Router) { }
 
   BannerImg: any[] = []
@@ -20,6 +23,12 @@ export class Tab1Page implements OnInit {
   searchQuery: any;
 
   laodingBar = false
+
+  breakpoints = {
+    640: { slidesPerView: 1, spaceBetween: 20 },
+    768: { slidesPerView: 2, spaceBetween: 40 },
+    1024: { slidesPerView: 3, spaceBetween: 50 },
+  };
 
   ngOnInit(): void {
     this.getTopBanner();

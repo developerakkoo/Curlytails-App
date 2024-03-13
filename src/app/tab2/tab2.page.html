@@ -42,7 +42,7 @@
     </ion-row>
 
     <ion-row *ngIf="!ShowOnPageData && !ShowMessage">
-      <ion-col size="4" *ngFor="let searchdata of SearchResult">
+      <ion-col size-sm="12" *ngFor="let searchdata of SearchResult">
         <div class="categoryWrapper animate__animated animate__bounceIn" (click)="navigateToPage2(searchdata.CategoryId._id)">
           <img src="assets/dog-treet.svg" alt="" srcset="">
           <ion-text class="ion-text-center" >
@@ -57,13 +57,13 @@
     </ion-row>
 
     <ion-row *ngIf="ShowOnPageData">
-      <ion-col size="4" *ngFor="let category of AllSubCategoryData; let i = index">
-        <div class="categoryWrapper animate__animated animate__bounceIn" (click)="openSubCategory(i, category._id)">
-          <img src="assets/dog-treet.svg" alt="" srcset="">
-          <ion-text class="ion-text-center">
-            <h6>{{category.name}}</h6>
-            <h6>{{category.description}}</h6>
-          </ion-text>
+      <ion-col size="12"  size-lg="4" size-md="6"  *ngFor="let category of AllSubCategoryData; let i = index">
+        <div class="categoryWrapper animate__animated animate__bounceIn"  (click)="openSubCategory(i, category._id)">
+          <img src="assets/dog-treet.svg" alt="" style="object-fit: cover; width: 100%; height: 80%;"  srcset="">
+              <ion-text class="ion-text-center">
+                <ion-text>{{category.name}}</ion-text> <br>
+                <ion-note>{{category.description}} </ion-note>
+              </ion-text>
         </div>
       </ion-col>
     </ion-row>
