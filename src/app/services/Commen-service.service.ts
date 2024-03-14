@@ -88,9 +88,9 @@ export class CommenServiceService {
       lowestPrice,
       upperPrice } = data
 
-    // console.log("filter service hit.." +
-    //   upperPrice
-    //   );
+    console.log("filter service hit.." +
+      upperPrice
+      );
 
 
     return this.http.get(`${environment.API_URL}/filter/product/${categoryId}?brand=${brands}&flavor=${flavor}&lifeStage=${LifeStage}&breedSize=${BreedSize}&vegNonVeg=${vegNonveg}&productCategoryId=${productCategoryId}&lowerPrice=${0}&upperPrice=${upperPrice}`)

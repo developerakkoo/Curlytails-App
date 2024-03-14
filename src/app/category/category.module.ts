@@ -7,6 +7,7 @@ import { IonicModule } from '@ionic/angular';
 import { CategoryPageRoutingModule } from './category-routing.module';
 
 import { CategoryPage } from './category.page';
+import { FilterComponent} from '../components/FilterComonent/filter/filter.component'
 
 @NgModule({
   imports: [
@@ -16,6 +17,6 @@ import { CategoryPage } from './category.page';
     CategoryPageRoutingModule
   ],
   schemas:[CUSTOM_ELEMENTS_SCHEMA],
-  declarations: [CategoryPage]
+  declarations: [CategoryPage ,FilterComponent]
 })
 export class CategoryPageModule {}

@@ -1,16 +1,21 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { ActivatedRoute } from '@angular/router'
 import { RangeCustomEvent } from '@ionic/angular';
 import { CommenServiceService } from '../services/Commen-service.service'
 import { KeyValue } from '@angular/common';
-import { delay, tap } from 'rxjs';
+import { delay, of, tap, toArray } from 'rxjs';
+
 
 @Component({
   selector: 'app-category',
   templateUrl: './category.page.html',
   styleUrls: ['./category.page.scss'],
 })
-export class CategoryPage implements OnInit {
+export class CategoryPage implements OnInit, OnChanges {
+
+
+  @Input() initialData!: any[];
+  sendata: any[] = [];
 
   categoryBadges: any[] = [
     {
@@ -56,9 +61,9 @@ export class CategoryPage implements OnInit {
   ShowMessage = false;
   loadbar = false
   ShowOnPageData = true
-  AllFilterData: any
-  
-  initiallySelectedProductCategoryValue=''
+  AllFilterData: any;
+
+  initiallySelectedProductCategoryValue = ''
 
   selectedValues: { [key: string]: string } = {
     BreedSize: '',
@@ -77,7 +82,8 @@ export class CategoryPage implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private service: CommenServiceService,
-  ) {  }
+  ) { }
+
 
   ngOnInit() {
 
@@ -92,10 +98,15 @@ export class CategoryPage implements OnInit {
     this.DisplaySelectedCategoryData();
     this.displaySelectedproductdata();
     this.showselected;
-    this.HitFilterData();
+    // this.HitFilterData();    
     console.log(this.selectedValues['upperPrice']);
 
     // this.getfilterselectedvalue()
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+      console.log("changes here---->");
+      console.log(changes['AllFilterData'].firstChange);
   }
 
 
@@ -121,7 +132,7 @@ export class CategoryPage implements OnInit {
         // this.ReceivedFilterData.push(res.data)
         // this.ReceivedCategoryData.push(res) 
         this.ReceivedCategoryData = res
-        console.log("onpage load data here -->" + res);
+        // console.log("onpage load data here -->" + res);
         this.ReceivedFilterData = this.ReceivedCategoryData.filterData
       })
     }
@@ -174,7 +185,7 @@ export class CategoryPage implements OnInit {
 
   selectproductCategory(event: any) {
     const categoryId = event.detail.value;
-    console.log("category Id here"+categoryId);
+    console.log("category Id here" + categoryId);
     // below i have called  show selected as it assign the value to object that well be passed to servive http filter mehtod
     this.showselected('productCategoryId', categoryId)
   }
@@ -192,41 +203,102 @@ export class CategoryPage implements OnInit {
     }
     // below i have called  show filter method that initially takes all the
     // values from this.selectedValues = [] and display data on dom
-    this.HitFilterData();
+    // this.HitFilterData();
   }
 
 
-  HitFilterData() {
-    this.service.FilterProduct(this.selectedValues).pipe(
-      tap(res => {
-        this.loadbar = true,
-          this.ShowMessage = false;
-      })
-    ).subscribe(
-      (res: { data?: any[] }) => {
-        this.AllFilterData = res.data;
+  // HitFilterData() {
+  //   this.service.FilterProduct(this.selectedValues).pipe(
+  //     tap(res => {
+  //       this.loadbar = true,
+  //         this.ShowMessage = false;
+  //     })
+  //   ).subscribe(
+  //     (res: { data?: any[] }) => {
+  //       this.AllFilterData = res.data;
 
-        if (this.AllFilterData.length > 0) {
-          // this.ShowOnPageData = true;
-          this.ShowMessage = false;
-          this.loadbar = false;
-          console.log("data found ----> " + this.loadbar);
-        } else {
-          // If no search results are found, display "Data not found" message
-          // this.ShowOnPageData = false;
-          this.ShowMessage = true;
-          this.loadbar = false;
-        }
+  //       if (this.AllFilterData.length > 0) {
+  //         // this.ShowOnPageData = true;
+  //         this.ShowMessage = false;
+  //         this.loadbar = false;
+  //         console.log("data found ----> " + this.loadbar);
+  //       } else {
+  //         // If no search results are found, display "Data not found" message
+  //         // this.ShowOnPageData = false;
+  //         this.ShowMessage = true;
+  //         this.loadbar = false;
+  //       }
 
-        console.log(this.AllFilterData);
-      }
-    )
+  //       console.log(this.AllFilterData);
+  //     }
+  //   )
+
+  // }
+
+  getEmittedvalues(item:any) {
+    console.log("this is emitted data here ----> " + item);
+ 
+    this.AllFilterData = item
+
+    if (this.AllFilterData.length > 0) {
+      console.log("data is here");
+      console.log(item);
+      this.ShowMessage = false;
+      this.loadbar = false;
+
+    } else if(item.length == 0) {
+      console.log("NO data here");
+      this.ShowMessage = true;
+      this.loadbar = false;
+    }
+
+
+    // item.pipe(
+    //   tap(res => {
+    //     this.loadbar = true,
+    //       this.ShowMessage = false;
+
+    //   })
+    // ).subscribe(
+    //   (res) => {
+    //     this.AllFilterData = res;
+
+    //     if (this.AllFilterData.length > 0) {
+    //       // this.ShowOnPageData = true;
+    //       this.ShowMessage = false;
+    //       this.loadbar = false;
+
+    //       console.log("data found ----> " + this.loadbar);
+    //     } else {
+    //       // If no search results are found, display "Data not found" message
+    //       // this.ShowOnPageData = false;
+    //       this.AllFilterData = []
+    //       this.ShowMessage = true;
+    //       this.loadbar = false;
+    //     }
+
+    //     console.log("this is filter data --->" + this.AllFilterData);
+    //   }
+    // )
+
+    // this.AllFilterData = item
+    // if (this.AllFilterData.length > 0) {
+    //           // this.ShowOnPageData = true;
+    //           this.ShowMessage = false;
+    //           this.loadbar = false;
+    //           console.log("data found ----> " + this.loadbar);
+    //         } else {
+    //           // If no search results are found, display "Data not found" message
+    //           // this.ShowOnPageData = false;
+    //           this.ShowMessage = true;
+    //           this.loadbar = false;
+    //         }
 
   }
 
-  resetAll(){
+  resetAll() {
     console.log("reset done");
-    
+
     this.initiallySelectedProductCategoryValue = '';
   }
 

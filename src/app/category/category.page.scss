@@ -38,10 +38,21 @@ ion-searchbar.custom {
   /*Custom Div for Badges Styling Start */
 
   
-
   .custom-card {
-      height: 500px;
+    width: 100%; /* Set desired width */
+    height: 500px; /* Set desired height */
+    margin-inline: auto;
+    overflow: hidden; /* Hide overflow content */
   }
+  
+  .custom-card-content {
+    height: calc(100% - 100px); /* Adjust height of card content */
+    overflow-y: auto; /* Enable vertical scrolling if content exceeds height */
+  }
+
+  // .custom-card {
+  //     height: 500px;
+  // }
 
   .wrapper {
     height: 9vh;
@@ -108,9 +119,23 @@ font-weight: 500;
 
   }
 
-  .ParentDiv{
-   display: flex;
-   flex-wrap: nowrap;
+  // .ParentDiv{
+  //  display: flex;
+  //  flex-wrap: nowrap;
+  // }
+
+  .custom-button {
+    --background: rgb(240, 237, 237);
+    --color: black;
+  }
+  
+  .custom-icon {
+    color: black;
+  }
+  
+
+  .filterIcon{
+      display: none;
   }
  
   $small: 500px;
@@ -124,16 +149,21 @@ font-weight: 500;
       .div2{
          width: 100%;
       }
+      .filterIcon{
+        display: block;
+        margin-top: 8px;
+    }
     }
   
     @media screen and (min-width: $medium) {
       .div1{
-        // display: none;
-        width: 30%;
+        display: block;
+        // width: 30%;
       }
       .div2{
         width: 70%;
       }
+      
     }
 
 

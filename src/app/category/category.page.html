@@ -13,44 +13,41 @@
       </ion-row>
 
       <ion-row>
-        <ion-col >
-        <ion-searchbar style="
+        <ion-col>
+          <ion-searchbar style="
     --box-shadow: none;
     width: 100%;
     height: 90px;
     --background: #F2F3F2;
     padding: 25px;
     " class="custom" placeholder="Search Product" animated="true">
-        </ion-searchbar>
-      </ion-col>
-      <ion-col size="auto">
-        <ion-item style="padding: 25px;">
-          <ion-icon name="filter" aria-hidden="true"></ion-icon>
-          <ion-label>Filter</ion-label>
-        </ion-item>
-      </ion-col>
+          </ion-searchbar>
+        </ion-col>
+        <div class="filterIcon">
+          <ion-col size="auto">
+            
+            <ion-item>
+              <ion-button id="open-modal" expand="block" slot="start" class="custom-button">
+                Filter
+                <ion-icon name="filter" slot="end" class="custom-icon"></ion-icon>
+              </ion-button>
+            </ion-item>
+          </ion-col>
+        </div>
+
       </ion-row>
 
-     
+
     </ion-grid>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <!-- <div class="wrapper">
-    <div *ngFor="let item of categoryBadges;let i = index" class="badge" (click)="categorySelectEvent($event, i)">
-      <p> {{item.name | titlecase}} </p>
-    </div>
-  </div> -->
-
-
 
   <!-- below div consist of two div . FIRST INCLUDES FILTER CONEENT AND OTHER
   DISPLAY CONTENT  -->
 
   <div>
-
-    <!-- Loading..... -->
     <div *ngIf="loadbar">
       <div style="width: 100%; display: flex; justify-content: center;">
         <ion-item>
@@ -60,114 +57,120 @@
       </div>
     </div>
 
-    <!-- Filter options and content start here  -->
+
+  <ion-grid>
+      <!-- Filter options and content start here  -->
     <!-- there are two colums one is for filter and other where content showsup -->
-    <div class="ParentDiv">
-      <!-- follwing div have filter options  -->
-      <div class="div1">
-        <div *ngIf="ShowOnPageData">
-          <div style="height: 200px; overflow: auto;">
-            <ion-item class="custom-list">
-              <ion-label>
-                <h2 slot="fixed">Select Product Category</h2>
-                <ion-list>
-                  <ion-radio-group [allowEmptySelection]="true" (ionChange)="selectproductCategory($event)"
-                    [value]="initiallySelectedProductCategoryValue">
-                    <ion-item *ngFor="let product of SelectProductCategory">
-                      <ion-radio justify="space-between" [value]="product._id">{{product.name}}</ion-radio>
-                    </ion-item>
-                  </ion-radio-group>
-                </ion-list>
-              </ion-label>
-            </ion-item>
-          </div>
+
+    <ion-row >
+      <ion-col size="3" style="height: 96vh;" class="div1"><!-- follwing div have filter options  -->
+          <app-filter (sendata)="getEmittedvalues($event)"></app-filter>
+      </ion-col>
+
+      <ion-col>
+          <!-- follwing div have the content to be shown  -->
+        <ion-grid>
+          <ion-row>
+            <ion-col *ngIf="ShowMessage" style="margin-inline: auto;">
+              <ion-item>
+                <ion-label>
+                  <h1>No Result Found</h1>
+                </ion-label>
+              </ion-item>
+            </ion-col>
 
 
-          <!-- radio buttons  -->
-          <ion-item>
-            <ion-label>
-              <ion-range labelPlacement="start" label="Price" [value]="100" [pin]="true"
-                (ionChange)="onIonChange($event)" [pinFormatter]="pinFormatter">
-              </ion-range>
-              <h6> {{ ' Price Between - 0 - ' + selectedValues['upperPrice'] + ' Rs ' }} </h6>
-            </ion-label>
-          </ion-item>
-
-
-
-          <ion-item *ngFor="let item of ReceivedFilterData | keyvalue: originalOrder">
-            <ion-select [label]="item.key" placeholder="Select" (ionChange)="showselected(item.key,$event)">
-              <ion-select-optgroup>
-                <ion-select-option *ngFor="let value of item.value" [value]="value">{{value}}</ion-select-option>
-              </ion-select-optgroup>
-            </ion-select>
-          </ion-item>
-
-          <!-- // static option for veg and nonveg  -->
-          <ion-item>
-            <ion-label>
-              <h5>Veg/Nonveg</h5>
-              <ion-list>
-                <ion-radio-group (ionChange)="showselected('vegNonveg',$event)">
-                  <ion-radio value="veg">Veg</ion-radio> <br />
-                  <ion-radio value="nonveg">Nonveg</ion-radio>
-                </ion-radio-group>
-              </ion-list>
-            </ion-label>
-          </ion-item>
-
-        </div>
-      </div>
-
-      <!-- follwing div have the content to be shown  -->
-      <div class="div2">
-        <!-- following div show no message if no content is found -->
-        <div *ngIf="ShowMessage" style="margin-inline: auto;">
-          <ion-item>
-            <ion-label>
-              <h1>No Result Found</h1>
-            </ion-label>
-          </ion-item>
-        </div>
-
-        <!-- if content is there below div is visible -->
-        <div  class="ParentContentDiv">
-          <ion-grid>
-            <ion-row>
-              <ion-col size-lg="4" size-md="6" size-sm="6" size="12" *ngFor="let description of AllFilterData">
-                <ion-card color="light" class="custom-card">
-                  <ion-thambnail>
-                    <img [src]="description.images[0]?.link" class="imgclass" alt="img">
-                  </ion-thambnail>
+            <ion-col size="12" size-md="4"  *ngFor="let description of AllFilterData">
+              <ion-card color="light" class="custom-card">
+                
+                <ion-card-content class="custom-card-content">
                   <ion-card-header>
-                    <ion-card-title>{{ description.name }}</ion-card-title>
-                    <ion-card-subtitle>{{ description.brand }}</ion-card-subtitle>
-                    <ion-card-subtitle>Rs.{{ description.price }}</ion-card-subtitle>
+                    <ion-thambnail>
+                      <img [src]="description.images[0]?.link" class="imgclass" alt="img">
+                    </ion-thambnail>
                   </ion-card-header>
-                  <ion-card-content>
+                  <ion-card-title>{{ description.name }}</ion-card-title>
+                  <ion-card-subtitle>{{ description.brand }}</ion-card-subtitle>
+                  <ion-card-subtitle>Rs.{{ description.price }}</ion-card-subtitle>
+                  <ion-note>{{ description.description }}</ion-note>
+                  
+              </ion-card-content>
+              
 
-                    <ion-text>{{ description.description }}</ion-text>
-                    <br />
+                <ion-button size='small' color="light"> <ion-icon size="small" name="cart"
+                  aria-hidden="true"></ion-icon></ion-button>
+              <ion-button size='small' color="light"><ion-icon size="samll" name="heart" color=""
+                  aria-hidden="true"></ion-icon> </ion-button>
+             
+                
+              </ion-card>
+            </ion-col>
+          </ion-row>
 
+        </ion-grid>
+      
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+    <!-- model below  -->
 
-                    <ion-button size='small' color="light"> <ion-icon size="small" name="cart"
-                        aria-hidden="true"></ion-icon></ion-button>
-                    <ion-button size='small' color="light"><ion-icon size="samll" name="heart" color=""
-                        aria-hidden="true"></ion-icon> </ion-button>
-                  </ion-card-content>
+    <ion-modal #modal trigger="open-modal" [initialBreakpoint]="0.25" [breakpoints]="[0, 0.25, 0.5, 0.75]">
+      <ng-template>
+        <ion-content>
+          
+            <app-filter (sendata)="getEmittedvalues($event)"></app-filter>
+     
+        </ion-content>
+      </ng-template>
+    </ion-modal>
 
-
-                </ion-card>
-              </ion-col>
-            </ion-row>
-          </ion-grid>
-
-
-        </div>
-      </div>
-    </div>
+    <!-- model ends here  -->
 
   </div>
 
 
 </ion-content>
+
+<!-- following div show no message if no content is found -->
+<!-- <div *ngIf="ShowMessage" style="margin-inline: auto;">
+  <ion-item>
+    <ion-label>
+      <h1>No Result Found</h1>
+    </ion-label>
+  </ion-item>
+</div>
+
+ if content is there below div is visible 
+<div class="ParentContentDiv">
+  <ion-grid>
+    <ion-row>
+      <ion-col size-lg="4" size-md="6" size-sm="6" size="12" *ngFor="let description of AllFilterData">
+        <ion-card color="light" class="custom-card">
+          <ion-thambnail>
+            <img [src]="description.images[0]?.link" class="imgclass" alt="img">
+          </ion-thambnail>
+          <ion-card-header>
+            <ion-card-title>{{ description.name }}</ion-card-title>
+            <ion-card-subtitle>{{ description.brand }}</ion-card-subtitle>
+            <ion-card-subtitle>Rs.{{ description.price }}</ion-card-subtitle>
+          </ion-card-header>
+          <ion-card-content>
+
+            <ion-text>{{ description.description }}</ion-text>
+            <br />
+
+
+            <ion-button size='small' color="light"> <ion-icon size="small" name="cart"
+                aria-hidden="true"></ion-icon></ion-button>
+            <ion-button size='small' color="light"><ion-icon size="samll" name="heart" color=""
+                aria-hidden="true"></ion-icon> </ion-button>
+          </ion-card-content>
+
+
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+
+</div> -->

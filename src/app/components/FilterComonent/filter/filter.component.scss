@@ -1,0 +1,13 @@
+.ResetButton {
+    width: 100%;
+  }
+
+
+  .custom-button {
+    position: sticky;
+     top: 0;
+     z-index: 20px;
+     box-shadow:  0 3px 10px 0 rgba(0, 0, 0, 0.19);
+    --background: rgb(250, 248, 248);
+    --color: black;
+  }
