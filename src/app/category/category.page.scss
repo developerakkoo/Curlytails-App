@@ -34,26 +34,36 @@ ion-searchbar.custom {
     
     //  color: red;
   }
+  ion-badge {
+    // --background: purple;
+    // --color: white;
+    --padding-end: 10px;
+    --padding-start: 10px;
+  }
 
+  .imgclass {
+    max-width: 100%; /* Ensure the image doesn't exceed its container width */
+    height: auto; /* Maintain aspect ratio */
+    width: 100%; /* Make the image take the full width of its container */
+  }
   /*Custom Div for Badges Styling Start */
 
-  
-  .custom-card {
-    width: 100%; /* Set desired width */
-    height: 500px; /* Set desired height */
-    margin-inline: auto;
-    overflow: hidden; /* Hide overflow content */
-  }
-  
   .custom-card-content {
-    height: calc(100% - 100px); /* Adjust height of card content */
-    overflow-y: auto; /* Enable vertical scrolling if content exceeds height */
+    display: flex;
+    flex-direction: column;
+    height: 100%; /* Ensures each card has the same height */
   }
-
-  // .custom-card {
-  //     height: 500px;
-  // }
-
+  
+  .limited-width {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-height: 100px;
+    // white-space: nowrap;
+  }
+  
+  .button-row {
+    margin-top: auto; /* Pushes the button row to the bottom */
+  }
   .wrapper {
     height: 9vh;
     display: flex;
@@ -123,6 +133,8 @@ font-weight: 500;
   //  display: flex;
   //  flex-wrap: nowrap;
   // }
+
+
 
   .custom-button {
     --background: rgb(240, 237, 237);

@@ -1,11 +1,11 @@
-import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { Component, Input, OnChanges, OnInit, SimpleChanges, numberAttribute } from '@angular/core';
 import { ActivatedRoute } from '@angular/router'
 import { RangeCustomEvent } from '@ionic/angular';
 import { CommenServiceService } from '../services/Commen-service.service'
 import { KeyValue } from '@angular/common';
 import { delay, of, tap, toArray } from 'rxjs';
-
-
+import { UserCartServiceService } from '../services/UserServices/user-cart-service.service'
+import { AlertController } from '@ionic/angular';
 @Component({
   selector: 'app-category',
   templateUrl: './category.page.html',
@@ -78,15 +78,22 @@ export class CategoryPage implements OnInit, OnChanges {
   }
   // Object to store selected values
 
+  productQuatity = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+  selectProductQuantity = "1"
+  TotalCartItems: any;
+
 
   constructor(
     private route: ActivatedRoute,
     private service: CommenServiceService,
+    private UserCartService: UserCartServiceService,
+    private alertController: AlertController
   ) { }
 
 
   ngOnInit() {
 
+    
     this.route.params.subscribe(params => {
       this.params = params['data'];
       this.categoryName = params['name'];
@@ -98,6 +105,7 @@ export class CategoryPage implements OnInit, OnChanges {
     this.DisplaySelectedCategoryData();
     this.displaySelectedproductdata();
     this.showselected;
+    this.getAllCartItem()
     // this.HitFilterData();    
     console.log(this.selectedValues['upperPrice']);
 
@@ -105,8 +113,8 @@ export class CategoryPage implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-      console.log("changes here---->");
-      console.log(changes['AllFilterData'].firstChange);
+    console.log("changes here---->");
+    console.log(changes['AllFilterData'].firstChange);
   }
 
 
@@ -207,37 +215,11 @@ export class CategoryPage implements OnInit, OnChanges {
   }
 
 
-  // HitFilterData() {
-  //   this.service.FilterProduct(this.selectedValues).pipe(
-  //     tap(res => {
-  //       this.loadbar = true,
-  //         this.ShowMessage = false;
-  //     })
-  //   ).subscribe(
-  //     (res: { data?: any[] }) => {
-  //       this.AllFilterData = res.data;
 
-  //       if (this.AllFilterData.length > 0) {
-  //         // this.ShowOnPageData = true;
-  //         this.ShowMessage = false;
-  //         this.loadbar = false;
-  //         console.log("data found ----> " + this.loadbar);
-  //       } else {
-  //         // If no search results are found, display "Data not found" message
-  //         // this.ShowOnPageData = false;
-  //         this.ShowMessage = true;
-  //         this.loadbar = false;
-  //       }
 
-  //       console.log(this.AllFilterData);
-  //     }
-  //   )
-
-  // }
-
-  getEmittedvalues(item:any) {
+  getEmittedvalues(item: any) {
     console.log("this is emitted data here ----> " + item);
- 
+
     this.AllFilterData = item
 
     if (this.AllFilterData.length > 0) {
@@ -246,60 +228,51 @@ export class CategoryPage implements OnInit, OnChanges {
       this.ShowMessage = false;
       this.loadbar = false;
 
-    } else if(item.length == 0) {
+    } else if (item.length == 0) {
       console.log("NO data here");
       this.ShowMessage = true;
       this.loadbar = false;
     }
 
 
-    // item.pipe(
-    //   tap(res => {
-    //     this.loadbar = true,
-    //       this.ShowMessage = false;
+  }
 
-    //   })
-    // ).subscribe(
-    //   (res) => {
-    //     this.AllFilterData = res;
+  selectQuantity(event: any) {
+    this.selectProductQuantity = event.detail.value
+  }
 
-    //     if (this.AllFilterData.length > 0) {
-    //       // this.ShowOnPageData = true;
-    //       this.ShowMessage = false;
-    //       this.loadbar = false;
+ AddToCart(ProductDetils: any) {
+    let body = {
+      productId: ProductDetils._id,
+      quantity: parseInt(this.selectProductQuantity),
+      price: ProductDetils.price
+    }
 
-    //       console.log("data found ----> " + this.loadbar);
-    //     } else {
-    //       // If no search results are found, display "Data not found" message
-    //       // this.ShowOnPageData = false;
-    //       this.AllFilterData = []
-    //       this.ShowMessage = true;
-    //       this.loadbar = false;
-    //     }
+     this.UserCartService.AddToCart(body).subscribe(async res => {
+      console.log(res);
+      const alert = await this.alertController.create({
+        header: ProductDetils.name,
+        subHeader: ProductDetils.brand,
+        message: 'Item Added to Cart Successfully!.',
+        buttons: ['Close'],
+      });
+  
+      await alert.present();
 
-    //     console.log("this is filter data --->" + this.AllFilterData);
-    //   }
-    // )
-
-    // this.AllFilterData = item
-    // if (this.AllFilterData.length > 0) {
-    //           // this.ShowOnPageData = true;
-    //           this.ShowMessage = false;
-    //           this.loadbar = false;
-    //           console.log("data found ----> " + this.loadbar);
-    //         } else {
-    //           // If no search results are found, display "Data not found" message
-    //           // this.ShowOnPageData = false;
-    //           this.ShowMessage = true;
-    //           this.loadbar = false;
-    //         }
+    })
 
   }
 
-  resetAll() {
-    console.log("reset done");
-
-    this.initiallySelectedProductCategoryValue = '';
+  getAllCartItem() {
+    // let token = localStorage.getItem('Token')
+      this.UserCartService.getCartByUserId().pipe(
+        toArray()
+      ).subscribe(res => {
+        this.TotalCartItems = res; // Assign the response to the property
+        console.log('Response Data:', this.TotalCartItems[0].data.cartItems.length ); // For debugging
+      })
   }
+
+
 
 }

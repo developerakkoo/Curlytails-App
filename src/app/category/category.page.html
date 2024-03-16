@@ -3,12 +3,26 @@
     <ion-grid>
       <ion-row>
 
-        <ion-toolbar>
-          <ion-title>{{categoryName}} Categories</ion-title>
-          <ion-buttons slot="start">
-            <ion-back-button defaultHref='/'></ion-back-button>
-          </ion-buttons>
-        </ion-toolbar>
+        <ion-col >
+          <ion-toolbar>
+            <ion-title>{{categoryName}} Categories</ion-title>
+            <ion-buttons slot="start">
+              <ion-back-button defaultHref='/'></ion-back-button>
+            </ion-buttons>
+          </ion-toolbar>
+        </ion-col>
+        <ion-col size="auto">
+
+          <div style="padding-right: 20px; padding-top: 10px; cursor: pointer;">
+           
+              <!-- <ion-icon size="large" name="cart" aria-hidden="true"></ion-icon> -->
+            <ion-icon size="large" name="cart" aria-hidden="true"></ion-icon>
+            <ion-badge>{{TotalCartItems[0].data.cartItems.length}}</ion-badge>
+          
+          </div>
+          
+
+        </ion-col>
 
       </ion-row>
 
@@ -25,7 +39,7 @@
         </ion-col>
         <div class="filterIcon">
           <ion-col size="auto">
-            
+
             <ion-item>
               <ion-button id="open-modal" expand="block" slot="start" class="custom-button">
                 Filter
@@ -58,68 +72,137 @@
     </div>
 
 
-  <ion-grid>
+    <ion-grid>
       <!-- Filter options and content start here  -->
-    <!-- there are two colums one is for filter and other where content showsup -->
+      <!-- there are two colums one is for filter and other where content showsup -->
 
-    <ion-row >
-      <ion-col size="3" style="height: 96vh;" class="div1"><!-- follwing div have filter options  -->
+      <ion-row>
+        <ion-col size="3" style="height: 96vh;" class="div1"><!-- follwing div have filter options  -->
           <app-filter (sendata)="getEmittedvalues($event)"></app-filter>
-      </ion-col>
+        </ion-col>
 
-      <ion-col>
+        <ion-col>
           <!-- follwing div have the content to be shown  -->
-        <ion-grid>
-          <ion-row>
-            <ion-col *ngIf="ShowMessage" style="margin-inline: auto;">
-              <ion-item>
-                <ion-label>
-                  <h1>No Result Found</h1>
-                </ion-label>
-              </ion-item>
-            </ion-col>
+          <ion-grid>
+            <ion-row>
+              <ion-col *ngIf="ShowMessage" style="margin-inline: auto;">
+                <ion-item>
+                  <ion-label>
+                    <h1>No Result Found</h1>
+                  </ion-label>
+                </ion-item>
+              </ion-col>
 
 
-            <ion-col size="12" size-md="4"  *ngFor="let description of AllFilterData">
-              <ion-card color="light" class="custom-card">
-                
-                <ion-card-content class="custom-card-content">
-                  <ion-card-header>
-                    <ion-thambnail>
+              <ion-col size="12" size-md="4" *ngFor="let description of AllFilterData">
+                <!-- <ion-card  class="custom-card">
+
+                  <ion-card-content class="custom-card-content">
+                    <ion-card-header>
+                      <ion-thambnail>
+                        <img [src]="description.images[0]?.link" class="imgclass" alt="img">
+                      </ion-thambnail>
+                    </ion-card-header>
+                    <ion-card-title>{{ description.name }}</ion-card-title>
+                    <ion-card-subtitle>{{ description.brand }}</ion-card-subtitle>
+                    <ion-card-subtitle>Rs.{{ description.price }}</ion-card-subtitle>
+                    <div class="limited-width">
+                      <p><ion-note>{{ description.description }}</ion-note></p>
+                    </div>
+
+                  </ion-card-content>
+
+
+                  <ion-item>
+                    <ion-select label="Select Quantity" label-placement="1" placeholder="1" (ionChange)="selectQuantity($event)">
+                      <ion-select-optgroup>
+                        <ion-select-option *ngFor="let num of productQuatity"
+                          [value]="num">{{num}}</ion-select-option>
+                      </ion-select-optgroup>
+                    </ion-select>
+                  </ion-item>
+
+
+                      <ion-row class="">
+                        <ion-col size="6">
+
+                          <ion-button size='small' color="light" expand="block" (click)="AddToCart(description)">
+                            <ion-icon size="small" name="cart" aria-hidden="true">
+                            </ion-icon>
+                          </ion-button>
+                        </ion-col>
+
+                        <ion-col size="6">
+                          <ion-button size='small' expand="block" color="light"><ion-icon size="samll" name="heart" color=""
+                              aria-hidden="true"></ion-icon> </ion-button>
+                        </ion-col>
+
+                       
+                      </ion-row>
+
+                   
+                </ion-card> -->
+
+                <ion-card>
+                  <ion-card-content class="custom-card-content">
+                    <ion-card-header>
+
                       <img [src]="description.images[0]?.link" class="imgclass" alt="img">
-                    </ion-thambnail>
-                  </ion-card-header>
-                  <ion-card-title>{{ description.name }}</ion-card-title>
-                  <ion-card-subtitle>{{ description.brand }}</ion-card-subtitle>
-                  <ion-card-subtitle>Rs.{{ description.price }}</ion-card-subtitle>
-                  <ion-note>{{ description.description }}</ion-note>
-                  
-              </ion-card-content>
-              
 
-                <ion-button size='small' color="light"> <ion-icon size="small" name="cart"
-                  aria-hidden="true"></ion-icon></ion-button>
-              <ion-button size='small' color="light"><ion-icon size="samll" name="heart" color=""
-                  aria-hidden="true"></ion-icon> </ion-button>
-             
-                
-              </ion-card>
-            </ion-col>
-          </ion-row>
+                    </ion-card-header>
+                    <ion-card-title>{{ description.name }}</ion-card-title>
+                    <ion-card-subtitle>{{ description.brand }}</ion-card-subtitle>
+                    <ion-card-subtitle>Rs.{{ description.price }}</ion-card-subtitle>
+                    <div class="limited-width">
+                      <p><ion-note>{{ description.description }}</ion-note></p>
+                    </div>
+                  </ion-card-content>
 
-        </ion-grid>
-      
-      </ion-col>
-    </ion-row>
-  </ion-grid>
+                  <ion-card-footer>
+                    <ion-row>
+                      <ion-item>
+                        <ion-select label="Quantity - " label-placement="1" placeholder="1"
+                          (ionChange)="selectQuantity($event)">
+                          <ion-select-optgroup>
+                            <ion-select-option *ngFor="let num of productQuatity" [value]="num"> {{
+                              num}}</ion-select-option>
+                          </ion-select-optgroup>
+                        </ion-select>
+                      </ion-item>
+                    </ion-row>
+
+                    <ion-row class="button-row">
+                      <ion-col size="6">
+                        <ion-button  size='small'   color="light" expand="block" (click)="AddToCart(description)">
+                          <ion-icon size="small"  name="cart" id="open-modal" aria-hidden="true"></ion-icon>
+                        </ion-button>
+                      </ion-col>
+
+                      <ion-col size="6">
+                        <ion-button size='small' expand="block" color="light">
+                          <ion-icon size="samll" name="heart" color="" aria-hidden="true"></ion-icon>
+                        </ion-button>
+                      </ion-col>
+                    </ion-row>
+
+                  </ion-card-footer>
+                </ion-card>
+              </ion-col>
+            </ion-row>
+
+          </ion-grid>
+
+        </ion-col>
+      </ion-row>
+    </ion-grid>
     <!-- model below  -->
 
     <ion-modal #modal trigger="open-modal" [initialBreakpoint]="0.25" [breakpoints]="[0, 0.25, 0.5, 0.75]">
       <ng-template>
         <ion-content>
-          
-            <app-filter (sendata)="getEmittedvalues($event)"></app-filter>
-     
+
+          <app-filter (sendata)="getEmittedvalues($event)"></app-filter>
+
         </ion-content>
       </ng-template>
     </ion-modal>
@@ -127,6 +210,9 @@
     <!-- model ends here  -->
 
   </div>
+
+
+
 
 
 </ion-content>

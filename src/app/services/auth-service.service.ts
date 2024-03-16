@@ -3,6 +3,8 @@ import { Observable, catchError } from 'rxjs';
 import { HttpClient } from '@angular/common/http'
 import { environment } from '../../environments/environment'
 import { ErrorServicesService } from '../services/error.services.service'
+import {jwtDecode} from 'jwt-decode';
+
 
 @Injectable({
   providedIn: 'root'
@@ -25,5 +27,17 @@ export class AuthServiceService {
     return this.http.post<any>(`${environment.API_URL}/user/login`, body)
     
   }
+
+  // getDecodedAccessToken(): any {
+  //   let token = localStorage.getItem('Token')
+  //   let decode;
+  //   if(token){
+  //      decode = jwtDecode(token)
+  //   }
+  //   if(decode){
+  //      return decode
+  //   }
+    
+  // }
 
 }

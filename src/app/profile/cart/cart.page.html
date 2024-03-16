@@ -8,42 +8,114 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
+
   <ion-list>
     <ion-list-header>
       <ion-label>Your cart items</ion-label>
       <ion-button>Clear cart</ion-button>
     </ion-list-header>
-    <ion-item lines="none">
-   
-      <ion-thumbnail slot="start">
-        <img src="assets/dogfood.jpg" />
+  </ion-list>
 
-      </ion-thumbnail>
-      <ion-label class="ion-text-wrap">
-        <p>Drools Optimum Performance</p>
-        <p> {{amount | currency:"INR"}} </p>
-      </ion-label>
-   
-      <ion-row style="background-color: #ece9e9;
-      border-radius: 4px;" slot="end" class="ion-no-padding ion-align-items-center"> 
-        <ion-col size="5">
-          <ion-button (click)="incrementQuantity()" fill="clear">
-            <ion-icon color="dark" slot="icon-only" name="add"></ion-icon>
+  <!-- <div>
+    <ion-list>
+      <ion-item lines="none">
+
+        <ion-thumbnail slot="start">
+          <img src="assets/dogfood.jpg" />
+        </ion-thumbnail>
+
+        <ion-label class="ion-text-wrap">
+          <p>Drools Optimum Performance</p>
+          <p> {{amount | currency:"INR"}} </p>
+        </ion-label>
+
+        <ion-row style="background-color: #ece9e9;
+      border-radius: 4px;" slot="end" class="ion-no-padding ion-align-items-center">
+          <ion-col size="5">
+            <ion-button (click)="incrementQuantity()" fill="clear">
+              <ion-icon color="dark" slot="icon-only" name="add"></ion-icon>
+            </ion-button>
+          </ion-col>
+          <ion-col size="2">
+            1
+          </ion-col>
+          <ion-col size="5">
+            <ion-button (click)="decrementQuantity()" fill="clear">
+              <ion-icon color="dark" slot="icon-only" name="remove"></ion-icon>
+            </ion-button>
+          </ion-col>
+        </ion-row>
+      </ion-item>
+    </ion-list>
+
+    <ion-button class="ion-padding" expand="block" mode="ios">
+      Proceed to Pay 1200
+    </ion-button>
+  </div> -->
+
+  <div *ngFor="let cartdata of responseData  ">
+    <ion-list *ngFor="let categoryItems of cartdata.data.cartItems">
+      <ion-item lines="none">
+
+        <ion-thumbnail slot="start">
+          <img src="assets/dogfood.jpg" />
+        </ion-thumbnail>
+
+        <ion-label class="ion-text-wrap">
+          <p>{{categoryItems.productId.name}}</p>
+          <p> {{categoryItems.productId.price | currency:"INR"}} </p>
+        </ion-label>
+
+        <ion-row style="background-color: #ece9e9;
+      border-radius: 4px;" slot="end" class="ion-no-padding ion-align-items-center">
+          <ion-col size="5">
+            <ion-button (click)="incrementQuantity(categoryItems.productId)" fill="clear">
+              <ion-icon color="dark" size="small" slot="icon-only" name="add"></ion-icon>
+            </ion-button>
+          </ion-col>
+          <ion-col size="2">
+            <div style="display: flex; justify-content: center; font-size: small;"> {{categoryItems.quantity }}</div>
+          </ion-col>
+          <ion-col size="5">
+            <ion-button (click)="decrementQuantity(categoryItems.productId)" fill="clear">
+              <ion-icon color="dark" size="small" slot="icon-only" name="remove"></ion-icon>
+            </ion-button>
+          </ion-col>
+        </ion-row>
+      </ion-item>
+      <ion-row>
+        <ion-col size="auto">
+          <ion-button fill="clear" class="ion-padding" mode="ios" (click)="RemoceFromCart(categoryItems)">
+            Remove
           </ion-button>
         </ion-col>
-        <ion-col size="2">
-          1
-        </ion-col>
-        <ion-col size="5">
-          <ion-button (click)="decrementQuantity()" fill="clear">
-            <ion-icon color="dark" slot="icon-only" name="remove"></ion-icon>
+        <ion-col>
+          <ion-button class="ion-padding" mode="ios">
+            Proceed to Pay {{categoryItems.productId.price | currency:"INR"}}
           </ion-button>
         </ion-col>
       </ion-row>
-    </ion-item>
-  </ion-list>
-  <ion-button class="ion-padding"  expand="block" mode="ios">
-    Proceed to Pay 1200
-  </ion-button>
-</ion-content>
+    </ion-list>
+    <div *ngIf="responseData[0].data.cartItems.length !== 0">
+      <ion-button class="ion-padding" expand="block" mode="ios">
+        Proceed to Pay {{ responseData[0].data.SubTotal | number:'1.0-0'}}
+      </ion-button>
+    </div>
+    <div *ngIf="responseData[0].data.cartItems.length == 0">
+      <ion-button class="ion-padding" expand="block" mode="ios">
+        Your Cart is Empty!
+      </ion-button>
+    </div>
+  </div>
 
+  <!-- <ion-item>
+    <ion-label *ngFor="let cartdata of responseData  ">
+      {{cartdata.data.SubTotal }}
+      <ion-list>
+        <ion-item *ngFor="let categoryItems of cartdata.data.cartItems">
+          <ion-label>{{categoryItems.productId._id}}</ion-label>
+        </ion-item>
+      </ion-list>
+    </ion-label>
+  </ion-item> -->
+</ion-content>
