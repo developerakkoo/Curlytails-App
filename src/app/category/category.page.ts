@@ -265,11 +265,11 @@ export class CategoryPage implements OnInit, OnChanges {
 
   getAllCartItem() {
     // let token = localStorage.getItem('Token')
-      this.UserCartService.getCartByUserId().pipe(
-        toArray()
-      ).subscribe(res => {
+      this.UserCartService.getCartByUserId().subscribe(res => {
         this.TotalCartItems = res; // Assign the response to the property
-        console.log('Response Data:', this.TotalCartItems[0].data.cartItems.length ); // For debugging
+        // console.log('Response Data:', this.TotalCartItems.data.cartItems.length ); 
+        console.log(res);
+        
       })
   }
 

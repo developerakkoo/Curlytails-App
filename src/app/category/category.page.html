@@ -17,7 +17,7 @@
            
               <!-- <ion-icon size="large" name="cart" aria-hidden="true"></ion-icon> -->
             <ion-icon size="large" name="cart" aria-hidden="true"></ion-icon>
-            <ion-badge>{{TotalCartItems[0].data.cartItems.length}}</ion-badge>
+            <ion-badge>{{TotalCartItems.data.cartItems.length}}</ion-badge>
           
           </div>
           
@@ -95,53 +95,7 @@
 
 
               <ion-col size="12" size-md="4" *ngFor="let description of AllFilterData">
-                <!-- <ion-card  class="custom-card">
-
-                  <ion-card-content class="custom-card-content">
-                    <ion-card-header>
-                      <ion-thambnail>
-                        <img [src]="description.images[0]?.link" class="imgclass" alt="img">
-                      </ion-thambnail>
-                    </ion-card-header>
-                    <ion-card-title>{{ description.name }}</ion-card-title>
-                    <ion-card-subtitle>{{ description.brand }}</ion-card-subtitle>
-                    <ion-card-subtitle>Rs.{{ description.price }}</ion-card-subtitle>
-                    <div class="limited-width">
-                      <p><ion-note>{{ description.description }}</ion-note></p>
-                    </div>
-
-                  </ion-card-content>
-
-
-                  <ion-item>
-                    <ion-select label="Select Quantity" label-placement="1" placeholder="1" (ionChange)="selectQuantity($event)">
-                      <ion-select-optgroup>
-                        <ion-select-option *ngFor="let num of productQuatity"
-                          [value]="num">{{num}}</ion-select-option>
-                      </ion-select-optgroup>
-                    </ion-select>
-                  </ion-item>
-
-
-                      <ion-row class="">
-                        <ion-col size="6">
-
-                          <ion-button size='small' color="light" expand="block" (click)="AddToCart(description)">
-                            <ion-icon size="small" name="cart" aria-hidden="true">
-                            </ion-icon>
-                          </ion-button>
-                        </ion-col>
-
-                        <ion-col size="6">
-                          <ion-button size='small' expand="block" color="light"><ion-icon size="samll" name="heart" color=""
-                              aria-hidden="true"></ion-icon> </ion-button>
-                        </ion-col>
-
-                       
-                      </ion-row>
-
-                   
-                </ion-card> -->
+                
 
                 <ion-card>
                   <ion-card-content class="custom-card-content">
