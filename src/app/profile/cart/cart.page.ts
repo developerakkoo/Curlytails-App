@@ -16,33 +16,8 @@ export class CartPage implements OnInit {
   selectedItems: any[] = [];
   cartItems: any[] = []
   productIds: any[] = []
-  //   {
-  //     "cartItems":[    
-  //     {
-  //       "productId":"65e6ed76c30857417fef25c1",
-  //       "quantity": 5,
-  //       "price": 3600,
-  //       "_id": "65f553e16780ca6309d4f699"
-  //     }
-  //     ],
-  //     "TotalItems":5,
-  //     "SubTotal":18000,
-  //     "productIds":["65f553e16780ca6309d4f699"]
-  // }
-
-  // body = {
-  //   cartItems: [{
-  //      // below product id from inside product id
-  //     ProductId: '',
-  //     Quantity:'',
-  //     price: '',
-  //     // below product id from outside product id
-  //     _id: ''
-  //   }],
-  //   TotalItems: ' ',
-  //   Subtotal: ' ',
-  //   productIds: []
-  // }
+  body: any;
+  TotalpayableAmount = 0
 
   constructor(
     private UserCartService: UserCartServiceService,
@@ -52,6 +27,7 @@ export class CartPage implements OnInit {
 
   ngOnInit() {
     this.getAllCartItem()
+
   }
 
 
@@ -69,6 +45,8 @@ export class CartPage implements OnInit {
   decrementQuantity(ProductDetils: any) {
     console.log(ProductDetils);
 
+    this.body = null
+
     let body = {
       productId: ProductDetils._id,
       quantity: 1,
@@ -82,6 +60,9 @@ export class CartPage implements OnInit {
   }
 
   incrementQuantity(ProductDetils: any) {
+
+    this.body = null
+
     let body = {
       productId: ProductDetils._id,
       quantity: 1,
@@ -122,62 +103,110 @@ export class CartPage implements OnInit {
     price: any,
     quantity: any,
     cartId: any,
-    productId: any) {
+    productId: any,
+    cartnum: any,
+    checkBoxCondition: any
+  ) {
 
-    console.log("cartdata total items " + ToalItems);
-    console.log("cartdata subtotal " + SubTotal);
-    // console.log("cartdata Id " + id);
-    console.log("cartItem price " + price),
-    console.log("cartItem quantity " + quantity);
-    console.log("cartItem Id " + cartId);
-    console.log("id from inside product Id " + productId);
+    // console.log("cartdata total items " + ToalItems);
+    // console.log("cartdata subtotal " + SubTotal);
+    // // console.log("cartdata Id " + id);git 
+    // console.log("cartItem price " + price),
+    // console.log("cartItem quantity " + quantity);
+    // console.log("cartItem Id " + cartId);
+    // console.log("id from inside product Id " + productId);
+    // console.log("cartNumber  "+ cartnum);
+    // console.log("checked or not"+ checkBoxCondition.target.checked);
 
-  //  let cartItems: [{
-  //     // below product id from inside product id
-  //     ProductId: '',
-  //     Quantity: '',
-  //     price: '',
-  //     // below product id from outside product id
-  //     _id: ''
-  //   }]
 
-    this.cartItems.push({
-      ProductId: productId,
-      Quantity: quantity,
-      price: price,
-      _id:cartId
-    })
+    if (checkBoxCondition.target.checked) {
 
-    this.productIds.push(cartId)
+      // let cartItem = this.cartItems.find(item => item.cartnum === cartnum);
+      let cartItemindex = this.cartItems.findIndex(item => item.cartnum === cartnum)
+      console.log("condition is true and cart item is -->" + cartItemindex);
 
-    let body = {
+      if (cartItemindex !== -1) {
+        this.cartItems[cartItemindex].Quantity = quantity
+      } else {
+        this.cartItems.push({
+          cartnum: cartnum,
+          ProductId: productId,
+          Quantity: quantity,
+          price: price,
+          _id: cartId
+        });
+        this.productIds.push([cartnum, cartId]);
+
+      }
+
+    } else {
+      // Remove unchecked item from cartItems array
+      this.cartItems = this.cartItems.filter(item => item.cartnum !== cartnum);
+      // Find the index of the item to remove based on the number
+      const index = this.productIds.findIndex(item => item[0] == cartnum);
+      if (index !== -1) {
+        // Remove the item from productIds array
+        this.productIds.splice(index, 1);
+      }
+    }
+
+    this.body = {
       cartItem: this.cartItems,
-      TotalItems: ToalItems,
-      Subtotal: SubTotal,
+      TotalItems:  parseInt(ToalItems),
+      Subtotal: parseInt(SubTotal),
       productIds: this.productIds
     }
 
-    console.log( "body here ---> "+ JSON.stringify(body));
-    
+    this.FindTotalPayableAmount()
 
-    // if (item.checked) {
-    //   this.selectedItems.push(item);
-    // } else {
-    //   const index = this.selectedItems.findIndex(selectedItem => selectedItem === item);
-    //   if (index !== -1) {
-    //     this.selectedItems.splice(index, 1);
-    //   }
-    // }
-    // console.log('Selected Items:', this.selectedItems);
+    // console.log("body here ---> " + JSON.stringify(this.body));
+  }
+
+  FindTotalPayableAmount() {
+
+    // console.log(JSON.stringify(this.body));
+
+    let totalAmount = 0
+
+    for (const key in this.body.cartItem) {
+      if (this.body.cartItem.hasOwnProperty(key)) {
+        const currentItem = this.body.cartItem[key];
+
+        // Calculate the amount for the current item
+        const amount = currentItem.Quantity * currentItem.price;
+
+        // Add the amount to totalAmount
+        totalAmount += amount;
+      }
+    }
+
+    this.TotalpayableAmount = totalAmount
+
   }
 
 
-  placeOrder() {
-    console.log("order placed method hitt!!");
+  placeOrder( data:any ) {
+    // console.log("order placed method hitt!!"+ this.body['productIds'].length);
+   
+    if(data == 'puchase Selected'){
+      this.OrderService.PlaceOrder(this.body).subscribe(res => {
+          console.log(res);
+        })
+    }else{
+      this.OrderService.PlaceOrder(data).subscribe(res => {
+          console.log(res);   
+        })
+    }
 
-    this.OrderService.PlaceOrder().subscribe(res => {
-      console.log(res);
 
-    })
+    // if (this.body !== undefined && this.body['productIds'].length !== 0) {
+    //   console.log("order placed method hitt!!" + JSON.stringify(this.body));
+    // } else {
+    //   console.log("please select the items to order!!");
+    // }
+    // this.OrderService.PlaceOrder().subscribe(res => {
+    //   console.log(res);
+
+    // })
   }
 }

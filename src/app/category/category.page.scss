@@ -51,13 +51,14 @@ ion-searchbar.custom {
   .custom-card-content {
     display: flex;
     flex-direction: column;
-    height: 100%; /* Ensures each card has the same height */
+    height: 400px; /* Ensures each card has the same height */
   }
   
   .limited-width {
-    overflow: hidden;
+    overflow: auto;
     text-overflow: ellipsis;
     max-height: 100px;
+    padding-inline: 5px;
     // white-space: nowrap;
   }
   
@@ -170,6 +171,7 @@ font-weight: 500;
     @media screen and (min-width: $medium) {
       .div1{
         display: block;
+        overflow-y: auto;
         // width: 30%;
       }
       .div2{

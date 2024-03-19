@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormControl, FormGroup, ReactiveFormsModule, FormBuilder , Validators} from '@angular/forms'
 import { AuthServiceService } from '../../services/auth-service.service'
 import { Router } from '@angular/router'
+import { AlertController } from '@ionic/angular';
 
 @Component({
   selector: 'app-register',
@@ -25,7 +26,7 @@ export class RegisterPage implements OnInit {
   alertButtons = ['Close'];
 
 
-  constructor( private fb: FormBuilder, private AuthService : AuthServiceService, private router: Router ) { 
+  constructor( private fb: FormBuilder, private AuthService : AuthServiceService, private router: Router, private alertController: AlertController ) { 
     this.myForm = fb.group({
       email: ['',[Validators.required, Validators.email]],
       password:['',[Validators.required, Validators.minLength(6)]],
@@ -47,15 +48,25 @@ export class RegisterPage implements OnInit {
     
   }
 
+  async presentAlert(message :any) {
+    const alert = await this.alertController.create({
+      // header: 'A Short Title Is Best',
+      // subHeader: message,
+      message: message.message,
+      buttons: ['Close'],
+    });
+
+    await alert.present();
+  }
+
   onSubmit(){
         
     if(this.myForm.valid){
     console.log(this.myForm.value);
-    this.AuthService.registerUser(this.myForm.value).subscribe(res => {
-      console.log(res);
-      if(res.message == 201 || 200){
-        this.setOpen(true)
-      }
+    this.AuthService.registerUser(this.myForm.value).subscribe({
+      next: (v) => console.log(this.presentAlert(v)),
+      error: (e) => console.log(this.presentAlert(e.error)),
+      complete: () => console.info('complete') 
     })
     
     }

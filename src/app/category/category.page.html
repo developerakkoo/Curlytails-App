@@ -7,7 +7,7 @@
           <ion-toolbar>
             <ion-title>{{categoryName}} Categories</ion-title>
             <ion-buttons slot="start">
-              <ion-back-button defaultHref='/'></ion-back-button>
+              <ion-back-button defaultHref='/tabs'></ion-back-button>
             </ion-buttons>
           </ion-toolbar>
         </ion-col>
@@ -50,13 +50,11 @@
         </div>
 
       </ion-row>
-
-
     </ion-grid>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
+<ion-content [fullscreen]="true" >
 
   <!-- below div consist of two div . FIRST INCLUDES FILTER CONEENT AND OTHER
   DISPLAY CONTENT  -->
@@ -164,10 +162,6 @@
     <!-- model ends here  -->
 
   </div>
-
-
-
-
 
 </ion-content>
 

@@ -19,9 +19,9 @@ export class UerOrderServiceService {
   
   token = this.StorageService.getDecodedAccessToken()
 
-  PlaceOrder(): Observable<any> {
-    // console.log(Id, body);
-    return this.http.post(`${environment.API_URL}/place/order/${this.token.userId}`, {}).pipe(
+  PlaceOrder(body:any): Observable<any> {
+    console.log( "service body here --> "+ JSON.stringify(body));
+    return this.http.post(`${environment.API_URL}/place/order/${this.token.userId}`, {body}).pipe(
       catchError((err) => {
         return this.errorService.handleError(err);
       })

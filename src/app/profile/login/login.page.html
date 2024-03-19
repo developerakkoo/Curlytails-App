@@ -4,14 +4,15 @@
         <ion-card >
           <ion-card-header >
             <ion-card-title>Login</ion-card-title>
+            <ion-card-subtitle color="success">{{message}}</ion-card-subtitle>
           </ion-card-header>
     
           <ion-card-content>
             <form [formGroup]="myForm" (ngSubmit)="onSubmit()">
-            <ion-input type="email" fill="solid" label="Email" labelPlacement="floating" helperText="Enter a valid email"
+            <ion-input type="email"  label="Email" labelPlacement="floating" helperText="Enter a valid email"
                formControlName="email"></ion-input>
             <br>
-            <ion-input type="password" fill="solid" label="Password" labelPlacement="floating" helperText="Enter a valid Password"
+            <ion-input type="password"  label="Password" labelPlacement="floating" helperText="Enter a valid Password"
                formControlName="password"></ion-input>
               <br>
               <ion-text size="full" >Forgot Password?</ion-text>

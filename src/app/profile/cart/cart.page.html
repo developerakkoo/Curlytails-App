@@ -66,17 +66,20 @@
     </ion-list> -->
 
 
-    <ion-list *ngFor="let categoryItems of cartdata.data.cartItems">
+    <ion-list *ngFor="let categoryItems of cartdata.data.cartItems; let i = index">
       <ion-item lines="none">
 
-        <ion-checkbox aria-label="Label" slot="start"  (ionChange)="onCheckboxChange( 
+        <ion-checkbox aria-label="Label"   slot="start"  (ionChange)="onCheckboxChange( 
           cartdata.data.TotalItems,
           cartdata.data.SubTotal, 
            cartdata.data._id,
            categoryItems.price, 
            categoryItems.quantity,
            categoryItems._id,
-           categoryItems.productId._id)" ></ion-checkbox>
+           categoryItems.productId._id,
+           i,
+           $event )
+           "></ion-checkbox>
 
         <ion-thumbnail slot="start">
           <img src="assets/dogfood.jpg" />
@@ -105,26 +108,33 @@
         </ion-row>
       </ion-item>
       <ion-row>
-        <ion-col size="auto">
-          <ion-button fill="clear" class="ion-padding" mode="ios" (click)="RemoceFromCart(categoryItems)">
-            Remove
+        <ion-col size="6">
+          <ion-button  size='small'  fill="solid" mode="ios" (click)="RemoceFromCart(categoryItems)">
+             Remove
           </ion-button>
+          <!-- <ion-button fill="clear" class="ion-padding" mode="ios" (click)="RemoceFromCart(categoryItems)">
+            Remove
+          </ion-button> -->
         </ion-col>
-        <ion-col>
-          <ion-button class="ion-padding" mode="ios" (click)="placeOrder()">
-            <!-- Proceed to Pay {{categoryItems.productId.price | currency:"INR"}} -->
+        <!-- <ion-col>
+          <ion-button class="ion-padding" mode="ios" >
+             Proceed to Pay {{categoryItems.productId.price | currency:"INR"}} 
              Place Order
           </ion-button>
-        </ion-col>
+        </ion-col> -->
       </ion-row>
     </ion-list>
 
 
 
-    <div *ngIf="responseData[0].data.cartItems.length !== 0">
-      <ion-button class="ion-padding" expand="block" mode="ios">
+    <div *ngIf="responseData[0].data.cartItems.length !== 0 && TotalpayableAmount == 0">
+      <ion-button class="ion-padding" expand="block" mode="ios" (click)="placeOrder(responseData[0].data)">
         Proceed to Pay {{ responseData[0].data.SubTotal | number:'1.0-0'}}
       </ion-button>
+    </div>
+    <div *ngIf="TotalpayableAmount !== 0">
+      <ion-button  class="ion-padding" expand="block" mode="ios" (click)="placeOrder('puchase Selected')"
+      > Pay for Selected {{TotalpayableAmount | number:'1.0-0'}}</ion-button>
     </div>
     <div *ngIf="responseData[0].data.cartItems.length == 0">
       <ion-button class="ion-padding" expand="block" mode="ios">
