@@ -9,8 +9,15 @@ ion-text{
     cursor: pointer;
 }
 .flex-center {
+    // width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100%;
+    padding-block: auto;
+    // margin-inline: 50px;
+}
+
+.background{
+    --background: url(../../../assets//petstoreBackImg.jpg)  no-repeat center center / cover;;
 }

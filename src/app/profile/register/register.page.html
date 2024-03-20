@@ -1,4 +1,4 @@
-<ion-content>
+<ion-content class="background">
   <div class="flex-center">
     <ion-card>
       <ion-card-header>
@@ -8,7 +8,7 @@
       <ion-card-content>
         <form [formGroup]="myForm" (ngSubmit)="onSubmit()">
 
-          <ion-input type="name" formControlName="name" fill="solid" label="Name" labelPlacement="floating"></ion-input>
+          <ion-input type="name" formControlName="name" fill="outline" label="Name" label-placement="floating"></ion-input>
           <ion-item *ngIf="myForm.get('name')?.invalid && (myForm.get('name')?.dirty || myForm.get('name')?.touched)">
             <ion-label>
               <ion-note *ngIf="myForm.get('name')?.errors?.['required']">Please Enter your name</ion-note>
@@ -16,8 +16,8 @@
           </ion-item>
 
           <br>
-          <ion-input type="email" formControlName="email" fill="solid" label="Email"
-            labelPlacement="floating"></ion-input>
+          <ion-input type="email" formControlName="email" fill="outline" label="Email"
+          label-placement="floating"></ion-input>
           <ion-item
             *ngIf="myForm.get('email')?.invalid && (myForm.get('email')?.dirty || myForm.get('email')?.touched)">
             <ion-label>
@@ -27,19 +27,19 @@
           </ion-item>
 
           <br>
-          <ion-input type="text" formControlName="phoneNo" fill="solid" label="Number"
-            labelPlacement="floating"></ion-input>
+          <ion-input type="text" formControlName="phoneNo" fill="outline" label="Number"
+          label-placement="floating"></ion-input>
           <ion-item class=" w-max border text-sm font-small text-red-500"
-            *ngIf="myForm.get('mobile')?.invalid && (myForm.get('mobile')?.dirty || myForm.get('mobile')?.touched)">
+            *ngIf="myForm.get('phoneNo')?.invalid && (myForm.get('phoneNo')?.dirty || myForm.get('phoneNo')?.touched)">
             <ion-label>
-              <ion-note *ngIf="myForm.get('mobile')?.errors?.['required']">Number is required</ion-note>
-              <ion-note *ngIf="myForm.get('mobile')?.errors?.['minlength']">Number is less then 10 digits.</ion-note>
+              <ion-note *ngIf="myForm.get('phoneNo')?.errors?.['required']">Number is required</ion-note>
+              <ion-note *ngIf="myForm.get('phoneNo')?.errors?.['minlength']">Number is less then 10 digits.</ion-note>
             </ion-label>
           </ion-item>
 
           <br>
-          <ion-input type="text" fill="solid" formControlName="address" label="Address"
-            labelPlacement="floating"></ion-input>
+          <ion-input type="text" fill="outline" formControlName="address" label="Address"
+          label-placement="floating"></ion-input>
           <ion-item
             *ngIf="myForm.get('address')?.invalid && (myForm.get('address')?.dirty || myForm.get('address')?.touched)">
             <ion-label>
@@ -48,8 +48,8 @@
           </ion-item>
 
           <br>
-          <ion-input type="password" fill="solid" formControlName="password" label="Password"
-            labelPlacement="floating"></ion-input>
+          <ion-input type="password" fill="outline" formControlName="password" label="Password"
+          label-placement="floating"></ion-input>
           <ion-item class=" w-max border text-sm font-small text-red-500"
             *ngIf="myForm.get('password')?.invalid && (myForm.get('password')?.dirty || myForm.get('password')?.touched)">
             <ion-label>

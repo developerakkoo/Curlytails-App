@@ -53,7 +53,7 @@ export class RegisterPage implements OnInit {
       // header: 'A Short Title Is Best',
       // subHeader: message,
       message: message.message,
-      buttons: ['Close'],
+      buttons: ['Ok'],
     });
 
     await alert.present();
