@@ -5,6 +5,7 @@ import { AuthServiceService } from '../../services/auth-service.service'
 import { Router } from '@angular/router'
 import { AlertController } from '@ionic/angular';
 
+
 @Component({
   selector: 'app-register',
   templateUrl: './register.page.html',
@@ -24,19 +25,28 @@ export class RegisterPage implements OnInit {
 
   isAlertOpen = false;
   alertButtons = ['Close'];
+  showPassword: boolean = false;
 
 
   constructor( private fb: FormBuilder, private AuthService : AuthServiceService, private router: Router, private alertController: AlertController ) { 
     this.myForm = fb.group({
       email: ['',[Validators.required, Validators.email]],
       password:['',[Validators.required, Validators.minLength(6)]],
-      phoneNo:['',[Validators.required, Validators.minLength(10)]],
+      phoneNo:['',[ Validators.required,
+        Validators.minLength(10), Validators.maxLength(10)]],
       name:['',[Validators.required]],
       address:['',[Validators.required]]
     })
    }
 
   ngOnInit() { }
+
+
+  togglePasswordVisibility() {
+    console.log("method hitt");
+    
+    this.showPassword = !this.showPassword;
+  }
 
   setOpen(isOpen: boolean) {
     if(isOpen == true){
@@ -64,7 +74,13 @@ export class RegisterPage implements OnInit {
     if(this.myForm.valid){
     console.log(this.myForm.value);
     this.AuthService.registerUser(this.myForm.value).subscribe({
-      next: (v) => console.log(this.presentAlert(v)),
+      next: (v) =>  {
+        this.presentAlert(v)
+        setTimeout(() => {
+          // localStorage.setItem('Token', v.data.accessToken)
+        this.router.navigate(['/login'])
+         }, 1000);
+      },
       error: (e) => console.log(this.presentAlert(e.error)),
       complete: () => console.info('complete') 
     })

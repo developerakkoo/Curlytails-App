@@ -66,11 +66,17 @@ $medium: 800px;
   //some CSS
   @media screen and (max-width: $small) {
     //do Smth
-    height: 300px;
+    height: 200px;
+    margin-block: auto;
   }
 
   @media screen and (min-width: $medium) {
     //do Smth
     height: 400px;
+    margin-block: auto;
   }
+}
+
+.background{
+  --background: url(../../assets/74033.jpg)  no-repeat center center / cover;
 }

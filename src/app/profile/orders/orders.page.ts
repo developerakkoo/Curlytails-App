@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { UerOrderServiceService } from '../../services/UserServices/user-order-service.service'
 import { filter, map, of, toArray } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-orders',
@@ -9,40 +10,41 @@ import { filter, map, of, toArray } from 'rxjs';
 })
 export class OrdersPage implements OnInit {
 
-  orders:any[] = [
+  orders: any[] = [
     {
-      "_id":1234,
-      "status":"Pending"
+      "_id": 1234,
+      "status": "Pending"
     }
   ];
-  
+  Orders: any;
+
   constructor(
-    private OrderService : UerOrderServiceService
+    private router: Router,
+    private OrderService: UerOrderServiceService
   ) { }
 
   ngOnInit() {
     this.FetchAllOrdersPlaced();
   }
 
-  FetchAllOrdersPlaced(){
-      this.OrderService.GetUserIdOrderByUserId().pipe(
-         map(res => res.data.orderItems[0].productId)
-      ).subscribe(res => {
+  FetchAllOrdersPlaced() {
+    this.OrderService.GetUserIdOrderByUserId().pipe(
+      map(res => res.data)
+    ).subscribe(res => {
       // console.log("orders--->"+ JSON.stringify(res.data.orderItems[0].productId));
       console.log(res);
-      let productId = res;
-      
-      // let innerdata = res.data.orderItems[0]
-      // of(innerdata).pipe(
-      //   map(innerdata => innerdata.map(innerdata = innerdata.productId))
-      // ).subscribe(res => {
-      //   console.log(res);
-        
-      // })
-      
-      
+
+      this.Orders = res;
+      // console.log( JSON.stringify(this.Orders) );
+
     })
-    
+
+  }
+
+  SeeOrderDetails(id:any){
+     console.log(id);
+     this.router.navigate(['/tabs/profile/orders/order-detail', {data:id}]);
+     
   }
 
 }

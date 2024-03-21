@@ -20,7 +20,7 @@ export class UerOrderServiceService {
   token = this.StorageService.getDecodedAccessToken()
 
   PlaceOrder(body:any): Observable<any> {
-    console.log( "service body here --> "+ JSON.stringify(body));
+    console.log( "service body here --> "+ typeof(body.Subtotal));
     return this.http.post(`${environment.API_URL}/place/order/${this.token.userId}`, {body}).pipe(
       catchError((err) => {
         return this.errorService.handleError(err);
@@ -29,8 +29,8 @@ export class UerOrderServiceService {
   }
 
   GetOrderById(orderId :any): Observable<any> {
-    // console.log(Id, body);
-    return this.http.get(`${environment.API_URL}/get/order/${orderId}`, {}).pipe(
+    // console.log(Id);
+    return this.http.get(`${environment.API_URL}/get/order/${orderId}`).pipe(
       catchError((err) => {
         return this.errorService.handleError(err);
       })

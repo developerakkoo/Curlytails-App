@@ -42,7 +42,6 @@ export class AuthInterceptorsService implements HttpInterceptor {
       // below code indicates if the page is not login and other 
       // need to verify if the user is loged in or not
       if(!req.url.includes('/login') && !req.url.includes('/register')){
-        
         return next.handle(req).pipe(catchError((err:HttpErrorResponse) => {
           if(err.status === 401){
             this.router.navigate(['/login']);

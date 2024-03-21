@@ -27,17 +27,18 @@
           </ion-item>
 
           <br>
-          <ion-input type="text" formControlName="phoneNo" fill="outline" label="Number"
+          <ion-input type="tel" formControlName="phoneNo" fill="outline" label="Number"
           label-placement="floating"></ion-input>
           <ion-item class=" w-max border text-sm font-small text-red-500"
             *ngIf="myForm.get('phoneNo')?.invalid && (myForm.get('phoneNo')?.dirty || myForm.get('phoneNo')?.touched)">
             <ion-label>
-              <ion-note *ngIf="myForm.get('phoneNo')?.errors?.['required']">Number is required</ion-note>
-              <ion-note *ngIf="myForm.get('phoneNo')?.errors?.['minlength']">Number is less then 10 digits.</ion-note>
+              <ion-note *ngIf=" myForm.get('phoneNo')?.errors?.['required'] ">Number is required</ion-note>
+              <ion-note *ngIf="myForm.get('phoneNo')?.errors?.['minlength'] || myForm.get('phoneNo')?.errors?.['maxlength']">Number must be of 10 digits only.</ion-note>
             </ion-label>
           </ion-item>
 
           <br>
+          
           <ion-input type="text" fill="outline" formControlName="address" label="Address"
           label-placement="floating"></ion-input>
           <ion-item
@@ -48,8 +49,24 @@
           </ion-item>
 
           <br>
-          <ion-input type="password" fill="outline" formControlName="password" label="Password"
-          label-placement="floating"></ion-input>
+          <!-- password -->
+          <ion-input type="{{ showPassword ? 'text' : 'password' }}" fill="outline" formControlName="password" label="Password"
+          label-placement="floating">
+          <!-- <ion-button
+        color="dark"
+        slot="end"
+        fill="clear"
+        (click)="this.showPassword = !this.showPassword;"
+      >
+        <ion-icon
+          slot="end"
+          name="{{ showPassword ? 'eye' : 'eye-off' }}"
+          slot="end"
+        ></ion-icon>
+      </ion-button> -->
+        </ion-input>
+        
+          <!-- <ion-icon name="eye" slot="end" (click)="togglePasswordVisibility()"></ion-icon> -->
           <ion-item class=" w-max border text-sm font-small text-red-500"
             *ngIf="myForm.get('password')?.invalid && (myForm.get('password')?.dirty || myForm.get('password')?.touched)">
             <ion-label>

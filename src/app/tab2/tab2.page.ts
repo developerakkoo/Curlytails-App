@@ -182,7 +182,7 @@ export class Tab2Page implements OnInit, AfterViewInit {
   navigateToPage2(id: any) {
     // Navigate to Page 2 with a parameter
     console.log(id);
-    this.router.navigate(['/category', {data: id}]); // 123 is an example parameter
+    this.router.navigate(['/tabs/category', {data: id}]); // 123 is an example parameter
   }
 
   // getSubCategoryByCategoryId(id:any){

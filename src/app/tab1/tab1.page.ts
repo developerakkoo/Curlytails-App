@@ -114,7 +114,7 @@ export class Tab1Page implements OnInit {
   navigateToPage2(id: any, name: any) {
     // Navigate to Page 2 with a parameter
     console.log(id, name);
-    this.router.navigate(['/category', { data: id, name: name }]); // 123 is an example parameter
+    this.router.navigate(['/tabs/category', { data: id, name: name }]); // 123 is an example parameter
   }
 
   navigateToCategoryPage() {

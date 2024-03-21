@@ -128,7 +128,7 @@
 
 
     <div *ngIf="responseData[0].data.cartItems.length !== 0 && TotalpayableAmount == 0">
-      <ion-button class="ion-padding" expand="block" mode="ios" (click)="placeOrder(responseData[0].data)">
+      <ion-button class="ion-padding" expand="block" mode="ios" (click)="placeOrder('EmptyBody')">
         Proceed to Pay {{ responseData[0].data.SubTotal | number:'1.0-0'}}
       </ion-button>
     </div>

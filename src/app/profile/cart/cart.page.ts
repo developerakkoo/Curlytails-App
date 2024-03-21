@@ -17,6 +17,7 @@ export class CartPage implements OnInit {
   cartItems: any[] = []
   productIds: any[] = []
   body: any;
+  Emptybody = {}
   TotalpayableAmount = 0
 
   constructor(
@@ -96,6 +97,7 @@ export class CartPage implements OnInit {
   }
 
 
+  // below mehod is to select single or multiple items to order 
   onCheckboxChange(
     ToalItems: any,
     SubTotal: any,
@@ -124,9 +126,10 @@ export class CartPage implements OnInit {
       // let cartItem = this.cartItems.find(item => item.cartnum === cartnum);
       let cartItemindex = this.cartItems.findIndex(item => item.cartnum === cartnum)
       console.log("condition is true and cart item is -->" + cartItemindex);
-
-      if (cartItemindex !== -1) {
+        
+      if (cartItemindex !== -1 ) {
         this.cartItems[cartItemindex].Quantity = quantity
+      
       } else {
         this.cartItems.push({
           cartnum: cartnum,
@@ -135,31 +138,28 @@ export class CartPage implements OnInit {
           price: price,
           _id: cartId
         });
-        this.productIds.push([cartnum, cartId]);
-
+        this.productIds.push(cartId);
       }
+      // if( PoductIndex !== -1 ){
+         
+      // }
 
     } else {
       // Remove unchecked item from cartItems array
       this.cartItems = this.cartItems.filter(item => item.cartnum !== cartnum);
-      // Find the index of the item to remove based on the number
-      const index = this.productIds.findIndex(item => item[0] == cartnum);
-      if (index !== -1) {
-        // Remove the item from productIds array
-        this.productIds.splice(index, 1);
-      }
+      this.productIds = this.productIds.filter(item => item !== cartId);
     }
 
     this.body = {
       cartItem: this.cartItems,
-      TotalItems:  parseInt(ToalItems),
+      TotalItems: parseInt(ToalItems),
       Subtotal: parseInt(SubTotal),
       productIds: this.productIds
     }
 
     this.FindTotalPayableAmount()
 
-    // console.log("body here ---> " + JSON.stringify(this.body));
+    console.log("body here ---> " + JSON.stringify(this.body));
   }
 
   FindTotalPayableAmount() {
@@ -185,15 +185,17 @@ export class CartPage implements OnInit {
   }
 
 
-  placeOrder( data:any ) {
-    // console.log("order placed method hitt!!"+ this.body['productIds'].length);
-   
+  placeOrder(data: any) {
+    console.log("body here ---> " + JSON.stringify(this.body));
+    // console.log("order placed method hitt!!"+ JSON.stringify(data));
+
+
     if(data == 'puchase Selected'){
       this.OrderService.PlaceOrder(this.body).subscribe(res => {
           console.log(res);
         })
     }else{
-      this.OrderService.PlaceOrder(data).subscribe(res => {
+      this.OrderService.PlaceOrder(this.Emptybody).subscribe(res => {
           console.log(res);   
         })
     }
