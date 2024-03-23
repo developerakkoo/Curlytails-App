@@ -4,6 +4,7 @@ import { AuthServiceService } from '../../services/auth-service.service'
 import { StorageServiceService } from '../../services/storage-service.service'
 import { Router } from '@angular/router'
 import { AlertController } from '@ionic/angular';
+import { ToastController } from '@ionic/angular';
 
 @Component({
   selector: 'app-login',
@@ -14,19 +15,66 @@ export class LoginPage implements OnInit {
 
   myForm: FormGroup
   message: any
+  showPassword: boolean = false;
 
   constructor(private fb: FormBuilder, private AuthService: AuthServiceService,
     private storageService: StorageServiceService,
     private rout: Router,
-    private alertController: AlertController
+    private alertController: AlertController,
+    private toastController: ToastController
+ 
   ) {
     this.myForm = fb.group({
       email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(6)]]
+      password: ['', [Validators.required, Validators.minLength(8)]]
     })
   }
 
   ngOnInit() {
+
+  }
+
+  // toast to represent error message
+  async presentToast(position: 'top' | 'middle' | 'bottom') {
+    const toast = await this.toastController.create({
+      message: this.message,
+      duration: 1500,
+      position: position,
+    });
+
+    await toast.present();
+  }
+
+  validateEmail() {
+    const emailControl = this.myForm.get('email');
+  
+  if (emailControl?.invalid && emailControl?.touched) {
+    if (emailControl.errors?.['required']) {
+      this.message = 'Email is required.';
+      this.presentToast('top')
+    } else if (emailControl.errors?.['email']) {
+      this.message = 'Please enter a valid email address.';
+      this.presentToast('top')
+    }
+  }
+  }
+
+  validatePassword() {
+    const passwordControl = this.myForm.get('password');
+    
+    if (passwordControl?.['invalid'] && passwordControl.touched) {
+      if (passwordControl.errors?.['required']) {
+        this.message = 'Password is required.';
+        this.presentToast('top')
+      } else if (passwordControl.errors?.['minlength']) {
+        this.message = 'Password must be at least 8 characters long.';
+        this.presentToast('top')
+      }
+    }
+  }
+
+  togglePasswordVisibility() {
+    this.showPassword = !this.showPassword;
   }
 
   // onSubmit() {
@@ -46,32 +94,29 @@ export class LoginPage implements OnInit {
   //   }
   // }
 
-  async presentAlert(message :any) {
-    const alert = await this.alertController.create({
-      // header: 'A Short Title Is Best',
-      // subHeader: message,
-      message: message.message,
-      buttons: ['Ok'],
-    });
-
-    await alert.present();
-  }
 
   onSubmit() {
+    console.log("submit method hitt!!");
+    
     if (this.myForm.valid) {
       console.log(this.myForm.value);
       this.AuthService.loginUser(this.myForm.value).subscribe({
         next: (v) => {
           // console.log(this.presentAlert(v))
           this.message = v.message
-           setTimeout(() => {
-            localStorage.setItem('Token', v.data.accessToken)
-          this.rout.navigate(['/'])
-           }, 1000);
+          this.presentToast('top')
+          //  setTimeout(() => {
+          //   localStorage.setItem('Token', v.data.accessToken)
+          // this.rout.navigate(['/'])
+          //  }, 1000);
           // localStorage.setItem('Token', v.data.accessToken)
           // this.rout.navigate(['/'])
         } ,
-        error: (e) => console.log(this.presentAlert(e.error)),
+        error: (e) => {
+          // console.log(e.error.message),
+          this.message = e.error.message
+          this.presentToast('top')
+        },
         complete: () => console.info('complete') 
       })
 

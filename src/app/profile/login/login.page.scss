@@ -1,23 +1,63 @@
-
-ion-card {
-    width: 400px;
+ion-input {
+    width: 100%;
 }
 
-ion-text{
+ion-text {
     display: flex;
     justify-content: center;
     cursor: pointer;
 }
-.flex-center {
-    // width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-block: 10px;
-    // padding-block: 10px;
-    // margin-inline: 50px;
+
+// .flex-center {
+//     // width: 100%;
+//     display: flex;
+//     justify-content: center;
+//     align-items: center;
+//     margin-block: 10px;
+//     // padding-block: 10px;
+//     // margin-inline: 50px;
+// }
+
+.FormFields {
+    width: 90%;
+    margin-bottom: 20px;
+    position: fixed;
+    top: 20%;
+
+    ion-item {
+        margin-block: 20px;
+        border-bottom: 1px solid black;
+    }
+
+    ion-text {
+        display: flex;
+        justify-content: end;
+        color: #FF8A00;
+        font-family: Poppins;
+        font-size: 16px;
+        font-weight: 500;
+        line-height: 24px;
+
+    }
+
 }
 
-.background{
-    --background: url(../../../assets//petstoreBackImg.jpg)  no-repeat center center / cover;;
+/* Or using custom classes */
+.transparent-background {
+    --background: transparent;
+    /* Sets the background color to transparent */
+}
+
+.background {
+    // background: url(../../../assets/loginPageImage.png) no-repeat 100% -200%  / contain;
+    //    border: 1px solid black;
+    width: 100%;
+    position: absolute;
+    top: -40px;
+    overflow: hidden;
+    // background-position-y: top;  
+    // background-position-x: left;
+    // background-repeat: no-repeat; 
+    // background-size: auto 50%;
+
 }

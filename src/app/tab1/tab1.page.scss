@@ -80,3 +80,108 @@ $medium: 800px;
 .background{
   --background: url(../../assets/74033.jpg)  no-repeat center center / cover;
 }
+
+
+// new code starts here 
+
+.fontStyle{
+  font-family: 'Poppins', sans-serif; 
+  font-weight: 900;
+  // font-size: large;
+  // font-weight: bold;
+}
+
+.displaycenter{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.center-content{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: 'Poppins', sans-serif; 
+  font-weight: 400;
+}
+
+.headerMidColContent{
+  ion-note{
+    display: flex;
+    justify-content: center;
+    font-size: medium;
+    // padding-block: 5px;
+    margin-bottom: 10px;
+  }
+ 
+}
+
+#notification-button {
+  position: relative;
+  width: 42px;
+  top: 1px;
+  right: 1px;
+  overflow: visible!important;
+  background-color: white;
+}
+
+#notifications-badge {
+  background-color: red;
+  position: absolute;
+  top: -3px;
+  right: -3px;
+  border-radius: 100%;
+}
+
+#notifications-dot {
+  background-color: #FF8A00;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  position: absolute;
+  top: 0;
+  right: 5px; /* Adjust this value based on your design */
+}
+
+.purchaseButton::part(native) {
+  background: #FF8A00;
+  color: #fff;
+  border-color: #fff;
+  border-radius: 20px;
+  font-weight: bold;
+}
+
+.purchaseButton::part(detail-icon) {
+  color: white;
+  opacity: 1;
+  font-size: 20px;
+}
+
+.purchaseButton {
+  display: flex;
+  justify-content: center;
+  border-radius: 20px;
+  margin: 0 auto; /* Center the button horizontally */
+}
+
+/* Responsive styles */
+
+.PetTypeImageContainer{
+  height: 80px;
+  overflow: hidden;
+}
+
+.PetTypeImageContainer{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  
+}
+
+
+@media screen and (max-width: 768px) {
+  .PetTypeImageContainer {
+    height: 180px;
+  }
+
+}

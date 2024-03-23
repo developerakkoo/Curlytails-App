@@ -1,62 +1,56 @@
-<ion-content class="background">
-  
-      <!-- <div class="flex-center">
-        <ion-card >
-          <ion-card-header >
-            <ion-card-title>Login</ion-card-title>
-            <ion-card-subtitle color="success">{{message}}</ion-card-subtitle>
-          </ion-card-header>
-    
-          <ion-card-content>
-            <form [formGroup]="myForm" (ngSubmit)="onSubmit()">
-            <ion-input type="email"  label="Email" labelPlacement="floating" helperText="Enter a valid email"
-               formControlName="email"></ion-input>
-            <br>
-            <ion-input type="password"  label="Password" labelPlacement="floating" helperText="Enter a valid Password"
-               formControlName="password"></ion-input>
-              <br>
-              <ion-text size="full" >Forgot Password?</ion-text>
-              <br>
-              <ion-button size="full"  type="submit">Login</ion-button>
-              <br>
-              <ion-button size="full" fill="clear"  href="/register">Register</ion-button>
-            </form>
-          </ion-card-content>
-        </ion-card>
-      </div> -->
+<ion-content [fullscreen]="true">
+  <div style="position: relative; width: 100%;">
 
-      <ion-grid>
-        <ion-row>
-          <ion-col size-sm="12" size-md="8" >
-            <div class="flex-center">
+    <div style="   width: 100%;
+    position: absolute; 
+    overflow: hidden;">
+      <img src="../../../assets/loginPageImage.png"
+        style="float: right; height: 80%; position: fixed; top: -20px; right: 0px; " alt="">
+    </div>
+
+    <div style="
+  display: flex;
+  justify-content: center; /* Center horizontally */
+  align-items: end; /* Center vertically */
+  height: 100%; /* Fill the height of ion-content */
+">
+
+      <form [formGroup]="myForm" (ngSubmit)="onSubmit()" class="FormFields">
+
+        <h1 style="font-family: Poppins; font-weight: bolder; font-size: xx-large;">Login</h1>
+        <p slot="start">Please sign in to continue</p>
+
+
+        <ion-item class="transparent-background" [class.invalid]="myForm.get('email')?.invalid && myForm.get('email')?.touched">
+          <ion-input labelPlacement="stacked" placeholder="Enter Email" type="email" formControlName="email" (ionBlur)="validateEmail()">
+          </ion-input>
+          <ion-icon slot="start" name="mail"></ion-icon>
+          <!-- <ion-text *ngIf="myForm.get('email')?.invalid && myForm.get('email')?.touched" color="danger" class="input-error">
+            <small>Email is required and must be a valid email address.</small>
+          </ion-text> -->
+        </ion-item>
+        <!-- invalid message for email -->
           
-            <ion-card >
-              <ion-card-header >
-                <ion-card-title style="display: flex; justify-content: center;">Welcome to PetStore</ion-card-title>
-                <ion-card-subtitle color="success">{{message}}</ion-card-subtitle>
-              </ion-card-header>
-              <hr />
-              <ion-card-content>
-                <form [formGroup]="myForm" (ngSubmit)="onSubmit()">
-                <ion-input type="email"  label="Email" label-placement="floating" fill="outline" 
-                   formControlName="email"></ion-input>
-                <br>
-                <ion-input type="password"  label="Password" label-placement="floating" fill="outline" 
-                   formControlName="password"></ion-input>
-                  <br>
-                  <ion-text size="full" >Forgot Password?</ion-text>
-                  <br>
-                  <ion-button size="full"  type="submit">Login</ion-button>
-                  <br>
-                  <ion-button size="full" fill="clear"  href="/register">Register</ion-button>
-                </form>
-              </ion-card-content>
-            </ion-card>
-        
-          </div>
-          </ion-col>
-          <ion-col size-sm="0" size-md="4"></ion-col>
-        </ion-row>
-      </ion-grid>
 
+        <ion-item class="transparent-background" [class.invalid]="myForm.get('password')?.invalid && myForm.get('password')?.touched">
+          <ion-input type="{{ showPassword ? 'text' : 'password' }}" placeholder="Enter Password" type="email"
+            formControlName="password" (ionBlur)="validatePassword()" > </ion-input>
+          <ion-icon slot="start" name="lock-closed"></ion-icon>
+          <ion-button fill="clear" slot="end" aria-label="Show/hide" (click)="togglePasswordVisibility()">
+            <ion-icon slot="icon-only" name="{{ showPassword ? 'eye' : 'eye-off' }}" aria-hidden="true"></ion-icon>
+          </ion-button>
+        </ion-item>
+
+
+        <br>
+        <ion-text slot="end">Forgot Password?</ion-text>
+        <br>
+        <ion-button class="purchaseButton" type="submit">Login</ion-button>
+        <br>
+        <ion-button size="full" fill="clear" href="/register" style="text-transform: none; color: black;"> Don't have an
+          account?<p style="color: #FF8A00;">&nbsp; Sign up</p> </ion-button>
+      </form>
+
+    </div>
+  </div>
 </ion-content>

@@ -20,15 +20,25 @@ export class Tab1Page implements OnInit {
   BannerImg: any[] = []
   TrendingNow: any[] = []
   PetTypes: any[] = []
-  searchQuery: any;
+  searchQuery = "Hinjawadi Phase 2 Pune";
 
   laodingBar = false
 
   breakpoints = {
-    640: { slidesPerView: 1, spaceBetween: 20 },
-    768: { slidesPerView: 2, spaceBetween: 40 },
-    1024: { slidesPerView: 3, spaceBetween: 50 },
+    640: { slidesPerView: 4, spaceBetween: 20 },
+    768: { slidesPerView: 4, spaceBetween: 40 },
+    1024: { slidesPerView: 4, spaceBetween: 50 },
   };
+  spaceBetween = {
+    640: { spaceBetween: 10 },
+    768: { spaceBetween: 40 },
+    1024: { spaceBetween: 50 },
+  }
+
+
+  // new design code 
+  currentaddress:any;
+  n = 3; 
 
   ngOnInit(): void {
     this.getTopBanner();
