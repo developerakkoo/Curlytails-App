@@ -24,16 +24,16 @@ export class Tab1Page implements OnInit {
 
   laodingBar = false
 
-  breakpoints = {
-    640: { slidesPerView: 4, spaceBetween: 20 },
-    768: { slidesPerView: 4, spaceBetween: 40 },
-    1024: { slidesPerView: 4, spaceBetween: 50 },
-  };
-  spaceBetween = {
-    640: { spaceBetween: 10 },
-    768: { spaceBetween: 40 },
-    1024: { spaceBetween: 50 },
-  }
+  // breakpoints = {
+  //   640: { slidesPerView: 4, spaceBetween: 20 },
+  //   768: { slidesPerView: 4, spaceBetween: 40 },
+  //   1024: { slidesPerView: 4, spaceBetween: 50 },
+  // };
+  // spaceBetween = {
+  //   640: { spaceBetween: 10 },
+  //   768: { spaceBetween: 40 },
+  //   1024: { spaceBetween: 50 },
+  // }
 
 
   // new design code 

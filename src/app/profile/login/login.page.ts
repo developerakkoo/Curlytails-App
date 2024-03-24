@@ -120,6 +120,18 @@ export class LoginPage implements OnInit {
         complete: () => console.info('complete') 
       })
 
+    }else{
+      const passwordControl = this.myForm.get('password');
+      const emailControl = this.myForm.get('email');
+
+      if(passwordControl?.['invalid'] && emailControl?.['invalid']){
+        this.message = 'Invalid Credentials.';
+        this.presentToast('top')
+      }else if (passwordControl?.['invalid']) {
+        this.validatePassword()
+      } else {
+         this.validateEmail()
+      }
     }
   }
 

@@ -1,0 +1,23 @@
+.FormFields {
+    width: 90%;
+    margin-bottom: 20px;
+    position: fixed;
+    top: 20%;
+
+    ion-item {
+        margin-block: 20px;
+        border-bottom: 1px solid black;
+    }
+
+    ion-text {
+        display: flex;
+        justify-content: end;
+        color: #FF8A00;
+        font-family: Poppins;
+        font-size: 16px;
+        font-weight: 500;
+        line-height: 24px;
+
+    }
+
+}

@@ -1,95 +1,67 @@
-<ion-content class="background">
-  <div class="flex-center">
-    <ion-card>
-      <ion-card-header>
-        <ion-card-title>Register</ion-card-title>
-      </ion-card-header>
+<ion-content>
+  <div style="padding-inline: 20px; padding-top: 50px;">
 
-      <ion-card-content>
-        <form [formGroup]="myForm" (ngSubmit)="onSubmit()">
-
-          <ion-input type="name" formControlName="name" fill="outline" label="Name" label-placement="floating"></ion-input>
-          <ion-item *ngIf="myForm.get('name')?.invalid && (myForm.get('name')?.dirty || myForm.get('name')?.touched)">
-            <ion-label>
-              <ion-note *ngIf="myForm.get('name')?.errors?.['required']">Please Enter your name</ion-note>
-            </ion-label>
-          </ion-item>
-
-          <br>
-          <ion-input type="email" formControlName="email" fill="outline" label="Email"
-          label-placement="floating"></ion-input>
-          <ion-item
-            *ngIf="myForm.get('email')?.invalid && (myForm.get('email')?.dirty || myForm.get('email')?.touched)">
-            <ion-label>
-              <ion-note *ngIf="myForm.get('email')?.errors?.['required']">Email required</ion-note>
-              <ion-note *ngIf="myForm.get('email')?.errors?.['email']">Invalid Email format</ion-note>
-            </ion-label>
-          </ion-item>
-
-          <br>
-          <ion-input type="tel" formControlName="phoneNo" fill="outline" label="Number"
-          label-placement="floating"></ion-input>
-          <ion-item class=" w-max border text-sm font-small text-red-500"
-            *ngIf="myForm.get('phoneNo')?.invalid && (myForm.get('phoneNo')?.dirty || myForm.get('phoneNo')?.touched)">
-            <ion-label>
-              <ion-note *ngIf=" myForm.get('phoneNo')?.errors?.['required'] ">Number is required</ion-note>
-              <ion-note *ngIf="myForm.get('phoneNo')?.errors?.['minlength'] || myForm.get('phoneNo')?.errors?.['maxlength']">Number must be of 10 digits only.</ion-note>
-            </ion-label>
-          </ion-item>
-
-          <br>
-          
-          <ion-input type="text" fill="outline" formControlName="address" label="Address"
-          label-placement="floating"></ion-input>
-          <ion-item
-            *ngIf="myForm.get('address')?.invalid && (myForm.get('address')?.dirty || myForm.get('address')?.touched)">
-            <ion-label>
-              <ion-note *ngIf="myForm.get('address')?.errors?.['required']">Please Enter your Address</ion-note>
-            </ion-label>
-          </ion-item>
-
-          <br>
-          <!-- password -->
-          <ion-input type="{{ showPassword ? 'text' : 'password' }}" fill="outline" formControlName="password" label="Password"
-          label-placement="floating">
-          <!-- <ion-button
-        color="dark"
-        slot="end"
-        fill="clear"
-        (click)="this.showPassword = !this.showPassword;"
-      >
-        <ion-icon
-          slot="end"
-          name="{{ showPassword ? 'eye' : 'eye-off' }}"
-          slot="end"
-        ></ion-icon>
-      </ion-button> -->
-        </ion-input>
-        
-          <!-- <ion-icon name="eye" slot="end" (click)="togglePasswordVisibility()"></ion-icon> -->
-          <ion-item class=" w-max border text-sm font-small text-red-500"
-            *ngIf="myForm.get('password')?.invalid && (myForm.get('password')?.dirty || myForm.get('password')?.touched)">
-            <ion-label>
-              <ion-note *ngIf="myForm.get('password')?.errors?.['required']">Password is required</ion-note>
-              <ion-note *ngIf="myForm.get('password')?.errors?.['minlength']">Password must be at least 8 characters
-                long</ion-note>
-            </ion-label>
-          </ion-item>
-
-          <br>
-          <ion-button type="submit" size="full" href="/register">Register</ion-button>
-          <ion-button size="full" fill="clear" (click)="alreadyRegistered()">Already Registered?</ion-button>
-        </form>
-      </ion-card-content>
-    </ion-card>
+  <div style="display: flex; width: 100%; justify-content: space-between; align-items: center; ">
+    <div>
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" style="height: 45px; width: 45px; ">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" />
+      </svg> 
+    </div>
+    <div style="margin-right: 20px;">
+      <img src="../../../assets/registerpageDogImage.png" alt="">
+    </div>
   </div>
+  <!-- form starts here -->
 
-  <!-- model start here  -->
-  <!-- <ion-button (click)="setOpen(true)">Click Me</ion-button> -->
-  <ion-alert
-    [isOpen]="isAlertOpen"
-    header="Registration Successfully!"
-    [buttons]="alertButtons"
-    (didDismiss)="setOpen(false)"
-  ></ion-alert>
+  <div style="
+  display: flex;
+  justify-content: center; /* Center horizontally */
+  align-items: end; /* Center vertically */
+  height: 100%; /* Fill the height of ion-content */
+">
+
+      <form [formGroup]="myForm" (ngSubmit)="onSubmit()" class="FormFields">
+
+        <h1 style="font-family: Poppins; font-weight: bolder; font-size: xx-large;">Create Account</h1>
+        <p slot="start">Please sign in to continue</p>
+
+        <ion-item class="transparent-background" >
+          <ion-input labelPlacement="stacked" placeholder="Full Name" type="text" formControlName="name" >
+          </ion-input>
+          <ion-icon slot="start" name="person-circle"></ion-icon>
+        </ion-item>
+
+        <ion-item class="transparent-background" >
+          <ion-input labelPlacement="stacked" placeholder="Enter Email" type="email" formControlName="email" >
+          </ion-input>
+          <ion-icon slot="start" name="mail"></ion-icon>
+        </ion-item>
+        <!-- invalid message for email -->
+          
+
+        <ion-item class="transparent-background" >
+          <ion-input type="{{ showPassword ? 'text' : 'password' }}" placeholder="Enter Password" type="email"
+            formControlName="password"  > </ion-input>
+          <ion-icon slot="start" name="lock-closed"></ion-icon>
+          <ion-button fill="clear" slot="end" aria-label="Show/hide" (click)="togglePasswordVisibility()">
+            <ion-icon slot="icon-only" name="{{ showPassword ? 'eye' : 'eye-off' }}" aria-hidden="true"></ion-icon>
+          </ion-button>
+        </ion-item>
+
+        <ion-item class="transparent-background" >
+          <ion-input type="password" placeholder="Confirm Password" type="password"
+            formControlName="password"  > </ion-input>
+          <ion-icon slot="start" name="lock-closed"></ion-icon>
+        </ion-item>
+
+        <br>
+        <ion-button class="purchaseButton" type="submit">SingUp</ion-button>
+        <br>
+        <ion-button size="full" fill="clear"  style="text-transform: none; color: black;">Already have an
+          account?<p style="color: #FF8A00;">&nbsp; Sign in</p> </ion-button>
+      </form>
+
+    </div>
+
+</div>
 </ion-content>
