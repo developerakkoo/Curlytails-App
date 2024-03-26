@@ -4,6 +4,7 @@ import { AlertController } from '@ionic/angular';
 import { UerOrderServiceService } from '../../services/UserServices/user-order-service.service'
 
 import { toArray } from 'rxjs';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-cart',
   templateUrl: './cart.page.html',
@@ -23,7 +24,8 @@ export class CartPage implements OnInit {
   constructor(
     private UserCartService: UserCartServiceService,
     private alertController: AlertController,
-    private OrderService: UerOrderServiceService
+    private OrderService: UerOrderServiceService,
+    private router: Router,
   ) { }
 
   ngOnInit() {
@@ -186,29 +188,24 @@ export class CartPage implements OnInit {
 
 
   placeOrder(data: any) {
-    console.log("body here ---> " + JSON.stringify(this.body));
+    // console.log("body here ---> " + JSON.stringify(this.body));
     // console.log("order placed method hitt!!"+ JSON.stringify(data));
-
 
     if(data == 'puchase Selected'){
       this.OrderService.PlaceOrder(this.body).subscribe(res => {
           console.log(res);
+          this.getAllCartItem()
         })
     }else{
       this.OrderService.PlaceOrder(this.Emptybody).subscribe(res => {
           console.log(res);   
+          this.getAllCartItem()
         })
     }
-
-
-    // if (this.body !== undefined && this.body['productIds'].length !== 0) {
-    //   console.log("order placed method hitt!!" + JSON.stringify(this.body));
-    // } else {
-    //   console.log("please select the items to order!!");
-    // }
-    // this.OrderService.PlaceOrder().subscribe(res => {
-    //   console.log(res);
-
-    // })
   }
+
+  navigateToAddtoProductDetial(){
+    this.router.navigate(['tabs','profile','product-detial']);
+  }
+
 }

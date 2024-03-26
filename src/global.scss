@@ -25,36 +25,15 @@
 @import "@ionic/angular/css/text-transformation.css";
 @import "@ionic/angular/css/flex-utils.css";
 
-.FormFields {
-  width: 90%;
-  margin-bottom: 20px;
-  position: fixed;
-  top: 20%;
 
-  ion-item {
-      margin-block: 20px;
-      border-bottom: 1px solid black;
-  }
-
-  ion-text {
-      display: flex;
-      justify-content: end;
-      color: #FF8A00;
-      font-family: Poppins;
-      font-size: 16px;
-      font-weight: 500;
-      line-height: 24px;
-
-  }
-
-}
 
 .purchaseButton::part(native) {
-    background: #FF8A00;
+    // background: #FF8A00;
     color: #fff;
     border-color: #fff;
     border-radius: 10px;
     font-weight: bold;
+    padding-block: 20px;
   }
   
   .purchaseButton::part(detail-icon) {
@@ -64,6 +43,7 @@
   }
   
   .purchaseButton {
+    padding-block: 10px;
     display: flex;
     justify-content: center;
     border-radius: 20px;

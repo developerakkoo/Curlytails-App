@@ -1,7 +1,21 @@
-<ion-content>
-  <div style="padding-inline: 20px; padding-top: 50px;">
+<ion-content [fullscreen]="true">
+  <div>
+    <ion-grid>
+      <ion-row style=" padding-inline: 5px;">
+        <ion-col >
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20" stroke-width="2.5" stroke="currentColor" style="height: 100%; width: 30px; margin-block: auto; ">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" />
+          </svg>
+        </ion-col>
+        <ion-col style=" display: flex; justify-content: center;">
+           <!-- <ion-img src="../../../assets/registerpageDogImage.png"></ion-img> -->
+           <img src="../../../assets/registerpageDogImage.png" style="width: 150px;" alt="">
+        </ion-col>
+      </ion-row>
+    
+    </ion-grid>
 
-  <div style="display: flex; width: 100%; justify-content: space-between; align-items: center; ">
+  <!-- <div style="display: flex; width: 100%; justify-content: space-between; align-items: center; ">
     <div>
       <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" style="height: 45px; width: 45px; ">
         <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" />
@@ -10,14 +24,13 @@
     <div style="margin-right: 20px;">
       <img src="../../../assets/registerpageDogImage.png" alt="">
     </div>
-  </div>
+  </div> -->
   <!-- form starts here -->
 
   <div style="
   display: flex;
   justify-content: center; /* Center horizontally */
   align-items: end; /* Center vertically */
-  height: 100%; /* Fill the height of ion-content */
 ">
 
       <form [formGroup]="myForm" (ngSubmit)="onSubmit()" class="FormFields">
@@ -25,40 +38,58 @@
         <h1 style="font-family: Poppins; font-weight: bolder; font-size: xx-large;">Create Account</h1>
         <p slot="start">Please sign in to continue</p>
 
-        <ion-item class="transparent-background" >
-          <ion-input labelPlacement="stacked" placeholder="Full Name" type="text" formControlName="name" >
+        <ion-item class="transparent-background" [ngClass]="{ 'invalid': myForm.get('name')?.invalid && myForm.get('name')?.touched, 'valid': myForm.get('name')?.valid && myForm.get('name')?.touched}">
+          <ion-input labelPlacement="stacked" placeholder="Full Name" type="text" formControlName="name" (ionBlur)="validatename()" >
           </ion-input>
           <ion-icon slot="start" name="person-circle"></ion-icon>
         </ion-item>
 
-        <ion-item class="transparent-background" >
-          <ion-input labelPlacement="stacked" placeholder="Enter Email" type="email" formControlName="email" >
+        <ion-item class="transparent-background" [ngClass]="{ 'invalid': myForm.get('email')?.invalid && myForm.get('email')?.touched, 'valid': myForm.get('email')?.valid && myForm.get('email')?.touched}">
+          <ion-input labelPlacement="stacked" placeholder="Enter Email" type="email" formControlName="email" (ionBlur)="validateEmail()">
           </ion-input>
           <ion-icon slot="start" name="mail"></ion-icon>
         </ion-item>
         <!-- invalid message for email -->
+
+        <ion-item class="transparent-background"  [ngClass]="{ 'invalid': myForm.get('phoneNo')?.invalid && myForm.get('phoneNo')?.touched, 'valid': myForm.get('phoneNo')?.valid && myForm.get('phoneNo')?.touched}">
+          <ion-input labelPlacement="stacked" 
+          placeholder="Enter Phone Number" 
+          formControlName="phoneNo" 
+          (ionBlur)="validatenumber()"
+          >
+          </ion-input>
+          <ion-icon slot="start" name="call"></ion-icon>
+        </ion-item>
           
 
-        <ion-item class="transparent-background" >
+        <ion-item class="transparent-background" [ngClass]="{ 'invalid': myForm.get('address')?.invalid && myForm.get('address')?.touched, 'valid': myForm.get('address')?.valid && myForm.get('address')?.touched}">
+          <ion-input labelPlacement="stacked" placeholder="Add Address" type="text" formControlName="address" (ionBlur)="validatename()" >
+          </ion-input>
+          <ion-icon slot="start" name="location-sharp"></ion-icon>
+        </ion-item>
+
+        
+
+        <ion-item class="transparent-background"  [ngClass]="{ 'invalid': myForm.get('password')?.invalid && myForm.get('password')?.touched, 'valid': myForm.get('password')?.valid && myForm.get('password')?.touched}">
           <ion-input type="{{ showPassword ? 'text' : 'password' }}" placeholder="Enter Password" type="email"
-            formControlName="password"  > </ion-input>
+            formControlName="password" (ionBlur)="validatePassword()" > </ion-input>
           <ion-icon slot="start" name="lock-closed"></ion-icon>
           <ion-button fill="clear" slot="end" aria-label="Show/hide" (click)="togglePasswordVisibility()">
             <ion-icon slot="icon-only" name="{{ showPassword ? 'eye' : 'eye-off' }}" aria-hidden="true"></ion-icon>
           </ion-button>
         </ion-item>
 
-        <ion-item class="transparent-background" >
-          <ion-input type="password" placeholder="Confirm Password" type="password"
-            formControlName="password"  > </ion-input>
+        <ion-item class="transparent-background"  [class.invalid]="myForm.get('cpassword')?.invalid && myForm.get('cpassword')?.touched">
+          <ion-input type="{{ showPassword ? 'text' : 'password' }}" placeholder="Enter Password" type="email"
+            formControlName="cpassword" (ionBlur)="passwordMatchValidator()" > </ion-input>
           <ion-icon slot="start" name="lock-closed"></ion-icon>
         </ion-item>
+  
 
         <br>
         <ion-button class="purchaseButton" type="submit">SingUp</ion-button>
-        <br>
-        <ion-button size="full" fill="clear"  style="text-transform: none; color: black;">Already have an
-          account?<p style="color: #FF8A00;">&nbsp; Sign in</p> </ion-button>
+        <ion-button (click)="alreadyRegistered()" size="full" fill="clear"  style="text-transform: none; color: black;">Already have an
+          account?<p style="color: #FF8A00;" >&nbsp; Sign in</p> </ion-button>
       </form>
 
     </div>

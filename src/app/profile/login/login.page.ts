@@ -34,6 +34,8 @@ export class LoginPage implements OnInit {
 
   }
 
+  // below code is same in register page. Which can be optimized
+
   // toast to represent error message
   async presentToast(position: 'top' | 'middle' | 'bottom') {
     const toast = await this.toastController.create({
@@ -65,10 +67,10 @@ export class LoginPage implements OnInit {
     if (passwordControl?.['invalid'] && passwordControl.touched) {
       if (passwordControl.errors?.['required']) {
         this.message = 'Password is required.';
-        this.presentToast('top')
+        this.presentToast('bottom')
       } else if (passwordControl.errors?.['minlength']) {
         this.message = 'Password must be at least 8 characters long.';
-        this.presentToast('top')
+        this.presentToast('bottom')
       }
     }
   }
@@ -109,13 +111,15 @@ export class LoginPage implements OnInit {
           //   localStorage.setItem('Token', v.data.accessToken)
           // this.rout.navigate(['/'])
           //  }, 1000);
-          // localStorage.setItem('Token', v.data.accessToken)
-          // this.rout.navigate(['/'])
+          localStorage.setItem('Token', v.data.accessToken)
+          this.rout.navigate(['/'])
+          console.log(v.data.accessToken);
+          
         } ,
         error: (e) => {
           // console.log(e.error.message),
           this.message = e.error.message
-          this.presentToast('top')
+          this.presentToast('bottom')
         },
         complete: () => console.info('complete') 
       })
@@ -126,7 +130,7 @@ export class LoginPage implements OnInit {
 
       if(passwordControl?.['invalid'] && emailControl?.['invalid']){
         this.message = 'Invalid Credentials.';
-        this.presentToast('top')
+        this.presentToast('bottom')
       }else if (passwordControl?.['invalid']) {
         this.validatePassword()
       } else {

@@ -20,6 +20,26 @@ ion-backdrop {
     background: var(--ion-color-primary);
 }
 
+.FormFields {
+    width: 90%;
+    
+    ion-item {
+        margin-block: 10px;
+        // border-bottom: 1px solid black;
+    }
+  
+    ion-text {
+        display: flex;
+        justify-content: end;
+        color: #FF8A00;
+        font-family: Poppins;
+        font-size: 16px;
+        font-weight: 500;
+        line-height: 24px;
+  
+    }
+  
+  }
 
 .background {
     --background: url(../../../assets/registerBackimg.jpg) no-repeat center center / cover;
@@ -40,3 +60,33 @@ ion-backdrop {
     height: 100px;
     border-radius: 10px;
 }
+
+
+.invalid {
+    --border-color: red;
+  }
+  
+  .valid {
+    --border-color: green;
+  }
+  
+//   .transparent-background {
+//     --border-color: transparent; /* Add this to ensure the border color is transparent by default */
+//   }
+  
+//   .transparent-background.ion-untouched {
+//     --border-color: transparent !important; /* Ensure the border color remains transparent if the field is untouched */
+//   }
+  
+//   .transparent-background.ion-touched {
+//     --border-color: var(--border-color) !important; /* Update the border color when the field is touched */
+//   }
+  
+//   .transparent-background.ion-untouched.invalid {
+//     --border-color: red !important; /* Update border color to red if field is invalid and untouched */
+//   }
+  
+//   .transparent-background.ion-touched.valid {
+//     --border-color: green !important; /* Update border color to green if field is valid and touched */
+//   }
+  

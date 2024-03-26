@@ -165,3 +165,10 @@ $medium: 800px;
   }
 
 }
+
+.heart-icon {
+  color: #808080; /* Grey color */
+}
+.heart-icon.clicked {
+  color: red; /* Red color */
+}

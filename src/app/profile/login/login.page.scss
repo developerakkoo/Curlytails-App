@@ -23,12 +23,12 @@ ion-text {
     margin-bottom: 20px;
     position: fixed;
     top: 20%;
-
+  
     ion-item {
-        margin-block: 20px;
+        margin-block: 10px;
         border-bottom: 1px solid black;
     }
-
+  
     ion-text {
         display: flex;
         justify-content: end;
@@ -37,10 +37,10 @@ ion-text {
         font-size: 16px;
         font-weight: 500;
         line-height: 24px;
-
+  
     }
-
-}
+  
+  }
 
 /* Or using custom classes */
 .transparent-background {
