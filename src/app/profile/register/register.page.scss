@@ -25,7 +25,15 @@ ion-backdrop {
     
     ion-item {
         margin-block: 10px;
-        // border-bottom: 1px solid black;
+        border-bottom: 1px solid black;
+    }
+
+    ion-item.invalid{
+        border-bottom: 2px solid red;
+    }
+
+    ion-item.valid{
+         border-bottom: 2px solid green;
     }
   
     ion-text {
@@ -38,6 +46,8 @@ ion-backdrop {
         line-height: 24px;
   
     }
+
+
   
   }
 
@@ -62,13 +72,14 @@ ion-backdrop {
 }
 
 
-.invalid {
-    --border-color: red;
-  }
+// .invalid {
+//     border-bottom: 1px solid red;
+    
+//   }
   
-  .valid {
-    --border-color: green;
-  }
+//   .valid {
+//     --border-color: green;
+//   }
   
 //   .transparent-background {
 //     --border-color: transparent; /* Add this to ensure the border color is transparent by default */

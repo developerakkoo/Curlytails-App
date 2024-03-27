@@ -8,6 +8,18 @@ const routes: Routes = [
   {
     path: '',
     component: RegisterPage
+  },
+  {
+    path: 'address-map',
+    loadChildren: () => import('./address-map/address-map.module').then( m => m.AddressMapPageModule)
+  },
+  {
+    path: 'addressform',
+    loadChildren: () => import('./addressform/addressform.module').then( m => m.AddressformPageModule)
+  },
+  {
+    path: 'add-address',
+    loadChildren: () => import('./add-address/add-address.module').then( m => m.AddAddressPageModule)
   }
 ];
 

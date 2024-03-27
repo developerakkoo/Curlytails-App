@@ -19,20 +19,18 @@
 
         <h1 style="font-family: Poppins; font-weight: bolder; font-size: xx-large;">Login</h1>
         <p slot="start">Please sign in to continue</p>
-
-
-        <ion-item class="transparent-background" [class.invalid]="myForm.get('email')?.invalid && myForm.get('email')?.touched">
+         
+        <div>
+        <ion-item class="transparent-background" [ngClass]="{ 'invalid': myForm.get('email')?.invalid && myForm.get('email')?.touched, 'valid': myForm.get('email')?.valid && myForm.get('email')?.touched}">
           <ion-input labelPlacement="stacked" placeholder="Enter Email" type="email" formControlName="email" (ionBlur)="validateEmail()">
           </ion-input>
           <ion-icon slot="start" name="mail"></ion-icon>
-          <!-- <ion-text *ngIf="myForm.get('email')?.invalid && myForm.get('email')?.touched" color="danger" class="input-error">
-            <small>Email is required and must be a valid email address.</small>
-          </ion-text> -->
         </ion-item>
+      </div>
         <!-- invalid message for email -->
           
 
-        <ion-item class="transparent-background" [class.invalid]="myForm.get('password')?.invalid && myForm.get('password')?.touched">
+        <ion-item class="transparent-background" [ngClass]="{ 'invalid': myForm.get('password')?.invalid && myForm.get('password')?.touched, 'valid': myForm.get('password')?.valid && myForm.get('password')?.touched}">
           <ion-input type="{{ showPassword ? 'text' : 'password' }}" placeholder="Enter Password" type="email"
             formControlName="password" (ionBlur)="validatePassword()" > </ion-input>
           <ion-icon slot="start" name="lock-closed"></ion-icon>
@@ -46,7 +44,6 @@
         <ion-text slot="end">Forgot Password?</ion-text>
         <br>
         <ion-button class="purchaseButton" type="submit">Login</ion-button>
-        <br>
         <ion-button size="full" fill="clear" href="/register" style="text-transform: none; color: black;"> Don't have an
           account?<p style="color: #FF8A00;">&nbsp; Sign up</p> </ion-button>
       </form>

@@ -28,6 +28,15 @@ ion-text {
         margin-block: 10px;
         border-bottom: 1px solid black;
     }
+
+    
+    ion-item.invalid{
+        border-bottom: 1px solid red;
+    }
+
+    ion-item.valid{
+         border-bottom: 1px solid green;
+    }
   
     ion-text {
         display: flex;
@@ -61,3 +70,5 @@ ion-text {
     // background-size: auto 50%;
 
 }
+
+

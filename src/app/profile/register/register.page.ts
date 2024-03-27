@@ -6,6 +6,7 @@ import { Router } from '@angular/router'
 import { AlertController } from '@ionic/angular';
 import { ToastController } from '@ionic/angular';
 import { UserCartServiceService } from '../../services/UserServices/user-cart-service.service'
+import { UserAddressService} from '../../services/UserServices/shared/user-address.service'
 
 @Component({
   selector: 'app-register',
@@ -15,6 +16,8 @@ import { UserCartServiceService } from '../../services/UserServices/user-cart-se
 export class RegisterPage implements OnInit {
 
   myForm: FormGroup;
+
+  UserAddress:string = '';
 
   RegistrationDetial = {
     name: '',
@@ -34,6 +37,7 @@ export class RegisterPage implements OnInit {
     private AuthService: AuthServiceService, private router: Router,
     private alertController: AlertController,
     private toastController: ToastController,
+    private userAddress: UserAddressService
     ) {
     this.myForm = fb.group({
       email: ['', [Validators.required, Validators.email]],
@@ -43,6 +47,18 @@ export class RegisterPage implements OnInit {
       name: ['', [Validators.required]],
       address: ['', [Validators.required]]
     })
+
+    this.userAddress.Address$.subscribe(add => {
+      // console.log("address here --->"+add);
+
+      if (add) {
+        let Address = JSON.parse(add)
+        this.myForm.get('address')?.setValue(`${Address['flat']}, ${Address['area']}, ${Address['pincode']}`);
+      }
+      console.log(this.UserAddress);
+      
+    })
+
   }
 
   ngOnInit() { }
@@ -173,6 +189,8 @@ export class RegisterPage implements OnInit {
   //   await alert.present();
   // }
 
+
+
   onSubmit() {
    console.log("method hit!!");
    
@@ -201,6 +219,10 @@ export class RegisterPage implements OnInit {
 
   alreadyRegistered() {
     this.router.navigate(['/login'])
+  }
+
+  navigateToAddressPage(){
+    this.router.navigate(['register','add-address'])
   }
 
 }

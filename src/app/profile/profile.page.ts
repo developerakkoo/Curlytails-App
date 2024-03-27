@@ -24,7 +24,6 @@ export class ProfilePage implements OnInit {
     }
     if(page == "cart"){
       this.router.navigate(['tabs','profile',page]);
-
     }
   }
 

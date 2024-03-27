@@ -26,31 +26,31 @@ export class AuthInterceptorsService implements HttpInterceptor {
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
       console.log("authInterCeptor Called!");
 
-      const myToken = localStorage.getItem('Token');
+      // const myToken = localStorage.getItem('Token');
    
 
-      if(!myToken){
-        this.router.navigate(['/login']);
-      }
+      // if(!myToken){
+      //   this.router.navigate(['/login']);
+      // }
 
-      const req = request.clone({
-         setHeaders:{
-          'x-access-token': `${myToken}`
-         }
-      });
+      // const req = request.clone({
+      //    setHeaders:{
+      //     'x-access-token': `${myToken}`
+      //    }
+      // });
 
       // below code indicates if the page is not login and other 
       // need to verify if the user is loged in or not
-      if(!req.url.includes('/login') && !req.url.includes('/register')){
-        return next.handle(req).pipe(catchError((err:HttpErrorResponse) => {
-          if(err.status === 401){
-            this.router.navigate(['/login']);
-          }
-          return throwError(() => err)
-        }))
+      // if(!req.url.includes('/login') && !req.url.includes('/register')){
+      //   return next.handle(req).pipe(catchError((err:HttpErrorResponse) => {
+      //     if(err.status === 401){
+      //       this.router.navigate(['/login']);
+      //     }
+      //     return throwError(() => err)
+      //   }))
 
-      }
-      return next.handle(req);
+      // }
+      return next.handle(request);
   
   }
 }

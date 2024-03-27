@@ -30,7 +30,6 @@ export class CartPage implements OnInit {
 
   ngOnInit() {
     this.getAllCartItem()
-
   }
 
 
