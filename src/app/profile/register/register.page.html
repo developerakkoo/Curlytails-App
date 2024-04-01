@@ -15,18 +15,6 @@
     
     </ion-grid>
 
-  <!-- <div style="display: flex; width: 100%; justify-content: space-between; align-items: center; ">
-    <div>
-      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" style="height: 45px; width: 45px; ">
-        <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" />
-      </svg> 
-    </div>
-    <div style="margin-right: 20px;">
-      <img src="../../../assets/registerpageDogImage.png" alt="">
-    </div>
-  </div> -->
-  <!-- form starts here -->
-
   <div style="
   display: flex;
   justify-content: center; /* Center horizontally */
@@ -62,12 +50,12 @@
         </ion-item>
           
 
-        <ion-item class="transparent-background" [ngClass]="{ 'invalid': myForm.get('address')?.invalid && myForm.get('address')?.touched, 'valid': myForm.get('address')?.valid && myForm.get('address')?.touched}">
+        <!-- <ion-item class="transparent-background" [ngClass]="{ 'invalid': myForm.get('address')?.invalid && myForm.get('address')?.touched, 'valid': myForm.get('address')?.valid && myForm.get('address')?.touched}">
           <ion-input labelPlacement="stacked" placeholder="Add Address" formControlName="address" (ionBlur)="validatename()"  >
           </ion-input>
           <ion-icon slot="start" name="location-sharp"></ion-icon>
           <ion-icon slot="end" name="arrow-forward" (click)=" navigateToAddressPage()" ></ion-icon>
-        </ion-item>
+        </ion-item> -->
 
         
 
@@ -81,14 +69,14 @@
         </ion-item>
 
         <ion-item class="transparent-background"  [class.invalid]="myForm.get('cpassword')?.invalid && myForm.get('cpassword')?.touched">
-          <ion-input type="{{ showPassword ? 'text' : 'password' }}" placeholder="Enter Password" type="email"
-            formControlName="cpassword" (ionBlur)="passwordMatchValidator()" > </ion-input>
+          <ion-input type="password" placeholder="Enter Password" 
+            formControlName="cpassword"  > </ion-input>
           <ion-icon slot="start" name="lock-closed"></ion-icon>
         </ion-item>
   
 
         <br>
-        <ion-button class="purchaseButton" type="submit">SingUp</ion-button>
+        <ion-button class="purchaseButton" (click)="navigateToAddressPage()" type="submit" [disabled]="myForm.invalid || myForm.hasError('passwordMismatch')">Next Step<ion-icon slot="end" name="arrow-forward"></ion-icon> </ion-button>
         <ion-button (click)="alreadyRegistered()" size="full" fill="clear"  style="text-transform: none; color: black;">Already have an
           account?<p style="color: #FF8A00;" >&nbsp; Sign in</p> </ion-button>
       </form>

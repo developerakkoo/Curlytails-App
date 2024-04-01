@@ -1,23 +1,41 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormControl, FormGroup, ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms'
+import { FormControl, FormGroup, ReactiveFormsModule, FormBuilder, Validators, AbstractControl, ValidationErrors } from '@angular/forms'
 import { AuthServiceService } from '../../services/auth-service.service'
 import { Router } from '@angular/router'
-import { AlertController } from '@ionic/angular';
+import { AlertController, IonicSlides } from '@ionic/angular';
 import { ToastController } from '@ionic/angular';
 import { UserCartServiceService } from '../../services/UserServices/user-cart-service.service'
-import { UserAddressService} from '../../services/UserServices/shared/user-address.service'
+import { UserAddressService } from '../../services/UserServices/shared/user-address.service'
+import { UserFormDetailsService } from '../../services/UserServices/shared/user-form-details.service'
+
+const passwordMatchValidator = (control: AbstractControl): ValidationErrors | null => {
+  const password = control.get('password');
+  const confirmPassword = control.get('cpassword');
+
+  if (!password || !confirmPassword || password.value !== confirmPassword.value) {
+    return { passwordMismatch: true };
+  }
+  return null;
+};
+
+const emailPatternValidator = Validators.pattern(/^[\w-]+(\.[\w-]+)*@gmail\.com$/);
 
 @Component({
   selector: 'app-register',
   templateUrl: './register.page.html',
   styleUrls: ['./register.page.scss'],
 })
+
+
+
 export class RegisterPage implements OnInit {
+
+  swiperModules = [IonicSlides];
 
   myForm: FormGroup;
 
-  UserAddress:string = '';
+  UserAddress: string = '';
 
   RegistrationDetial = {
     name: '',
@@ -37,31 +55,94 @@ export class RegisterPage implements OnInit {
     private AuthService: AuthServiceService, private router: Router,
     private alertController: AlertController,
     private toastController: ToastController,
-    private userAddress: UserAddressService
-    ) {
+    private userAddress: UserAddressService,
+    private RegistrationDetails: UserFormDetailsService
+  ) {
     this.myForm = fb.group({
-      email: ['', [Validators.required, Validators.email]],
+      email: ['', [Validators.required, emailPatternValidator]],
       password: ['', [Validators.required, Validators.minLength(6)]],
-      cpassword: ['', [Validators.required, Validators.minLength(6)]],
+      cpassword: ['', [Validators.required]],
       phoneNo: ['', [Validators.required, Validators.pattern('^[0-9]{10}$')]],
       name: ['', [Validators.required]],
-      address: ['', [Validators.required]]
-    })
-
-    this.userAddress.Address$.subscribe(add => {
-      // console.log("address here --->"+add);
-
-      if (add) {
-        let Address = JSON.parse(add)
-        this.myForm.get('address')?.setValue(`${Address['flat']}, ${Address['area']}, ${Address['pincode']}`);
-      }
-      console.log(this.UserAddress);
-      
-    })
+      address: ['']
+    },
+    {
+      validators: passwordMatchValidator // Apply custom validator to the form group
+    });
 
   }
 
-  ngOnInit() { }
+  ngOnInit() {
+
+    // below method takes the address and shows it in input address box of myForm
+    // this.userAddress.Address$.subscribe({
+    //   next: (add: any) => {
+    //     console.log("address here --->" + JSON.stringify(add));
+    //     if (Object.keys(add).length !== 0) {
+    //       let Address = add;
+    //       let formattedAddress = '';
+    //       if (Address.flat !== undefined) {
+    //         formattedAddress += `${Address.flat}, `;
+    //       }
+    //       if (Address.county !== undefined) {
+    //         formattedAddress += `${Address.county}, `;
+    //       }
+    //       if (Address.road !== undefined) {
+    //         formattedAddress += `${Address.road}, `;
+    //       }
+
+    //       if (Address.state_district !== undefined) {
+    //         formattedAddress += `${Address.state_district}, `;
+    //       }
+    //       if (Address.state !== undefined) {
+    //         formattedAddress += `${Address.state}, `;
+    //       }
+    //       if (Address.postcode !== undefined) {
+    //         formattedAddress += `${Address.postcode}, `;
+    //       }
+    //       // Remove trailing comma and space
+    //       formattedAddress = formattedAddress.replace(/,\s*$/, '');
+    //       this.myForm.get('address')?.setValue(formattedAddress);
+    //     }
+    //   },
+    //   error: (err: any) => {
+    //     console.log(err);
+    //   },
+    //   complete: () => console.info('complete') 
+    // }
+
+    //   // add => {
+    //   // console.log("address here --->"+ JSON.stringify(add));
+    //   // if (Object.keys(add).length !== 0) {
+    //   //   let Address = add;
+    //   //   let formattedAddress = '';
+    //   //   if (Address.flat !== undefined) {
+    //   //     formattedAddress += `${Address.flat}, `;
+    //   //   }
+    //   //   if (Address.county !== undefined) {
+    //   //     formattedAddress += `${Address.county}, `;
+    //   //   }
+    //   //   if (Address.road !== undefined) {
+    //   //     formattedAddress += `${Address.road}, `;
+    //   //   }
+
+    //   //   if (Address.state_district !== undefined) {
+    //   //     formattedAddress += `${Address.state_district}, `;
+    //   //   }
+    //   //   if (Address.state !== undefined) {
+    //   //     formattedAddress += `${Address.state}, `;
+    //   //   }
+    //   //   if (Address.postcode !== undefined) {
+    //   //     formattedAddress += `${Address.postcode}, `;
+    //   //   }
+    //   //   // Remove trailing comma and space
+    //   //   formattedAddress = formattedAddress.replace(/,\s*$/, '');
+    //   //   this.myForm.get('address')?.setValue(formattedAddress);
+    //   // }
+    //   // console.log(this.UserAddress);
+    // );
+
+  }
 
   // toast to represent error message
   async presentToast(position: 'top' | 'middle' | 'bottom') {
@@ -115,7 +196,7 @@ export class RegisterPage implements OnInit {
   }
 
   validatePassword() {
-    const passwordControl = this.myForm.get('password');
+    const passwordControl = this.myForm?.get('password');
 
     if (passwordControl?.['invalid'] && passwordControl.touched) {
       if (passwordControl.errors?.['required']) {
@@ -128,101 +209,69 @@ export class RegisterPage implements OnInit {
     }
   }
 
-  passwordMatchValidator() {
-    const passwordControl = this.myForm.get('password');
-    const confirmPasswordControl = this.myForm.get('cpassword');
+  // passwordMatchValidator() {
+  //   const passwordControl = this.myForm.get('password');
+  //   const confirmPasswordControl = this.myForm.get('cpassword');
 
-    if (passwordControl && confirmPasswordControl) {
-      const passwordValue = passwordControl.value;
-      const confirmPasswordValue = confirmPasswordControl.value;
-  
-      if (passwordValue !== confirmPasswordValue) {
-        confirmPasswordControl.setErrors({ passwordMismatch: true });
-        this.message = 'Passwords do not match.';
-        this.presentToast('bottom')
-      } else {
-        confirmPasswordControl.setErrors(null);
-        this.message = 'Passwords match.';
-        this.presentToast('bottom')
-      }
-    }
+  //   if (passwordControl && confirmPasswordControl) {
+  //     const passwordValue = passwordControl.value;
+  //     const confirmPasswordValue = confirmPasswordControl.value;
 
-    // if (
-    //   confirmPasswordControl!.errors &&
-    //   !confirmPasswordControl!.errors['passwordMismatch']
-    // ) {
-    //   // Other error present, don't overwrite it
-    //   return;
-    // }
+  //     if (passwordValue !== confirmPasswordValue) {
+  //       confirmPasswordControl.setErrors({ passwordMismatch: true });
+  //       this.message = 'Passwords do not match.';
+  //       this.presentToast('bottom')
+  //     } else {
+  //       confirmPasswordControl.setErrors(null);
+  //       this.message = 'Passwords match.';
+  //       this.presentToast('bottom')
+  //     }
+  //   }
 
-    // if (passwordControl!.value !== confirmPasswordControl!.value) {
-    //   confirmPasswordControl!.setErrors({ passwordMismatch: true });
-    //   this.message = "Password Mismatched"
-    //   this.presentToast('top')
-    // } else {
-    //   confirmPasswordControl!.setErrors(null);
-    // }
-  }
+  // }
 
   togglePasswordVisibility() {
     this.showPassword = !this.showPassword;
   }
 
-  // setOpen(isOpen: boolean) {
-  //   if(isOpen == true){
-  //     this.isAlertOpen = isOpen;
-  //   }else{
-  //     this.isAlertOpen = isOpen;
-  //     this.router.navigate(['/login']);
-  //   }
-
-  // }
-
-  // async presentAlert(message :any) {
-  //   const alert = await this.alertController.create({
-  //     // header: 'A Short Title Is Best',
-  //     // subHeader: message,
-  //     message: message.message,
-  //     buttons: ['Ok'],
-  //   });
-
-  //   await alert.present();
-  // }
-
-
 
   onSubmit() {
-   console.log("method hit!!");
-   
+    console.log("method hit!!");
+
     if (this.myForm.valid) {
       console.log(this.myForm.value);
-      this.AuthService.registerUser(this.myForm.value).subscribe({
-        next: (v) =>  {
-          this.message = "Registration Successfull!"
-          this.presentToast('bottom')
-          // setTimeout(() => {
-          //   // localStorage.setItem('Token', v.data.accessToken)
-          // this.router.navigate(['/login'])
-          //  }, 1000);
-        },
-        error: (e) => {
-          this.message = e.error.message
-          this.presentToast('bottom')
-        } 
-      })
 
-    }else{
+      this.RegistrationDetails.setData(this.myForm.value)
+
+      // this.AuthService.registerUser(this.myForm.value).subscribe({
+      //   next: (v) => {
+      //     this.message = "Registration Successfull!"
+      //     this.presentToast('bottom')
+      //     // setTimeout(() => {
+      //     //   // localStorage.setItem('Token', v.data.accessToken)
+      //     // this.router.navigate(['/login'])
+      //     //  }, 1000);
+      //   },
+      //   error: (e) => {
+      //     this.message = e.error.message
+      //     this.presentToast('bottom')
+      //   }
+      // })
+
+    } else {
       console.log("form validation failed");
-      
+
     }
   }
+
+
 
   alreadyRegistered() {
     this.router.navigate(['/login'])
   }
 
-  navigateToAddressPage(){
-    this.router.navigate(['register','add-address'])
+  navigateToAddressPage() {
+    this.router.navigate(['register', 'add-address'])
   }
 
 }

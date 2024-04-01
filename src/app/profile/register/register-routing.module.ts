@@ -10,10 +10,6 @@ const routes: Routes = [
     component: RegisterPage
   },
   {
-    path: 'address-map',
-    loadChildren: () => import('./address-map/address-map.module').then( m => m.AddressMapPageModule)
-  },
-  {
     path: 'addressform',
     loadChildren: () => import('./addressform/addressform.module').then( m => m.AddressformPageModule)
   },

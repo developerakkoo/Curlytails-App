@@ -79,7 +79,7 @@
             <ion-label class="headerMidColContent">
               <ion-note>Delivery Address</ion-note>
 
-              <ion-text class="fontStyle" >{{searchQuery}}</ion-text>
+              <ion-text class="fontStyle">{{searchQuery}}</ion-text>
             </ion-label>
           </ion-item>
         </ion-col>
@@ -107,9 +107,8 @@
     /* right: 5px; */
     /* margin-inline: 3px; */
     top: -5px;" class="searchbar" #inputstring placeholder="Search" animated="true">
-          </ion-searchbar>
+    </ion-searchbar>
   </ion-toolbar>
-
 
 </ion-header>
 
@@ -178,7 +177,7 @@
         <p class="fontStyle">Popular Items</p>
       </ion-col>
       <ion-col size="auto" style="color: orange;">
-        <p (click)="navigateToAddtoCart()" >See all</p>
+        <p (click)="navigateToAddtoCart()">See all</p>
       </ion-col>
     </ion-row>
   </ion-grid>
@@ -188,25 +187,32 @@
       <swiper-slide>
         <ion-card>
           <div style="padding-block: 2px; ">
-          <ion-icon name="heart-outline" size="large" class="heart-icon"  color="primary" ></ion-icon>
-        </div>
+            <ion-icon name="heart-outline" size="large" class="heart-icon" color="primary"></ion-icon>
+          </div>
+
           <div style="display: flex; flex-direction: column; align-items: center;  padding: 20px;">
-            <div class="PetTypeImageContainer" style="overflow: hidden;">
+
+            <div class="PetTypeImageContainer" (click)="navigateToAddtoProductDetialPage(pets._id)" style="overflow: hidden;">
               <img src="../../assets//image 2.png" class="PurchasenowImages"
                 style="object-fit: cover; width: 100%; height: 100%;" alt="">
             </div>
+
             <div>
-               
-              <h4 class="center-content" style="color: #252525; font-weight: 500; font-family: 'Poppins', sans-serif;">{{pets.brand}}</h4>
-              <h5 class="displaycenter fontStyle" style="color: #252525;" >{{ '₹' + 250 }}</h5>
+
+              <h4 class="center-content" style="color: #252525; font-weight: 500; font-family: 'Poppins', sans-serif;">
+                {{pets.brand}}</h4>
+              <h5 class="displaycenter fontStyle" style="color: #252525;">{{ '₹' + 250 }}</h5>
               <div *ngIf="!cartAddedStatus[i]">
-                <ion-button class="purchaseButton" (click)="AddToCart(pets, i)" color="primary"  > {{ cartAddedStatus[i] ? 'Go to Cart' : 'Add to Cart'  }}</ion-button>
+                <ion-button class="purchaseButton" (click)="AddToCart(pets, i)" color="primary"> {{ cartAddedStatus[i] ?
+                  'Go to Cart' : 'Add to Cart' }}</ion-button>
               </div>
               <div *ngIf="cartAddedStatus[i]">
-                <ion-button class="purchaseButton" (click)="navigateToAddtoCart()" color="success"  > {{ cartAddedStatus[i] ? 'Go to Cart' : 'Add to Cart'  }}</ion-button>
+                <ion-button class="purchaseButton" (click)="navigateToAddtoCart()" color="success"> {{
+                  cartAddedStatus[i] ? 'Go to Cart' : 'Add to Cart' }}</ion-button>
               </div>
             </div>
           </div>
+
         </ion-card>
       </swiper-slide>
     </ng-container>

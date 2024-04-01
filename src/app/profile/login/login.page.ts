@@ -67,10 +67,10 @@ export class LoginPage implements OnInit {
     if (passwordControl?.['invalid'] && passwordControl.touched) {
       if (passwordControl.errors?.['required']) {
         this.message = 'Password is required.';
-        this.presentToast('bottom')
+        this.presentToast('top')
       } else if (passwordControl.errors?.['minlength']) {
         this.message = 'Password must be at least 8 characters long.';
-        this.presentToast('bottom')
+        this.presentToast('top')
       }
     }
   }
@@ -117,9 +117,9 @@ export class LoginPage implements OnInit {
           
         } ,
         error: (e) => {
-          // console.log(e.error.message),
+          console.log(e.error.message),
           this.message = e.error.message
-          this.presentToast('bottom')
+          this.presentToast('top')
         },
         complete: () => console.info('complete') 
       })
@@ -130,7 +130,7 @@ export class LoginPage implements OnInit {
 
       if(passwordControl?.['invalid'] && emailControl?.['invalid']){
         this.message = 'Invalid Credentials.';
-        this.presentToast('bottom')
+        this.presentToast('top')
       }else if (passwordControl?.['invalid']) {
         this.validatePassword()
       } else {

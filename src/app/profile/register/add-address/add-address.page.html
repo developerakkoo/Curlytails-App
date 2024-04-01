@@ -5,22 +5,38 @@
         <ion-col size="auto">
           <ion-back-button defaultHref="/register"></ion-back-button>
         </ion-col>
-        <ion-col style="display: flex; justify-content: center; ">
-          <ion-title style="font-weight: bolder;">Choose Location</ion-title>
-        </ion-col>
+       
       </ion-row>
     </ion-grid>
     
   </ion-toolbar>
-  <ion-toolbar >
+  <!-- <ion-toolbar >
     <ion-searchbar style="width: 95%; margin-inline: auto;" [debounce]="1000" showCancelButton="focus" class="custom"></ion-searchbar>
-  </ion-toolbar>
+  </ion-toolbar> -->
 </ion-header>
 
 <ion-content [fullscreen]="true">
+ 
+  <!-- <div style="height: 50px;">
+    <app-address-map></app-address-map>
+  </div> -->
 
-  <ion-list [inset]="true" (click)="getUserAddress()" >
-    <ion-item [button]="true">
+  <ion-list [inset]="true"  >
+
+      
+    <ion-item [button]="true" (click)="navigateToAddressPage()">
+      <ion-icon color="success" slot="start" name="caret-up-circle-outline" size="large"></ion-icon>
+      <ion-label >
+        <ion-text>Add address</ion-text><br />
+        <ion-note color="medium" class="ion-text-wrap">
+          Enter Address manually..
+        </ion-note>
+      </ion-label>
+      <ion-note slot="end"></ion-note>
+    </ion-item>
+
+    
+    <ion-item [button]="true" (click)="getUserAddressAndNavigateToAddressForm()">
       <ion-icon color="tertiary" slot="start" name="location-outline" size="large"></ion-icon>
       <ion-label>
         <ion-text>Current Location</ion-text><br />
@@ -32,27 +48,12 @@
       <ion-note slot="end"></ion-note>
     </ion-item>
   
-    <ion-item [button]="true" (click)="navigateToAddressPage()">
-      <ion-icon color="success" slot="start" name="caret-up-circle-outline" size="large"></ion-icon>
-      <ion-label >
-        <ion-text> Add address</ion-text><br />
-        <ion-note color="medium" class="ion-text-wrap">
-          Enter Address manually..
-        </ion-note>
-      </ion-label>
-      <ion-note slot="end"></ion-note>
-    </ion-item>
-
-    
-    <!-- <ion-item>
-      <div style="flex-wrap: nowrap;">
-        <div style="width: 100%;" id="map"></div>
-        <div>
-               <ion-button (click)="getCurrentLocation()">Get Current Location</ion-button> -
-        </div>
-      </div>
-    </ion-item> -->
-  
    </ion-list>
- 
+   <!-- <div>
+    <ion-button class="getLocation" (click)="getCurrentLocation()">Get Current Location</ion-button>
+  </div> -->
+<!-- 
+   <div id="map"></div>
+   <ion-button class="getLocation" (click)="getCurrentLocation()">Get Current Location</ion-button>
+  -->
 </ion-content>

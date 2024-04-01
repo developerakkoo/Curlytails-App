@@ -26,12 +26,12 @@ export class AuthInterceptorsService implements HttpInterceptor {
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
       console.log("authInterCeptor Called!");
 
-      // const myToken = localStorage.getItem('Token');
+      const myToken = localStorage.getItem('Token');
    
 
-      // if(!myToken){
-      //   this.router.navigate(['/login']);
-      // }
+      if(!myToken){
+        this.router.navigate(['/login']);
+      }
 
       // const req = request.clone({
       //    setHeaders:{
@@ -41,7 +41,7 @@ export class AuthInterceptorsService implements HttpInterceptor {
 
       // below code indicates if the page is not login and other 
       // need to verify if the user is loged in or not
-      // if(!req.url.includes('/login') && !req.url.includes('/register')){
+      // if(!req.url.includes('/login') && !req.url.includes('/register') && !req.url.includes('/register/add-address') && !req.url.includes('/register/addressform')){
       //   return next.handle(req).pipe(catchError((err:HttpErrorResponse) => {
       //     if(err.status === 401){
       //       this.router.navigate(['/login']);
@@ -50,7 +50,43 @@ export class AuthInterceptorsService implements HttpInterceptor {
       //   }))
 
       // }
-      return next.handle(request);
+      // return next.handle(request);
+      // return next.handle(req).pipe(
+      //   catchError((error: HttpErrorResponse) => {
+      //     if (error.status === 401) {
+      //       // Handle unauthorized access here (e.g., show a message or perform logout)
+      //       // For now, let's just log it and return to the caller
+      //       if(!req.url.includes('/register') && !req.url.includes('/add-address') && !req.url.includes('/addressform')){
+      //         this.router.navigate(['/login']);
+      //         console.error('Unauthorized access detected.');
+      //       }
+      //     }
+      //     return throwError(() => error);
+      //   })
+      // );
+ 
+      if (myToken) {
+        const req = request.clone({
+          setHeaders: {
+            'x-access-token': `${myToken}`
+          }
+        });
+        
+        return next.handle(req).pipe(
+          catchError((error: HttpErrorResponse) => {
+            if (error.status === 401) {
+              if (!req.url.includes('/register') && !req.url.includes('/add-address') && !req.url.includes('/addressform')) {
+                this.router.navigate(['/login']);
+                console.error('Unauthorized access detected.');
+              }
+            }
+            return throwError(() => error);
+          })
+        );
+      } 
+        return next.handle(request);
+      
+
   
   }
 }

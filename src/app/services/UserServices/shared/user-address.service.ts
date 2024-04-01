@@ -6,19 +6,20 @@ import { BehaviorSubject } from 'rxjs'
   providedIn: 'root'
 })
 export class UserAddressService {
+  [x: string]: any;
 
   constructor() { }
 
-  private AddressSubject = new BehaviorSubject<string>('')
+  private AddressSubject = new BehaviorSubject<any>({})
   Address$ = this.AddressSubject.asObservable();
 
-  setData(data:string){
+  setData(data:any){
     console.log(data);
     
     this.AddressSubject.next(data)
   }
 
-  getData():string {
+  getData():any {
       return this.AddressSubject.getValue();
   }
 

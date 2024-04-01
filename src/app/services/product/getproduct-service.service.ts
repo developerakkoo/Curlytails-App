@@ -26,4 +26,13 @@ export class GetproductServiceService {
       })
     );
   }
+
+  getproductById(id:any): Observable<any>{
+    console.log(id);
+    return this.http.get(`${environment.API_URL}/get/product/${id}`).pipe(
+      catchError((err) => {
+        return this.errorService.handleError(err);
+      })
+    );
+  }
 }

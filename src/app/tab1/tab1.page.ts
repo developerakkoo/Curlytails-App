@@ -186,4 +186,10 @@ export class Tab1Page implements OnInit {
     this.router.navigate(['tabs','profile','cart']);
   }
 
+  navigateToAddtoProductDetialPage(id:any){
+    console.log(id);
+    
+    this.router.navigate(['tabs','profile','product-detial', {data: id}]);
+  }
+
 }

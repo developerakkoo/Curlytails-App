@@ -1,13 +1,114 @@
-<ion-header [translucent]="true">
+<!-- <ion-header >
   <ion-toolbar>
-    <ion-title>productDetial</ion-title>
+    <ion-button color="light">
+      <ion-icon slot="start" name="chevron-back"></ion-icon>     
+    </ion-button>
   </ion-toolbar>
-</ion-header>
+</ion-header> -->
 
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">productDetial</ion-title>
-    </ion-toolbar>
-  </ion-header>
+  <ion-grid>
+    <ion-row>
+      <ion-col size="12">
+        <ion-button class="custom-button"><ion-icon size="large" name="chevron-back"></ion-icon> </ion-button>
+      </ion-col>
+
+      <ion-col size="12">
+        <div class="image-container">
+          <div
+            style="width: 80%; height: 420px; border: 1px solid black; overflow: hidden; display: flex; justify-content: center; align-items: center;">
+            <img src="" class="imgclass" alt="img">
+          </div>
+        </div>
+      </ion-col>
+
+      <ion-col>
+
+        <div style="height: 100%;">
+
+          <div class="custom-card">
+
+            <ion-text style=" font-size: large; font-weight: bold; font-family: Poppins;">{{ productDetails.name
+              }}</ion-text>
+            <!-- <ion-card-subtitle>{{ productDetails.brand }}</ion-card-subtitle>
+            <ion-card-subtitle>Rs.{{ productDetails.price }}</ion-card-subtitle> -->
+            <!-- <div style=" height: 30%; overflow: hidden; ">
+              <p style="font-family: Poppins; margin-block: 5px; padding-block: 10px; height: 80%; overflow-y: hidden; text-overflow: ellipsis;">{{ productDetails.description }} Lorem ipsum dolor sit amet, consectetur 
+                adipisicing elit. Ipsum similique iste aut voluptas ea. Voluptatum illum molestias quod exercitationem vero, consequuntur, 
+                dolore recusandae blanditiis sequi laudantium vitae consequatur voluptatem eos... </p>
+            </div> -->
+
+            <div style="height: 30%; margin: 5px 0;">
+              <p style="font-family: Poppins; margin: 5px 0;  height: 80%; overflow: hidden; text-overflow: ellipsis; ">
+                {{ productDetails.description }} Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsum
+                similique iste aut voluptas ea. Voluptatum illum molestias quod exercitationem vero, consequuntur,
+                dolore recusandae blanditiis sequi laudantium vitae consequatur voluptatem eos...
+              </p>
+            </div>
+
+            <ion-row  >
+              <ion-col size="6">
+                <div style="background-color: #ece9e9;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                border-radius: 20%; height: fit-content; width: max-content;">
+                  <div>
+                    <ion-button fill="clear">
+                      <ion-icon color="dark" size="small" slot="icon-only" name="add"></ion-icon>
+                    </ion-button>
+                  </div>
+                  <div>
+                    <ion-icon color="dark" size="small" slot="icon-only" name="remove"></ion-icon>
+                  </div>
+                  <div>
+                    <ion-button fill="clear">
+                      <ion-icon color="dark" size="small" slot="icon-only" name="remove"></ion-icon>
+                    </ion-button>
+                  </div>
+                </div>
+              </ion-col>
+
+              <ion-col size="6">
+                <div style="display: flex; justify-content: end; align-items: center;">
+                <p style=" font-size: x-large; font-weight: bolder; ">Rs.{{ productDetails.price }}</p>
+              </div>
+              </ion-col>
+
+            </ion-row>
+
+            <ion-row>
+              <ion-item>
+                <ion-select label="Quantity - " label-placement="1" placeholder="1"
+                  (ionChange)="selectQuantity($event)">
+                  <ion-select-optgroup>
+                    <ion-select-option *ngFor="let num of productQuatity" [value]="num">{{ num }}</ion-select-option>
+                  </ion-select-optgroup>
+                </ion-select>
+              </ion-item>
+            </ion-row>
+
+            <ion-row class="button-row">
+              <ion-col size="6">
+                <ion-button size='small' color="light" expand="block" (click)="AddToCart(productDetails)">
+                  <ion-icon size="small" name="cart" id="open-modal" aria-hidden="true"></ion-icon>
+                </ion-button>
+              </ion-col>
+
+              <ion-col size="6">
+                <ion-button size='small' expand="block" color="light">
+                  <ion-icon size="samll" name="heart" color="" aria-hidden="true"></ion-icon>
+                </ion-button>
+              </ion-col>
+            </ion-row>
+          </div>
+
+        </div>
+
+
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+
 </ion-content>
