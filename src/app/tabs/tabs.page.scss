@@ -5,3 +5,26 @@
     height: 92px;
     box-shadow: 2px -5px 15px 0px rgba(85, 94, 88, 0.1)
 }
+
+.purchaseButton::part(native) {
+    // background: #FF8A00;
+    color: #fff;
+    border-color: #fff;
+    border-radius: 10px;
+    font-weight: bold;
+    padding-block: 20px;
+  }
+  
+  .purchaseButton::part(detail-icon) {
+    color: white;
+    opacity: 1;
+    font-size: 20px;
+  }
+  
+  .purchaseButton {
+    padding-block: 10px;
+    display: flex;
+    justify-content: center;
+    border-radius: 20px;
+    margin: 0 auto; /* Center the button horizontally */
+  }

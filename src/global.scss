@@ -27,26 +27,3 @@
 @import "~leaflet/dist/leaflet.css";
 
 
-.purchaseButton::part(native) {
-    // background: #FF8A00;
-    color: #fff;
-    border-color: #fff;
-    border-radius: 10px;
-    font-weight: bold;
-    padding-block: 20px;
-  }
-  
-  .purchaseButton::part(detail-icon) {
-    color: white;
-    opacity: 1;
-    font-size: 20px;
-  }
-  
-  .purchaseButton {
-    padding-block: 10px;
-    display: flex;
-    justify-content: center;
-    border-radius: 20px;
-    margin: 0 auto; /* Center the button horizontally */
-  }
-  

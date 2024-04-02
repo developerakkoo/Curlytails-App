@@ -7,12 +7,11 @@
 </ion-header> -->
 
 <ion-content [fullscreen]="true">
+
+  <ion-button slot="fixed" class="custom-button"><ion-icon size="large" name="chevron-back"></ion-icon> </ion-button>
+
   <ion-grid>
     <ion-row>
-      <ion-col size="12">
-        <ion-button class="custom-button"><ion-icon size="large" name="chevron-back"></ion-icon> </ion-button>
-      </ion-col>
-
       <ion-col size="12">
         <div class="image-container">
           <div
@@ -46,38 +45,48 @@
               </p>
             </div>
 
-            <ion-row  >
-              <ion-col size="6">
-                <div style="background-color: #ece9e9;
+            <ion-row>
+              <ion-col size="12">
+                <div style="
+                width: 100%;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                ">
+
+                  <div style="background-color: #ece9e9;
                 display: flex;
                 justify-content: center;
                 align-items: center;
-                border-radius: 20%; height: fit-content; width: max-content;">
-                  <div>
-                    <ion-button fill="clear">
-                      <ion-icon color="dark" size="small" slot="icon-only" name="add"></ion-icon>
-                    </ion-button>
-                  </div>
-                  <div>
-                    <ion-icon color="dark" size="small" slot="icon-only" name="remove"></ion-icon>
-                  </div>
-                  <div>
-                    <ion-button fill="clear">
-                      <ion-icon color="dark" size="small" slot="icon-only" name="remove"></ion-icon>
-                    </ion-button>
-                  </div>
-                </div>
-              </ion-col>
+                border-radius: 20%; height: fit-content; width: max-content;
+                ">
 
-              <ion-col size="6">
-                <div style="display: flex; justify-content: end; align-items: center;">
-                <p style=" font-size: x-large; font-weight: bolder; ">Rs.{{ productDetails.price }}</p>
-              </div>
+                    <div>
+                      <ion-button fill="clear">
+                        <ion-icon color="dark" size="small" slot="icon-only" name="add"></ion-icon>
+                      </ion-button>
+                    </div>
+                    <div>
+                      <ion-icon color="dark" size="small" slot="icon-only" name="remove"></ion-icon>
+                    </div>
+                    <div>
+                      <ion-button fill="clear">
+                        <ion-icon color="dark" size="small" slot="icon-only" name="remove"></ion-icon>
+                      </ion-button>
+                    </div>
+                  </div>
+
+                  <div style="display: flex; justify-content: end; ">
+                    <p style=" font-size: x-large; font-weight: bolder; ">Rs.{{ productDetails.price }}</p>
+                  </div>
+
+                </div>
+
               </ion-col>
 
             </ion-row>
 
-            <ion-row>
+            <!-- <ion-row>
               <ion-item>
                 <ion-select label="Quantity - " label-placement="1" placeholder="1"
                   (ionChange)="selectQuantity($event)">
@@ -86,21 +95,49 @@
                   </ion-select-optgroup>
                 </ion-select>
               </ion-item>
-            </ion-row>
+            </ion-row> -->
 
-            <ion-row class="button-row">
-              <ion-col size="6">
-                <ion-button size='small' color="light" expand="block" (click)="AddToCart(productDetails)">
-                  <ion-icon size="small" name="cart" id="open-modal" aria-hidden="true"></ion-icon>
-                </ion-button>
-              </ion-col>
 
-              <ion-col size="6">
-                <ion-button size='small' expand="block" color="light">
-                  <ion-icon size="samll" name="heart" color="" aria-hidden="true"></ion-icon>
-                </ion-button>
-              </ion-col>
-            </ion-row>
+
+            <div style="display: flex; justify-content: space-around;">
+
+              <div style="width: min-content;">
+                <ion-button class="custom-button" (click)="toggleHeart()"><ion-icon size="large" [name]="heartIcon"
+                  class="heart-icon"></ion-icon>
+              </ion-button>
+              </div>
+
+              <div style="width: min-content;">
+                <ion-button style="
+                --padding-top: 12px;
+--padding-bottom: 12px;
+--padding-start: 16px;
+
+--padding-end: 16px;
+--background: transparent;
+--box-shadow: none;
+color: inherit; 
+border-radius: 20%;
+            ">
+              <ion-icon size="large" fill="none" stroke="black" name="cart"></ion-icon>
+              <ion-note style="display: flex; justify-content: center; margin-inline: 5px;">Add to Cart</ion-note>
+            </ion-button>
+              </div>
+              
+              <div style="width: 100%;">
+                <ion-button size="large" style="
+                --padding-top: 12px;
+--padding-bottom: 12px;
+--padding-start: 26px;
+--padding-end: 26px;
+  --border-radius: 30%;
+
+            ">
+              <ion-note style="  color: white;">Buy Now</ion-note>
+            </ion-button>
+              </div>
+            </div>
+
           </div>
 
         </div>

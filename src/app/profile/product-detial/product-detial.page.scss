@@ -1,8 +1,33 @@
-ion-header {}
+
+
+
+.purchaseButton::part(native) {
+    // background: #FF8A00;
+    color: #fff;
+    border-color: #fff;
+    border-radius: 20%;
+    font-weight: bold;
+    padding-block: 20px;
+  }
+  
+  .purchaseButton::part(detail-icon) {
+    color: white;
+    opacity: 1;
+    font-size: 20px;
+  }
+  
+  .purchaseButton {
+    padding-block: 10px;
+    display: flex;
+    justify-content: center;
+    border-radius: 20%;
+    margin: 0 auto; /* Center the button horizontally */
+  }
 
 .custom-button {
     --border-radius: 30%;
     color: black;
+    margin: 20px;
     --background: white;
     /* Set background color to white */
     --padding-top: 12px;
@@ -45,3 +70,11 @@ ion-header {}
     object-fit: cover;
     /* Maintain aspect ratio */
 }
+
+ion-icon.heart-icon[name='heart'] {
+    color: red; // Color when clicked
+  }
+  
+  ion-icon.heart-icon[name='heart-outline'] {
+    color: inherit; // Normal color
+  }

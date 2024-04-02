@@ -15,6 +15,7 @@ export class ProductDetialPage implements OnInit, AfterViewInit {
   productDetails:any;
   selectProductQuantity = "1"
   productQuatity = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+  heartIcon: string = 'heart-outline'; // Initial icon state
 
   constructor(
     private ActivateRout: ActivatedRoute,
@@ -47,6 +48,14 @@ export class ProductDetialPage implements OnInit, AfterViewInit {
 
   selectQuantity(event: any) {
     this.selectProductQuantity = event.detail.value
+  }
+
+  toggleHeart() {
+    if (this.heartIcon === 'heart-outline') {
+      this.heartIcon = 'heart';
+    } else {
+      this.heartIcon = 'heart-outline';
+    }
   }
 
   AddToCart(ProductDetils: any) {
